@@ -1,0 +1,29 @@
+ENVIRONOMICS PROJECTS LLP
+Innovation and R&D Overview
+
+This summary provides a simple downloadable overview of the active innovation themes presented on the Environomics website.
+
+Active R&D Initiatives
+
+1. Proprietary Single Axis Solar Tracker for India
+- Built for Indian soil conditions, wind zones, and monsoon loads
+- Designed to improve generation versus fixed-tilt systems
+- Includes storm stow logic for high-wind protection
+
+2. AI-Powered Plant Performance Platform
+- Uses analytics and machine learning for anomaly detection
+- Helps predict inverter fault signatures
+- Supports proactive operations and maintenance planning
+
+Ongoing Research Areas
+
+- Bifacial module yield modelling for western India conditions
+- Tracker fault prediction using weather-linked classification
+- Drone-assisted thermographic anomaly detection
+- Battery dispatch strategy for industrial captive loads
+- String-level optimization under partial shading
+- Hybrid rooftop and ground-mount feasibility modelling
+
+For technical discussions or collaboration requests, contact:
+info@environomics.in
+https://environomics.in/contact
