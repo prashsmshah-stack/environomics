@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch src/index.js",
-    "start": "node src/index.js",
+    "start": "node src/start.js",
     "auth:hash": "node src/scripts/hash-password.js",
     "admin:set-password": "node src/scripts/set-admin-password.js",
     "content:sync": "node src/scripts/sync-default-content.js"

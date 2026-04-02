@@ -1,9 +1,10 @@
 import { createApp } from "./app.js";
-import { env } from "./config/env.js";
+import { env, validateRuntimeEnv } from "./config/env.js";
 import { closeMysqlPool } from "./lib/mysql.js";
 import { initializeContentStorage } from "./services/contentService.js";
 
 async function start() {
+  validateRuntimeEnv();
   await initializeContentStorage();
 
   const app = createApp();

@@ -1,114 +1,80 @@
 # Environomics Backend
 
-This backend powers the current Vite frontend and stores the editable website content used by the public site and admin panel.
+This Express backend powers the public website, admin panel, uploads, and CMS data layer.
 
-## Current stack
+## Runtime
 
-- Runtime: Node.js 20+
-- Framework: Express
-- Persistence: JSON fallback and MySQL
-- Database: MySQL from XAMPP or compatible MySQL servers
+- Node.js 22.12+ or 24.x
+- Express
+- MySQL or JSON fallback storage
 
-## What is already ready
+## Recommended workflow
 
-- Admin login endpoint
-- Public content endpoints
-- Admin CRUD endpoints for projects, clients, testimonials, leads
-- Contact, social links, SEO, and settings endpoints
-- Reorder endpoints for list sections
-- Local image upload endpoint
-- MySQL-backed content storage
-- Frontend/admin integration with the API
+Install dependencies from the repository root:
 
-## What still needs launch attention
+```bash
+npm install
+```
 
-- Production auth hardening
-- Final deployment environment configuration
-- Long-term file storage and backups for production
+Run the backend in development:
 
-## MySQL schema ready
+```bash
+npm run dev:server
+```
 
-The initial XAMPP-friendly MySQL schema is prepared here:
+Run the full production app after building the frontend:
+
+```bash
+npm run build
+npm run start
+```
+
+The root `start` command now serves:
+
+- the frontend from `dist/`
+- the API from `/api`
+- uploaded files from `/uploads`
+
+It also forces production mode on the deployment start path and rejects placeholder admin secrets.
+
+## MySQL schema
+
+Use:
 
 - `server/database/mysql/schema.sql`
 
-It includes tables for:
+The schema is import-ready for Hostinger and no longer hardcodes `CREATE DATABASE` or `USE`, so you can import it directly into the database you created in hPanel or phpMyAdmin.
 
-- admin users and sessions
-- home content
-- projects
-- clients
-- testimonials
-- leads
-- contact settings
-- social links
-- SEO pages
-- schema settings
-- site settings
-- media assets
+## Storage modes
 
-It also seeds the singleton records and default SEO page rows so the backend can be launched on MySQL with less reshaping later.
-
-To import it in XAMPP:
-
-1. Open `phpMyAdmin`
-2. Go to the `Import` tab
-3. Select `server/database/mysql/schema.sql`
-4. Run the import
-
-Important:
-
-- The backend supports both JSON and MySQL storage
-- The frontend already consumes this backend
-- Use MySQL for launch so admin edits, uploads, and published content stay in sync
-
-## Switching backend storage
-
-The backend now supports both storage modes:
-
-- `STORAGE_DRIVER=json`
 - `STORAGE_DRIVER=mysql`
+- `STORAGE_DRIVER=json`
 
-To run against XAMPP MySQL, update `.env` like this:
+Use MySQL for production so admin edits, uploads, sessions, and leads stay in sync.
 
-```env
-STORAGE_DRIVER=mysql
-MYSQL_HOST=127.0.0.1
-MYSQL_PORT=3306
-MYSQL_USER=root
-MYSQL_PASSWORD=
-MYSQL_DATABASE=environomics_cms
-```
+## Environment files
 
-Notes:
+The backend can read values from:
 
-- If `admin_users` is empty, the backend will auto-create the first admin from `ADMIN_USERNAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD`
-- If the CMS tables are empty, the backend will seed the default starter data on first run
-- JSON mode still works, so we have a safe fallback while we test MySQL
+- `server/.env`
+- root `.env`
+- hosting platform environment variables
 
-To generate a password hash manually:
+See:
 
-```powershell
-npm run auth:hash -- myStrongPassword
-```
+- `server/.env.example`
 
-## Run locally
+## Helper commands
 
-1. Copy `.env.example` to `.env`
-2. Install dependencies
-3. Start the server
+- `npm run auth:hash -- yourPassword`
+- `npm run admin:set-password`
+- `npm run content:sync`
 
-```powershell
-cd server
-npm install
-npm run dev
-```
+## Hostinger notes
 
-## Default URLs
+For the simplest deployment, use one Hostinger Node.js app at the repository root with:
 
-- API base: `http://127.0.0.1:4000/api`
-- Health check: `http://127.0.0.1:4000/api/health`
+- build command: `npm run build`
+- start command: `npm run start`
 
-## Important note
-
-Use the backend and frontend together for launch verification. The public website, admin panel, uploads, and lead forms rely on this API layer.
+Then import the MySQL schema, set the environment variables, and point your domain to the Node.js app.
