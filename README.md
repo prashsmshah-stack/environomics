@@ -30,7 +30,6 @@ This repository contains:
 
 ```bash
 npm install
-npm --prefix server install
 ```
 
 ### 2. Create environment files
@@ -56,7 +55,7 @@ Copy-Item server\.env.example server\.env
 
 ### 3. Create the MySQL database and import the schema
 
-Create a database named `environomics_cms` or update the name in `server/.env`.
+Create a database named `environomics_cms` or update the name in your backend environment.
 
 Then import:
 
@@ -67,12 +66,12 @@ mysql -u root -p environomics_cms < server/database/mysql/schema.sql
 ### 4. Start the backend
 
 ```bash
-npm --prefix server run dev
+npm run dev:server
 ```
 
 Backend default URL:
 
-- `http://127.0.0.1:4000`
+- `http://127.0.0.1:3000`
 
 ### 5. Start the frontend
 
@@ -86,45 +85,81 @@ Frontend default URL:
 
 ## Production Build
 
-Frontend:
+The production deployment now runs as one Node.js app:
 
 ```bash
+npm install
 npm run build
+npm run start
 ```
 
-Backend:
+`npm run build` creates the Vite frontend in `dist/`.
 
-```bash
-npm --prefix server run start
-```
+`npm run start` launches Express in production mode, serves the built frontend, serves `/uploads`, and exposes the API at `/api`.
 
-## Deployment Notes
+## Deployment Architecture
 
-This project is not GitHub Pages only.
+This repository is ready to deploy as a single Hostinger Node.js app.
 
-It needs:
+The deployed app now works like this:
 
-1. A static host for the Vite frontend
-2. A Node.js host for the backend
-3. A MySQL database
+1. Vite builds the frontend into `dist/`
+2. Express serves `dist/` for the website and admin SPA
+3. Express serves `/api/*` for the backend
+4. Express serves `/uploads/*` for admin-uploaded media
+5. MySQL stores CMS content, admin sessions, and leads
 
-### Frontend
+You do not need a separate static hosting deployment unless you intentionally want to split the frontend and backend.
 
-- Build with `npm run build`
-- Deploy the `dist/` output
-- If the frontend and backend are on the same domain, the frontend will use `/api` automatically
-- If the backend is on another domain or subdomain, set `VITE_API_BASE` in the frontend environment
+## Hostinger Deployment
 
-### Backend
+Recommended Hostinger setup:
 
-- Set real production values in `server/.env`
-- Import `server/database/mysql/schema.sql` before first boot
-- Start with `npm --prefix server run start`
-- Run `npm --prefix server run content:sync` after deployment if you want default records inserted where missing
+1. Create a Node.js application and point it at the repository root.
+2. Select Node.js `24.x` or another version compatible with the root `package.json` engines field.
+3. Use build command `npm run build`.
+4. Use start command `npm run start`.
+5. Create a MySQL database in hPanel.
+6. Import `server/database/mysql/schema.sql` into that database.
+7. Add the backend environment variables in Hostinger or create `server/.env`.
+8. Point your domain to the Node.js application.
 
-### SPA Routing
+### Environment on Hostinger
 
-The frontend uses client-side routing. Your host must rewrite unknown routes to `index.html`.
+- Keep `VITE_API_BASE` blank when the frontend and backend are served by the same Hostinger app.
+- Set `HOST=0.0.0.0`.
+- Set `STORAGE_DRIVER=mysql`.
+- Set `MYSQL_HOST=localhost` unless Hostinger gives you a different host.
+- Set a real `ADMIN_PASSWORD`.
+- Set a long random `ADMIN_TOKEN_SECRET`.
+- Set `CORS_ORIGIN` to include your live domain and `www` domain.
+- `npm run start` will reject placeholder admin secrets in production mode.
+
+### First Production Boot
+
+- Start the app with `npm run start`.
+- If you want to ensure the seeded starter content exists, run `npm run content:sync` once after deployment.
+- If `admin_users` is empty, the first admin is auto-created from `ADMIN_USERNAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD`.
+
+### Uploaded Media
+
+- Admin media uploads are stored on disk in `server/uploads/`.
+- Back up that directory as part of your deployment or server backup plan.
+- The app serves uploaded files at `/uploads/...`.
+
+### Optional Split Deployment
+
+If you intentionally host the frontend and backend on different origins:
+
+- Deploy the frontend separately from `dist/`
+- Set `VITE_API_BASE` to the full backend API origin, for example `https://api.example.com/api`
+- Add the frontend origin to `CORS_ORIGIN`
+
+## SPA Routing
+
+When you use the Node.js deployment path above, Express already handles SPA fallback for routes like `/admin`, `/projects`, and `/contact`.
+
+If you deploy the frontend as static files somewhere else, you still need SPA rewrites:
 
 - Apache: `public/.htaccess` is already included
 - Nginx: use a `try_files $uri /index.html;` style rule
@@ -143,6 +178,14 @@ Leave it blank when the frontend and backend are served from the same origin thr
 
 See `server/.env.example`
 
+The backend supports:
+
+- `server/.env`
+- root `.env`
+- Hostinger environment variables
+
+If the same variable exists in multiple places, the hosting environment value wins.
+
 Important values:
 
 - `PORT`
@@ -158,6 +201,12 @@ Important values:
 - `MYSQL_USER`
 - `MYSQL_PASSWORD`
 - `MYSQL_DATABASE`
+
+Helpful production commands:
+
+- `npm run auth:hash -- yourPassword`
+- `npm run admin:set-password`
+- `npm run content:sync`
 
 ## GitHub Upload Checklist
 

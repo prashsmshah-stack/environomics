@@ -1,11 +1,5 @@
 SET NAMES utf8mb4;
 
-CREATE DATABASE IF NOT EXISTS `environomics_cms`
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
-
-USE `environomics_cms`;
-
 CREATE TABLE IF NOT EXISTS `admin_users` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(120) NOT NULL,
