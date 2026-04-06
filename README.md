@@ -21,8 +21,6 @@ This repository contains:
 - `imgs/` local image assets used by the frontend
 - `server/src/` backend source
 - `server/database/mysql/schema.sql` required MySQL schema
-- `server/.env.example` backend environment template
-- `.env.example` frontend environment template
 
 ## Local Development
 
@@ -32,26 +30,33 @@ This repository contains:
 npm install
 ```
 
-### 2. Create environment files
+### 2. Create backend environment file
 
-Frontend:
+Create `server/.env` manually with the values your environment needs.
 
-```bash
-cp .env.example .env
+Minimum typical local setup:
+
+```dotenv
+NODE_ENV=development
+PORT=3001
+HOST=127.0.0.1
+STORAGE_DRIVER=json
+ADMIN_USERNAME=admin
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=change-me
+ADMIN_TOKEN_SECRET=replace-with-a-long-random-secret
+DATA_FILE=./data/content.json
+UPLOAD_DIR=./uploads
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=
+MYSQL_DATABASE=environomics_cms
+MYSQL_CONNECTION_LIMIT=10
 ```
 
-Backend:
-
-```bash
-cp server/.env.example server/.env
-```
-
-On Windows PowerShell:
-
-```powershell
-Copy-Item .env.example .env
-Copy-Item server\.env.example server\.env
-```
+Frontend env is optional.
+Only create a root `.env` if you want to override `VITE_API_BASE`.
 
 ### 3. Create the MySQL database and import the schema
 
@@ -168,15 +173,11 @@ If you deploy the frontend as static files somewhere else, you still need SPA re
 
 ### Frontend
 
-See `.env.example`
-
 - `VITE_API_BASE`
 
 Leave it blank when the frontend and backend are served from the same origin through `/api`.
 
 ### Backend
-
-See `server/.env.example`
 
 The backend supports:
 
@@ -224,7 +225,6 @@ Upload these:
 - `tailwind.config.js`
 - `vite.config.js`
 - `.gitignore`
-- `.env.example`
 - `README.md`
 
 Do not upload secrets:

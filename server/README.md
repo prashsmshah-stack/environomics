@@ -60,10 +60,6 @@ The backend can read values from:
 - root `.env`
 - hosting platform environment variables
 
-See:
-
-- `server/.env.example`
-
 ## Helper commands
 
 - `npm run auth:hash -- yourPassword`
