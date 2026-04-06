@@ -1,4 +1,4 @@
-const API_PORT = 3000;
+const API_PORT = 3001;
 const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1"]);
 
 function trimTrailingSlash(value = "") {

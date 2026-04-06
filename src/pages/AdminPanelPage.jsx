@@ -348,7 +348,7 @@ const originalWebsiteClients = [
     category: "Pharma",
     year: "2024",
     capacity: "1,300 kWp",
-    companyLogo: "",
+    companyLogo: "/imgs/company-logos/baxter-pharma.png",
   },
   {
     name: "Siemens Energy",
@@ -376,7 +376,7 @@ const originalWebsiteClients = [
     category: "Chemicals",
     year: "2022-23",
     capacity: "1,899 kWp",
-    companyLogo: "https://www.amolminechem.com/images/amol-dicalite-logo2.svg",
+    companyLogo: "/imgs/company-logos/amol-minechem.jpg",
   },
   {
     name: "Akash Fashion",
@@ -404,14 +404,14 @@ const originalWebsiteClients = [
     category: "Manufacturing",
     year: "2025",
     capacity: "528.5 kWp",
-    companyLogo: "",
+    companyLogo: "/imgs/company-logos/fuji-silvertech.png",
   },
   {
     name: "Colgate-Palmolive",
     category: "FMCG",
     year: "2025",
     capacity: "250 kWp",
-    companyLogo: "https://www.environomics.net.in/wp-content/uploads/2025/02/2025_colgate_palmolive-Photoroom.webp",
+    companyLogo: "/imgs/company-logos/colgate-palmolive.png",
   },
   {
     name: "Rohan Dyes (RDL)",
@@ -446,7 +446,7 @@ const originalWebsiteClients = [
     category: "Engineering",
     year: "2020",
     capacity: "72 kWp + HVAC",
-    companyLogo: "",
+    companyLogo: "/imgs/company-logos/busch-vacuum.png",
   },
   {
     name: "JMC Paper",
@@ -558,8 +558,7 @@ const originalWebsiteTestimonials = [
     installed: "2025",
     description:
       "A global FMCG brand trusted Environomics with its energy infrastructure. Professional execution and high attention to detail.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuApf37-r6cPNg2oTCu_5RmHu34EtVgI032c5kTQoR1mJ03Ny5qo84iPmuIuu2EZCuF_-2un9BpWvvWE04CiZN6-KEnM9uQZUBZSKjzLj7GD0OnCXXKqzcBUMPlZYHtr1tHlJtjolrYVOI2atdqlw6AFabS7wOLoALO36pHl0xTq4oWKyjh5v40OOM-cCIADN5XVehahoDZ5Ppgh30CpKOjtWMX6vBoZ9ylH4YwoG7eRJA6QfrznYPjpnwWtV_sfsGYxHppSVX-vlb8",
+    image: "/imgs/projects/colgate-palmolive.jpg",
   },
   {
     title: "Baxter Pharmaceutical",
@@ -569,8 +568,7 @@ const originalWebsiteTestimonials = [
     installed: "2024",
     description:
       "Baxter Pharmaceutical needed a pharma-grade install with strict hygiene protocols. Environomics delivered it on schedule and exceeded our expectations.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAyYu2IPnQvhAE3wZ353sCeO86UPagz8MB-Epw2P2G1ysh-tCw3kDxd5_RFaMASfAGq5oQk8Uc7TOlUq663vYeUtnKO2blaCvG08IsJxQyhHgoXWODO9wgyLe3MN4V-DJjc3BBlCnshmXDdoldu688vkLhwscqNNuwJ8kpU96fPXPEE-EJsXcWtO6AuDOjrMEg30DZtucUnmaowZXOxw9XZ4xyV935lKvOlvUZMvYZFA1HcrJX8MGnOmivDlnvmWZkbm5E_0ayLkGk",
+    image: "/imgs/projects/baxter-pharma.jpg",
   },
   {
     title: "Fuji SilverTech",
@@ -580,8 +578,7 @@ const originalWebsiteTestimonials = [
     installed: "2025",
     description:
       "Fuji SilverTech delivered 528.5 kWp on time and above the modelled yield. The real time monitoring system is excellent.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuADeKa5dhkmjSYMrCyT7z6EpmyX1NVJV1LLWjV_VcjAC85w5q_eFeKix-19EsYovh0BI4eMtzOo8N2P4siLPkJNDFNPilY11or8Vax08BBDF84EQGXZdAMrRg0nxHWPeUGM_1gqy-DLbK7RX7IZS5D41UbQ6IRt2S3UVr1pJlbqFBGay6wqc8-H0q5RxnwqNnLMKhILzc2sWsAWolILQLP1BsvWWxz3kYVsUN5umeYE2846TSaeYh5sRjy5pP3RUud5gNf2-94a7nE",
+    image: "/imgs/projects/fuji-silvertech.jpg",
   },
   { ...defaultTestimonial },
   {
@@ -625,8 +622,7 @@ const originalWebsiteTestimonials = [
     installed: "2022",
     description:
       "Scaling solar across multiple phases was delivered on schedule every time. Their multi phase execution strategy minimized downtime.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuA2vU0SCBr2ncLYv7DKdyWECSX9BXMfyz9hwoVmkrTqowZzpHXvXkbcGfrwDOz9ajeU8OieX95ASAmb_HacV1Z0kXpJS0spcRQgxmD2bFoeZmVORDbIAW_OluWiq3iEjDBEygVgA7Ux8g5OMeQuaxisnZ1S8-eyWuAmF0h7qVqF135uGmJ-oiUNxxSIdRBxNmQnFJzwSTQ9Wl88xMR_nnq9pF8EBRcUcQLEOMqhZc-iMzRZqF0X7k_WIwloyGw5R8GzdNvNRIiP72w",
+    image: "/imgs/projects/raviraj-foils.png",
   },
 ];
 

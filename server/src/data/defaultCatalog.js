@@ -81,8 +81,8 @@ export const defaultProjects = [
     capacity: "1,300 kWp Solar",
     description: projectDescriptions["BAXTER PHARMA"],
     status: "Published",
-    image: "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0310-2-scaled.jpg",
-    companyLogo: "",
+    image: "/imgs/projects/baxter-pharma.jpg",
+    companyLogo: "/imgs/company-logos/baxter-pharma.png",
     direction: "right",
   },
   {
@@ -91,10 +91,8 @@ export const defaultProjects = [
     capacity: "250 kWp Solar",
     description: projectDescriptions["COLGATE-PALMOLIVE"],
     status: "Published",
-    image:
-      "https://www.environomics.net.in/wp-content/uploads/2024/02/Otsuka05-1024x768-640x480_c.jpg",
-    companyLogo:
-      "https://www.environomics.net.in/wp-content/uploads/2025/02/2025_colgate_palmolive-Photoroom.webp",
+    image: "/imgs/projects/colgate-palmolive.jpg",
+    companyLogo: "/imgs/company-logos/colgate-palmolive.png",
     direction: "left",
   },
   {
@@ -103,9 +101,8 @@ export const defaultProjects = [
     capacity: "1,899 kWp Solar",
     description: projectDescriptions["AMOL MINECHEM"],
     status: "Published",
-    image:
-      "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0306-1-1-1024x682-640x480_c.jpg",
-    companyLogo: "",
+    image: "/imgs/projects/amol-minechem.jpg",
+    companyLogo: "/imgs/company-logos/amol-minechem.jpg",
     direction: "right",
   },
   {
@@ -114,7 +111,7 @@ export const defaultProjects = [
     capacity: "1,899 kWp Solar",
     description: projectDescriptions["RAVIRAJ FOILS"],
     status: "Published",
-    image: "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0327-1-scaled.jpg",
+    image: "/imgs/projects/raviraj-foils.png",
     companyLogo: "https://www.ravirajfoils.com/images/logo.png",
     direction: "left",
   },
@@ -124,8 +121,7 @@ export const defaultProjects = [
     capacity: "999 kWp Solar",
     description: projectDescriptions["AKASH FASHION"],
     status: "Published",
-    image:
-      "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0327-2-1024x683-640x480_c.jpg",
+    image: "/imgs/projects/akash-fashion.jpg",
     companyLogo: "https://www.environomics.net.in/wp-content/uploads/2024/01/akashfashion.png",
     direction: "right",
   },
@@ -147,8 +143,7 @@ export const defaultProjects = [
     capacity: "325 kWp Solar",
     description: projectDescriptions["ROHAN DYES (RDL)"],
     status: "Published",
-    image:
-      "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0311-1-1024x682-640x480_c.jpg",
+    image: "/imgs/projects/rohan-dyes-rdl.jpg",
     companyLogo:
       "https://www.environomics.net.in/wp-content/uploads/2024/02/rohan-dyes-rdil-logonew.png",
     direction: "right",
@@ -159,9 +154,8 @@ export const defaultProjects = [
     capacity: "528.5 kWp Solar",
     description: projectDescriptions["FUJI SILVERTECH"],
     status: "Published",
-    image:
-      "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0308-1024x682-640x480_c.jpg",
-    companyLogo: "",
+    image: "/imgs/projects/fuji-silvertech.jpg",
+    companyLogo: "/imgs/company-logos/fuji-silvertech.png",
     direction: "left",
   },
   {
@@ -170,8 +164,7 @@ export const defaultProjects = [
     capacity: "900 kWp Solar",
     description: projectDescriptions["SOMANY EVERGREEN"],
     status: "Published",
-    image:
-      "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0309-1024x682-640x480_c.jpg",
+    image: "/imgs/projects/somany-evergreen.jpg",
     companyLogo: "https://www.environomics.net.in/wp-content/uploads/2024/02/Somany-Evergreen.png",
     direction: "right",
   },
@@ -181,8 +174,8 @@ export const defaultProjects = [
     capacity: "72 kWp Solar + HVAC",
     description: projectDescriptions["BUSCH VACUUM"],
     status: "Published",
-    image: "https://www.environomics.net.in/wp-content/uploads/2024/02/20230530_162952-scaled.jpg",
-    companyLogo: "",
+    image: "/imgs/projects/busch-vacuum.jpg",
+    companyLogo: "/imgs/company-logos/busch-vacuum.png",
     direction: "left",
   },
 ];
@@ -229,7 +222,7 @@ export const defaultClients = [
     category: "Pharma",
     year: "2024",
     capacity: "1,300 kWp",
-    companyLogo: "",
+    companyLogo: "/imgs/company-logos/baxter-pharma.png",
   },
   {
     id: "client_siemens_energy",
@@ -261,7 +254,7 @@ export const defaultClients = [
     category: "Chemicals",
     year: "2022-23",
     capacity: "1,899 kWp",
-    companyLogo: "https://www.amolminechem.com/images/amol-dicalite-logo2.svg",
+    companyLogo: "/imgs/company-logos/amol-minechem.jpg",
   },
   {
     id: "client_akash_fashion",
@@ -294,7 +287,7 @@ export const defaultClients = [
     category: "Manufacturing",
     year: "2025",
     capacity: "528.5 kWp",
-    companyLogo: "",
+    companyLogo: "/imgs/company-logos/fuji-silvertech.png",
   },
   {
     id: "client_colgate_palmolive",
@@ -302,8 +295,7 @@ export const defaultClients = [
     category: "FMCG",
     year: "2025",
     capacity: "250 kWp",
-    companyLogo:
-      "https://www.environomics.net.in/wp-content/uploads/2025/02/2025_colgate_palmolive-Photoroom.webp",
+    companyLogo: "/imgs/company-logos/colgate-palmolive.png",
   },
   {
     id: "client_rohan_dyes_rdl",
@@ -346,7 +338,7 @@ export const defaultClients = [
     category: "Engineering",
     year: "2020",
     capacity: "72 kWp + HVAC",
-    companyLogo: "",
+    companyLogo: "/imgs/company-logos/busch-vacuum.png",
   },
   {
     id: "client_jmc_paper",
@@ -451,8 +443,7 @@ export const defaultTestimonials = [
     installed: "2025",
     description:
       "A global FMCG brand trusted Environomics with its energy infrastructure. Professional execution and high attention to detail.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuApf37-r6cPNg2oTCu_5RmHu34EtVgI032c5kTQoR1mJ03Ny5qo84iPmuIuu2EZCuF_-2un9BpWvvWE04CiZN6-KEnM9uQZUBZSKjzLj7GD0OnCXXKqzcBUMPlZYHtr1tHlJtjolrYVOI2atdqlw6AFabS7wOLoALO36pHl0xTq4oWKyjh5v40OOM-cCIADN5XVehahoDZ5Ppgh30CpKOjtWMX6vBoZ9ylH4YwoG7eRJA6QfrznYPjpnwWtV_sfsGYxHppSVX-vlb8",
+    image: "/imgs/projects/colgate-palmolive.jpg",
   },
   {
     id: "testimonial_baxter",
@@ -463,8 +454,7 @@ export const defaultTestimonials = [
     installed: "2024",
     description:
       "Baxter Pharmaceutical needed a pharma-grade install with strict hygiene protocols. Environomics delivered it on schedule and exceeded our expectations.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAyYu2IPnQvhAE3wZ353sCeO86UPagz8MB-Epw2P2G1ysh-tCw3kDxd5_RFaMASfAGq5oQk8Uc7TOlUq663vYeUtnKO2blaCvG08IsJxQyhHgoXWODO9wgyLe3MN4V-DJjc3BBlCnshmXDdoldu688vkLhwscqNNuwJ8kpU96fPXPEE-EJsXcWtO6AuDOjrMEg30DZtucUnmaowZXOxw9XZ4xyV935lKvOlvUZMvYZFA1HcrJX8MGnOmivDlnvmWZkbm5E_0ayLkGk",
+    image: "/imgs/projects/baxter-pharma.jpg",
   },
   {
     id: "testimonial_fuji_silvertech",
@@ -475,8 +465,7 @@ export const defaultTestimonials = [
     installed: "2025",
     description:
       "Fuji SilverTech delivered 528.5 kWp on time and above the modelled yield. The real time monitoring system is excellent.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuADeKa5dhkmjSYMrCyT7z6EpmyX1NVJV1LLWjV_VcjAC85w5q_eFeKix-19EsYovh0BI4eMtzOo8N2P4siLPkJNDFNPilY11or8Vax08BBDF84EQGXZdAMrRg0nxHWPeUGM_1gqy-DLbK7RX7IZS5D41UbQ6IRt2S3UVr1pJlbqFBGay6wqc8-H0q5RxnwqNnLMKhILzc2sWsAWolILQLP1BsvWWxz3kYVsUN5umeYE2846TSaeYh5sRjy5pP3RUud5gNf2-94a7nE",
+    image: "/imgs/projects/fuji-silvertech.jpg",
   },
   {
     id: "testimonial_siemens_energy",
@@ -535,7 +524,6 @@ export const defaultTestimonials = [
     installed: "2022",
     description:
       "Scaling solar across multiple phases was delivered on schedule every time. Their multi phase execution strategy minimized downtime.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuA2vU0SCBr2ncLYv7DKdyWECSX9BXMfyz9hwoVmkrTqowZzpHXvXkbcGfrwDOz9ajeU8OieX95ASAmb_HacV1Z0kXpJS0spcRQgxmD2bFoeZmVORDbIAW_OluWiq3iEjDBEygVgA7Ux8g5OMeQuaxisnZ1S8-eyWuAmF0h7qVqF135uGmJ-oiUNxxSIdRBxNmQnFJzwSTQ9Wl88xMR_nnq9pF8EBRcUcQLEOMqhZc-iMzRZqF0X7k_WIwloyGw5R8GzdNvNRIiP72w",
+    image: "/imgs/projects/raviraj-foils.png",
   },
 ];

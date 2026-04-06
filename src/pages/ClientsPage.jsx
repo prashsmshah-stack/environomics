@@ -31,21 +31,21 @@ const fallbackClients = [
   { n: "Honda India", s: "Automotive", y: "2023", c: "2,500 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2023_honda-Photoroom.webp" },
   { n: "Welspun Group", s: "Textiles", y: "2024", c: "2,000 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2023_welspun-Photoroom.webp" },
   { n: "Otsuka Pharmaceuticals", s: "Pharma", y: "2018", c: "2,024 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/02/otsuka.png" },
-  { n: "Baxter Pharmaceutical", s: "Pharma", y: "2024", c: "1,300 kWp", k: "baxter" },
+  { n: "Baxter Pharmaceutical", s: "Pharma", y: "2024", c: "1,300 kWp", l: "/imgs/company-logos/baxter-pharma.png" },
   { n: "Siemens Energy", s: "Engineering", y: "2023", c: "1,300 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/02/siemens.jpg" },
   { n: "Jindal", s: "Steel / Infra", y: "2017", c: "1,000 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/OIP-53.jpg" },
   { n: "Raviraj Foils", s: "Manufacturing", y: "2022-23", c: "1,899 kWp", l: "https://www.ravirajfoils.com/images/logo.png" },
-  { n: "Amol Minechem", s: "Chemicals", y: "2022-23", c: "1,899 kWp", l: "https://www.amolminechem.com/images/amol-dicalite-logo2.svg" },
+  { n: "Amol Minechem", s: "Chemicals", y: "2022-23", c: "1,899 kWp", l: "/imgs/company-logos/amol-minechem.jpg" },
   { n: "Akash Fashion", s: "Textiles", y: "2021", c: "999 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/01/akashfashion.png" },
   { n: "Somany Evergreen", s: "Tiles / MFG", y: "2022", c: "900 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/02/Somany-Evergreen.png" },
   { n: "Monginis Foods", s: "Food & Bev", y: "2018", c: "780 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2017_monginis-Photoroom.webp" },
-  { n: "Fuji SilverTech", s: "Manufacturing", y: "2025", c: "528.5 kWp", k: "fuji" },
-  { n: "Colgate-Palmolive", s: "FMCG", y: "2025", c: "250 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2025_colgate_palmolive-Photoroom.webp" },
+  { n: "Fuji SilverTech", s: "Manufacturing", y: "2025", c: "528.5 kWp", l: "/imgs/company-logos/fuji-silvertech.png" },
+  { n: "Colgate-Palmolive", s: "FMCG", y: "2025", c: "250 kWp", l: "/imgs/company-logos/colgate-palmolive.png" },
   { n: "Rohan Dyes (RDL)", s: "Chemicals", y: "2020", c: "325 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/02/rohan-dyes-rdil-logonew.png" },
   { n: "Balkrishna", s: "Manufacturing", y: "2019", c: "325 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/logo-3.png" },
   { n: "Delhi University", s: "Education", y: "2017", c: "120 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/delhi-university-686256-1.jpg" },
   { n: "DPS Bopal", s: "Education", y: "2018", c: "90 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/delhi-public-school-bopal-logo-1.jpg" },
-  { n: "Busch Vacuum", s: "Engineering", y: "2020", c: "72 kWp + HVAC", k: "busch" },
+  { n: "Busch Vacuum", s: "Engineering", y: "2020", c: "72 kWp + HVAC", l: "/imgs/company-logos/busch-vacuum.png" },
   { n: "JMC Paper", s: "Paper / MFG", y: "2019", c: "50 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/download-8.jpg" },
   { n: "Aqseptence", s: "Water Tech", y: "2022-23", c: "320 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/01/aqseptencelogo.png" },
   { n: "Screenotex", s: "Manufacturing", y: "2021", c: "100 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/01/screen.png" },
@@ -91,34 +91,6 @@ function Icon({ name, className = "" }) {
 }
 
 function Logo({ client }) {
-  if (client.k === "baxter") {
-    return (
-      <svg viewBox="0 0 160 40" className="max-h-[44px] max-w-[130px]">
-        <text x="0" y="30" fontFamily="Arial Black, Arial, sans-serif" fontSize="28" fontWeight="900" fill="#cc0000">Baxter</text>
-      </svg>
-    );
-  }
-
-  if (client.k === "fuji") {
-    return (
-      <svg viewBox="0 0 200 42" className="max-h-[42px] max-w-[140px]">
-        <rect width="200" height="42" rx="4" fill="#003087" />
-        <text x="8" y="26" fontFamily="Arial, sans-serif" fontSize="12" fontWeight="700" fill="#ffffff">FUJI SILVERTECH</text>
-        <text x="8" y="37" fontFamily="Arial, sans-serif" fontSize="7" fill="#8ab0e0">INDO-JAPAN PARTNERSHIP</text>
-      </svg>
-    );
-  }
-
-  if (client.k === "busch") {
-    return (
-      <svg viewBox="0 0 200 42" className="max-h-[42px] max-w-[140px]">
-        <rect width="200" height="42" rx="4" fill="#c8102e" />
-        <text x="8" y="26" fontFamily="Arial, sans-serif" fontSize="13" fontWeight="700" fill="#ffffff">BUSCH VACUUM</text>
-        <text x="8" y="37" fontFamily="Arial, sans-serif" fontSize="7" fill="#ffb3be">SOLUTIONS</text>
-      </svg>
-    );
-  }
-
   return (
     <img
       src={client.l || logoFallback(client.n)}
@@ -144,10 +116,6 @@ export default function ClientsPage() {
       return fallbackClients;
     }
 
-    const specialLogoKinds = new Map(
-      fallbackClients.filter((client) => client.k).map((client) => [client.n, client.k])
-    );
-
     return backendClients.map((client, index) => {
       const name = String(client.name ?? "").trim();
       const companyLogo = resolveMediaUrl(client.companyLogo ?? "");
@@ -159,7 +127,6 @@ export default function ClientsPage() {
         y: normalizeSingleLineText(client.year),
         c: normalizeSingleLineText(client.capacity),
         l: companyLogo,
-        k: companyLogo ? "" : specialLogoKinds.get(name) ?? "",
       };
     });
   }, [content]);

@@ -11,16 +11,16 @@ const fallbackProjects = [
   { name: "OTSUKA PHARMACEUTICALS", capacity: "2,024 kWp Solar", meta: "2018  PHARMA  7 yrs live  Longevity proof. Still above P50 in 2025.", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/Otsuka06-1024x768-640x480_c.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2024/02/otsuka.png", alt: "Otsuka Pharmaceuticals Logo" } },
   { name: "WELSPUN GROUP", capacity: "2,000 kWp Solar", meta: "2024  TEXTILES  National conglomerate. Scale + recency.", image: "https://www.environomics.net.in/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-14-at-20.10.41_76ec1bcd-1024x768-640x480_c.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2025/02/2023_welspun-Photoroom.webp", alt: "Welspun Group Logo" } },
   { name: "SIEMENS ENERGY", capacity: "1,300 kWp Solar", meta: "2023  ENGINEERING  Global MNC. Strongest credibility signal.", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0314-1-1024x683-640x480_c.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2024/02/siemens.jpg", alt: "Siemens Energy Logo" } },
-  { name: "BAXTER PHARMA", capacity: "1,300 kWp Solar", meta: "2024  PHARMA  Global pharma MNC. GMP-grade proof.", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0310-2-scaled.jpg", brand: { kind: "baxter" } },
-  { name: "COLGATE-PALMOLIVE", capacity: "250 kWp Solar", meta: "2025  FMCG  Household global name. FMCG diversity.", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/Otsuka05-1024x768-640x480_c.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2025/02/2025_colgate_palmolive-Photoroom.webp", alt: "Colgate-Palmolive Logo" } },
-  { name: "AMOL MINECHEM", capacity: "1,899 kWp Solar", meta: "2022-23  CHEMICALS  Largest chemicals install. Sector diversity.", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0306-1-1-1024x682-640x480_c.jpg", brand: { kind: "amol" } },
-  { name: "RAVIRAJ FOILS", capacity: "1,899 kWp Solar", meta: "2022-23  MANUFACTURING  Multi-phase proof. Repeat-client signal.", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0327-1-scaled.jpg", brand: { kind: "image", src: "https://www.ravirajfoils.com/images/logo.png", alt: "Raviraj Foils Logo" } },
-  { name: "AKASH FASHION", capacity: "999 kWp Solar", meta: "2021  TEXTILES  Sub-MW to MW scale. Textiles depth.", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0327-2-1024x683-640x480_c.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2024/01/akashfashion.png", alt: "Akash Fashion Logo" } },
+  { name: "BAXTER PHARMA", capacity: "1,300 kWp Solar", meta: "2024  PHARMA  Global pharma MNC. GMP-grade proof.", image: "/imgs/projects/baxter-pharma.jpg", brand: { kind: "image", src: "/imgs/company-logos/baxter-pharma.png", alt: "Baxter Pharma Logo" } },
+  { name: "COLGATE-PALMOLIVE", capacity: "250 kWp Solar", meta: "2025  FMCG  Household global name. FMCG diversity.", image: "/imgs/projects/colgate-palmolive.jpg", brand: { kind: "image", src: "/imgs/company-logos/colgate-palmolive.png", alt: "Colgate-Palmolive Logo" } },
+  { name: "AMOL MINECHEM", capacity: "1,899 kWp Solar", meta: "2022-23  CHEMICALS  Largest chemicals install. Sector diversity.", image: "/imgs/projects/amol-minechem.jpg", brand: { kind: "image", src: "/imgs/company-logos/amol-minechem.jpg", alt: "Amol Minechem Logo" } },
+  { name: "RAVIRAJ FOILS", capacity: "1,899 kWp Solar", meta: "2022-23  MANUFACTURING  Multi-phase proof. Repeat-client signal.", image: "/imgs/projects/raviraj-foils.png", brand: { kind: "image", src: "https://www.ravirajfoils.com/images/logo.png", alt: "Raviraj Foils Logo" } },
+  { name: "AKASH FASHION", capacity: "999 kWp Solar", meta: "2021  TEXTILES  Sub-MW to MW scale. Textiles depth.", image: "/imgs/projects/akash-fashion.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2024/01/akashfashion.png", alt: "Akash Fashion Logo" } },
   { name: "MONGINIS FOODS", capacity: "780 kWp Solar", meta: "2018  FOOD & BEV  Recognisable brand. Food sector coverage.", image: "https://www.environomics.net.in/wp-content/uploads/2025/02/WhatsApp-Image-2025-02-14-at-20.20.00_fc6dfe58-1024x768-640x480.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2025/02/2017_monginis-Photoroom.webp", alt: "Monginis Foods Logo" } },
-  { name: "ROHAN DYES (RDL)", capacity: "325 kWp Solar", meta: "2020  CHEMICALS  Chemical sector breadth. Steady delivery.", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0311-1-1024x682-640x480_c.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2024/02/rohan-dyes-rdil-logonew.png", alt: "Rohan Dyes Logo" } },
-  { name: "FUJI SILVERTECH", capacity: "528.5 kWp Solar", meta: "2025  MANUFACTURING  Most recent. Above yield.", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0308-1024x682-640x480_c.jpg", brand: { kind: "fuji" } },
-  { name: "SOMANY EVERGREEN", capacity: "900 kWp Solar", meta: "2022  TILES / MFG  Known Indian brand. Tiles sector unique.", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/DJI_0309-1024x682-640x480_c.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2024/02/Somany-Evergreen.png", alt: "Somany Evergreen Logo" } },
-  { name: "BUSCH VACUUM", capacity: "72 kWp Solar + HVAC", meta: "2020  ENGINEERING  Dual-service (Solar + HVAC).", image: "https://www.environomics.net.in/wp-content/uploads/2024/02/20230530_162952-scaled.jpg", brand: { kind: "busch" }, highlight: true },
+  { name: "ROHAN DYES (RDL)", capacity: "325 kWp Solar", meta: "2020  CHEMICALS  Chemical sector breadth. Steady delivery.", image: "/imgs/projects/rohan-dyes-rdl.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2024/02/rohan-dyes-rdil-logonew.png", alt: "Rohan Dyes Logo" } },
+  { name: "FUJI SILVERTECH", capacity: "528.5 kWp Solar", meta: "2025  MANUFACTURING  Most recent. Above yield.", image: "/imgs/projects/fuji-silvertech.jpg", brand: { kind: "image", src: "/imgs/company-logos/fuji-silvertech.png", alt: "Fuji SilverTech Logo" } },
+  { name: "SOMANY EVERGREEN", capacity: "900 kWp Solar", meta: "2022  TILES / MFG  Known Indian brand. Tiles sector unique.", image: "/imgs/projects/somany-evergreen.jpg", brand: { kind: "image", src: "https://www.environomics.net.in/wp-content/uploads/2024/02/Somany-Evergreen.png", alt: "Somany Evergreen Logo" } },
+  { name: "BUSCH VACUUM", capacity: "72 kWp Solar + HVAC", meta: "2020  ENGINEERING  Dual-service (Solar + HVAC).", image: "/imgs/projects/busch-vacuum.jpg", brand: { kind: "image", src: "/imgs/company-logos/busch-vacuum.png", alt: "Busch Vacuum Logo" }, highlight: true },
 ];
 
 const valueCards = [
@@ -124,18 +124,6 @@ function handleImageError(event, label, variant = "photo") {
 }
 
 function BrandLogo({ brand, name }) {
-  if (brand.kind === "baxter") {
-    return <svg className="tl-logo-svg" viewBox="0 0 160 38"><text x="0" y="30" fontFamily="Arial Black,sans-serif" fontSize="27" fontWeight="900" fill="#cc0000">Baxter</text></svg>;
-  }
-  if (brand.kind === "amol") {
-    return <svg className="tl-logo-svg" viewBox="0 0 200 38"><rect width="200" height="38" rx="3" fill="#0a2d5e" /><text x="8" y="25" fontFamily="Arial,sans-serif" fontSize="12" fontWeight="700" fill="#ffffff">AMOL MINECHEM</text></svg>;
-  }
-  if (brand.kind === "fuji") {
-    return <svg className="tl-logo-svg" viewBox="0 0 200 38"><rect width="200" height="38" rx="3" fill="#003087" /><text x="8" y="22" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="700" fill="#ffffff">FUJI SILVERTECH</text><text x="8" y="34" fontFamily="Arial,sans-serif" fontSize="7.5" fill="#a0bce0">PRECAST INDO JAPAN PARTNERSHIP</text></svg>;
-  }
-  if (brand.kind === "busch") {
-    return <svg className="tl-logo-svg" viewBox="0 0 200 38"><rect width="200" height="38" rx="3" fill="#c8102e" /><text x="8" y="24" fontFamily="Arial,sans-serif" fontSize="12.5" fontWeight="700" fill="#ffffff">BUSCH VACUUM</text><text x="8" y="34" fontFamily="Arial,sans-serif" fontSize="7.5" fill="#ffb3be">SOLUTIONS</text></svg>;
-  }
   return <img className="tl-logo" src={brand.src} alt={brand.alt ?? `${name} Logo`} style={brand.style} loading="lazy" decoding="async" onError={(event) => handleImageError(event, name, "logo")} />;
 }
 
