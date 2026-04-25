@@ -99,10 +99,10 @@ export default function ClientsPage() {
       color: #4c596b !important;
       max-width: none !important;
       width: 100%;
+      line-height: 1.35;
     }
     @media (min-width: 1280px) {
       .clients-page-intro p {
-        white-space: nowrap;
         font-size: clamp(1.05rem, 1.45vw, 1.75rem);
       }
     }

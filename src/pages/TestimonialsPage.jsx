@@ -178,7 +178,7 @@ export default function TestimonialsPage() {
                 <br />
                 Industrial Brands
               </h1>
-              <p className="mx-auto mt-10 max-w-6xl text-lg leading-[1.4] text-white/90 sm:text-xl lg:text-[1.08rem]">
+              <p className="optika-medium mx-auto mt-10 max-w-6xl text-lg leading-[1.4] text-white/90 sm:text-xl lg:text-[1.08rem]">
                 The best measure of an EPC contractor is what clients say after the project closes,
                 once the system has been running for a year or two and they know whether it actually
                 performed.

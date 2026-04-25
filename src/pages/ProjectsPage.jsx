@@ -468,32 +468,94 @@ export default function ProjectsPage() {
       <header className="bg-white px-4 pb-10 pt-24 text-on-surface sm:px-6 sm:pb-12 lg:px-8 lg:pb-14 lg:pt-28 md:pt-32">
         <div className="mx-auto max-w-screen-2xl">
           <div className="text-left">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-              <div className="max-w-5xl">
-                <h1 className="optika-bold text-4xl leading-[1.05] text-on-surface sm:text-5xl md:text-6xl xl:text-7xl">
-                  Our Projects
-                </h1>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                <div className="max-w-5xl">
+                  <h1 className="optika-bold text-4xl leading-[1.02] text-primary sm:text-5xl md:text-6xl xl:text-7xl">
+                    Global Portfolio
+                  </h1>
 
-                <h2 className="optika-medium mt-4 text-lg text-tertiary sm:text-xl md:text-2xl">
-                  Commissioned with Precision. Performing with Expectation.
-                </h2>
+                  <h2 className="optika-bold mt-4 text-xl leading-tight text-on-surface sm:text-2xl md:text-[2.2rem]">
+                    Commissioned with Precision. Performing with Expectation.
+                  </h2>
+                </div>
 
-                <p className="helixa-regular mt-6 max-w-5xl text-base leading-relaxed text-tertiary sm:text-lg">
-                  Our project portfolio spans over a decade of execution across India&apos;s most
-                  demanding commercial and industrial environments. Each installation is live,
-                  operational, and generating returns, not a case study with a soft conclusion. From
-                  30 kWp rooftop systems to multi megawatt ground mount plants, from pharmaceutical
-                  grade HVAC to automated compressed air networks, every project below is live,
-                  operational, and performing.
-                </p>
+                <div ref={filterRef} className="relative lg:ml-8 lg:mt-2 lg:shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setIsIndustryMenuOpen((current) => !current)}
+                    className="helixa-bold inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-on-surface shadow-sm transition hover:border-primary/30 hover:bg-white"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">filter_alt</span>
+                    <span>Industry Filter</span>
+                    {selectedIndustries.length ? (
+                      <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[0.72rem] text-primary">
+                        {selectedIndustries.length}
+                      </span>
+                    ) : null}
+                    <span
+                      className={`material-symbols-outlined text-[18px] transition-transform ${
+                        isIndustryMenuOpen ? "rotate-180" : ""
+                      }`}
+                    >
+                      expand_more
+                    </span>
+                  </button>
 
-                <div className="mt-6 flex flex-wrap items-center gap-3">
-                  <span className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-medium text-slate-700">
-                    {selectedIndustries.length
-                      ? `Showing ${filteredProjects.length} of ${projects.length} projects`
-                      : `${projects.length} live projects across ${industries.length} industries`}
-                  </span>
+                  {isIndustryMenuOpen ? (
+                    <div className="absolute right-0 top-full z-20 mt-3 w-[290px] rounded-[24px] border border-slate-200 bg-white p-4 shadow-[0_24px_50px_rgba(15,23,42,0.16)]">
+                      <div className="mb-3 flex items-center justify-between gap-3">
+                        <p className="optika-bold text-base text-on-surface">Filter by Industry</p>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedIndustries([])}
+                          disabled={!selectedIndustries.length}
+                          className="helixa-bold text-xs text-primary transition hover:text-primary/80 disabled:cursor-not-allowed disabled:opacity-40"
+                        >
+                          Clear All
+                        </button>
+                      </div>
 
+                      <div className="space-y-2">
+                        {industries.map((industry) => (
+                          <label
+                            key={industry}
+                            className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm transition hover:border-primary/25 hover:bg-slate-50"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={selectedIndustries.includes(industry)}
+                              onChange={() => toggleIndustry(industry)}
+                              className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                            />
+                            <span className="helixa-regular text-on-surface">{industry}</span>
+                          </label>
+                        ))}
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => setIsIndustryMenuOpen(false)}
+                        className="helixa-bold mt-4 inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm text-white transition hover:bg-primary/90"
+                      >
+                        Apply Filters
+                      </button>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+
+              <p className="helixa-regular max-w-none text-base leading-relaxed text-tertiary sm:text-lg lg:text-[1.08rem]">
+                Our project portfolio spans over a decade of execution across India&apos;s most
+                demanding commercial and industrial environments. Each installation is live,
+                operational, and generating returns, not a case study with a soft conclusion. From
+                30 kWp rooftop systems to multi megawatt ground mount plants, from pharmaceutical
+                grade HVAC to automated compressed air networks, every project below is live,
+                operational, and performing.
+              </p>
+
+              {selectedIndustries.length ? (
+                <div className="flex flex-wrap items-center gap-3">
                   {selectedIndustries.map((industry) => (
                     <button
                       key={industry}
@@ -506,71 +568,7 @@ export default function ProjectsPage() {
                     </button>
                   ))}
                 </div>
-              </div>
-
-              <div ref={filterRef} className="relative lg:ml-8 lg:mt-2 lg:shrink-0">
-                <button
-                  type="button"
-                  onClick={() => setIsIndustryMenuOpen((current) => !current)}
-                  className="helixa-bold inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-on-surface shadow-sm transition hover:border-primary/30 hover:bg-white"
-                >
-                  <span className="material-symbols-outlined text-[18px]">filter_alt</span>
-                  <span>Industry Filter</span>
-                  {selectedIndustries.length ? (
-                    <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[0.72rem] text-primary">
-                      {selectedIndustries.length}
-                    </span>
-                  ) : null}
-                  <span
-                    className={`material-symbols-outlined text-[18px] transition-transform ${
-                      isIndustryMenuOpen ? "rotate-180" : ""
-                    }`}
-                  >
-                    expand_more
-                  </span>
-                </button>
-
-                {isIndustryMenuOpen ? (
-                  <div className="absolute right-0 top-full z-20 mt-3 w-[290px] rounded-[24px] border border-slate-200 bg-white p-4 shadow-[0_24px_50px_rgba(15,23,42,0.16)]">
-                    <div className="mb-3 flex items-center justify-between gap-3">
-                      <p className="optika-bold text-base text-on-surface">Filter by Industry</p>
-                      <button
-                        type="button"
-                        onClick={() => setSelectedIndustries([])}
-                        disabled={!selectedIndustries.length}
-                        className="helixa-bold text-xs text-primary transition hover:text-primary/80 disabled:cursor-not-allowed disabled:opacity-40"
-                      >
-                        Clear All
-                      </button>
-                    </div>
-
-                    <div className="space-y-2">
-                      {industries.map((industry) => (
-                        <label
-                          key={industry}
-                          className="flex cursor-pointer items-center gap-3 rounded-xl border border-slate-200 px-3 py-2 text-sm transition hover:border-primary/25 hover:bg-slate-50"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={selectedIndustries.includes(industry)}
-                            onChange={() => toggleIndustry(industry)}
-                            className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
-                          />
-                          <span className="helixa-regular text-on-surface">{industry}</span>
-                        </label>
-                      ))}
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => setIsIndustryMenuOpen(false)}
-                      className="helixa-bold mt-4 inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm text-white transition hover:bg-primary/90"
-                    >
-                      Apply Filters
-                    </button>
-                  </div>
-                ) : null}
-              </div>
+              ) : null}
             </div>
           </div>
         </div>
