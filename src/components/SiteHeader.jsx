@@ -59,6 +59,7 @@ const routeKeys = {
   "/about": "about",
   "/services": "services",
   "/projects": "projects",
+  "/projects/case-study": "projects",
   "/om": "om",
   "/clients": "clients",
   "/testimonials": "testimonials",

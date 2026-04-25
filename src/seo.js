@@ -28,6 +28,11 @@ const pageMetadata = {
     description:
       "Explore Environomics project work across rooftop solar, ground mount systems, industrial HVAC, and utility infrastructure for leading commercial and industrial clients.",
   },
+  "/projects/case-study": {
+    title: "Project Case Study",
+    description:
+      "Review detailed project information from the Environomics industrial EPC portfolio, including client, sector, installed capacity, and project imagery.",
+  },
   "/om": {
     title: "Solar O&M Services",
     description:
@@ -75,6 +80,7 @@ const routeToPageKey = {
   "/home": "home",
   "/about": "about",
   "/projects": "projects",
+  "/projects/case-study": "projects",
   "/clients": "clients",
   "/services": "services",
   "/testimonials": "testimonials",
