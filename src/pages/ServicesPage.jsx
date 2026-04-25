@@ -58,7 +58,7 @@ export default function ServicesPage() {
   }, [activeIndex, panels.length]);
 
   useEffect(() => {
-    updateServiceSearch(activeIndex);
+    updateServiceSearch(activeIndex, servicesPagePanelKeys);
   }, [activeIndex]);
 
   const handlePanelClick = (event) => {
@@ -97,6 +97,23 @@ export default function ServicesPage() {
 
       <main className="services-shell">
         <section className="services-section">
+          <div className="service-list-panel" role="tablist" aria-label="Environomics services">
+            {panels.map((panel, index) => (
+              <button
+                key={panel.key ?? panel.id}
+                type="button"
+                role="tab"
+                aria-selected={activeIndex === index}
+                aria-controls={panel.id}
+                className={`service-list-item ${activeIndex === index ? "active" : ""}`}
+                onClick={() => setActiveIndex(index)}
+              >
+                {panel.label}
+              </button>
+            ))}
+            <div className="service-list-bar" />
+          </div>
+
           <div className="tab-panels" ref={panelsRef} onClick={handlePanelClick}>
             {panels.map((panel, index) => (
               <div
