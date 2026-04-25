@@ -280,6 +280,23 @@ export default function ServicesPage() {
       <SiteHeader />
       <main className="services-shell">
         <section className="services-section">
+          <div className="service-list-panel" role="tablist" aria-label="Environomics services">
+            {labels.map((label, index) => (
+              <button
+                key={`${label}-${index}`}
+                type="button"
+                role="tab"
+                aria-selected={activeIndex === index}
+                aria-controls={panels[index]?.id}
+                className={`service-list-item ${activeIndex === index ? "active" : ""}`}
+                onClick={() => handleTabClick(index)}
+              >
+                {label}
+              </button>
+            ))}
+            <div className="service-list-bar" />
+          </div>
+
           <div className="tab-panels" ref={panelsRef} onClick={handlePanelClick}>
             {panels.map((panel, index) => (
               <div
