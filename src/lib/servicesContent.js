@@ -1,0 +1,478 @@
+const servicePanelConfig = [
+  {
+    key: "solar-rooftop",
+    label: "SOLAR ROOFTOP SOLUTIONS",
+    panelId: "panel0",
+  },
+  {
+    key: "ground-mount",
+    label: "GROUND MOUNT SOLAR PLANTS",
+    panelId: "panel1",
+  },
+  {
+    key: "om",
+    label: "SOLAR OPERATIONS & MAINTENANCE",
+    panelId: "panel2",
+  },
+  {
+    key: "hvac",
+    label: "HVAC & PHARMACEUTICAL CLEAN ROOMS",
+    panelId: "panel3",
+  },
+  {
+    key: "automation",
+    label: "ELECTRIFICATION, AUTOMATION & ENERGY AUDITS",
+    panelId: "panel4",
+  },
+];
+
+export const servicesPagePanelKeys = [
+  "solar-rooftop",
+  "ground-mount",
+  "hvac",
+  "automation",
+];
+
+export const operationsMaintenancePanelKey = "om";
+
+const serviceConfigByKey = new Map(
+  servicePanelConfig.map((config, index) => [
+    config.key,
+    { ...config, sourceIndex: index },
+  ])
+);
+
+function slugify(value = "") {
+  return value
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function stripInlineHandlers(markup = "") {
+  return markup
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/\son\w+="[^"]*"/gi, "");
+}
+
+function normalizeVisibleText(value = "") {
+  return value
+    .replace(/(\d+)\s*[â€“â€”-]\s*(\d+)/g, "$1 to $2")
+    .replace(/([A-Za-z])\s*[â€“â€”-]\s*([A-Za-z])/g, (match, start, end) =>
+      start.length === 1 && end.length === 1 ? `${start} to ${end}` : `${start} ${end}`
+    )
+    .replace(/(\d+)-(?=[A-Za-z])/g, "$1 ")
+    .replace(/([A-Za-z])-(?=[A-Za-z])/g, "$1 ")
+    .replace(/\s+[â€“â€”-]\s+/g, ", ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+function normalizeTextTree(root) {
+  if (typeof document === "undefined" || !root) {
+    return;
+  }
+
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+
+  while (walker.nextNode()) {
+    textNodes.push(walker.currentNode);
+  }
+
+  textNodes.forEach((node) => {
+    node.textContent = normalizeVisibleText(node.textContent ?? "");
+  });
+}
+
+function cleanPanelTags(root) {
+  if (!root) {
+    return;
+  }
+
+  root.querySelectorAll(".panel-tag").forEach((node) => {
+    node.textContent = (node.textContent ?? "")
+      .replace(/^\s*\d+\s*[â€“â€”-]\s*/, "")
+      .trim();
+  });
+}
+
+function sanitizeStyle(styleText = "") {
+  let cleaned = styleText.replace(/\r\n/g, "\n");
+
+  cleaned = cleaned.replace(
+    /\/\*[^*]*Nav[^*]*\*\/[\s\S]*?(?=\/\*[^*]*Services Section[^*]*\*\/)/i,
+    ""
+  );
+  cleaned = cleaned.replace(/\/\*[^*]*Footer[^*]*\*\/[\s\S]*$/i, "");
+
+  cleaned = cleaned.replace(/(^|\n)\s*nav[^{]*\{[\s\S]*?\}\s*/gi, "");
+  cleaned = cleaned.replace(/(^|\n)\s*\.nav-[^{]*\{[\s\S]*?\}\s*/gi, "");
+  cleaned = cleaned.replace(/(^|\n)\s*footer[^{]*\{[\s\S]*?\}\s*/gi, "");
+
+  const overrides = `
+    .services-shell { background: var(--off-white); min-height: 100vh; }
+    .services-shell .services-section { padding-top: 80px; }
+    .services-shell .panel-cta { text-decoration: none; }
+    .services-shell { font-family: "Inter", sans-serif; }
+    .services-shell p,
+    .services-shell li,
+    .services-shell .panel-hero p,
+    .services-shell .panel-metric .m-lbl,
+    .services-shell .card p,
+    .services-shell .step-content p,
+    .services-shell .full-card p,
+    .services-shell .accent-card p,
+    .services-shell .faq-a p,
+    .services-shell .ref-card .detail {
+      font-family: "Inter", sans-serif;
+    }
+    .services-shell h1,
+    .services-shell h2,
+    .services-shell h3,
+    .services-shell h4,
+    .services-shell .sub-title,
+    .services-shell .panel-tag,
+    .services-shell .panel-metric .m-val,
+    .services-shell .card h3,
+    .services-shell .step-num,
+    .services-shell .step-content h4,
+    .services-shell .full-card h3,
+    .services-shell .accent-card h3,
+    .services-shell .ref-card .client,
+    .services-shell .faq-q span,
+    .services-shell .service-list-item {
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+    .services-shell .panel-cta,
+    .services-shell .tag,
+    .services-shell .ref-card .kw,
+    .services-shell .faq-toggle {
+      font-family: "Inter", sans-serif;
+    }
+    .services-shell .panel-tag {
+      display: block;
+      margin-bottom: 18px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: #6ee7b7;
+      font-size: clamp(1.45rem, 2.4vw, 2.15rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      text-transform: none;
+    }
+    @media (max-width: 768px) {
+      .services-shell .services-section { 
+        padding-top: 60px; 
+        padding-left: 20px; 
+        padding-right: 20px; 
+        padding-bottom: 80px;
+        max-width: 100%;
+      }
+      .services-shell .panel-hero {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+        padding: 40px 20px !important;
+      }
+      .services-shell .panel-hero h2 {
+        font-size: clamp(1.3rem, 5vw, 2rem) !important;
+      }
+      .services-shell .panel-hero p { font-size: 14px; }
+      .services-shell .panel-cta {
+        font-size: 12px;
+        padding: 10px 18px;
+      }
+      .services-shell .panel-metrics {
+        padding: 20px !important;
+      }
+      .services-shell .panel-metric {
+        padding: 12px 0 !important;
+      }
+      .services-shell .panel-metric .m-val {
+        font-size: 1.3rem !important;
+      }
+      .services-shell .content-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+      .services-shell .content-grid.three {
+        grid-template-columns: 1fr !important;
+      }
+      .services-shell .card {
+        padding: 20px !important;
+      }
+      .services-shell .card h3 {
+        font-size: 15px;
+      }
+      .services-shell .card p { font-size: 13px; }
+      .services-shell .ref-projects {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .services-shell .ref-projects.ref-projects-compact {
+        grid-template-columns: 1fr !important;
+      }
+      .services-shell .ref-projects.ref-projects-compact .ref-card {
+        grid-column: span 1 !important;
+      }
+      .services-shell .two-col {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+      .services-shell .tech-benefits-list {
+        grid-template-columns: 1fr !important;
+        gap: 8px 16px !important;
+      }
+      .services-shell .engineering-list ul {
+        grid-template-columns: 1fr !important;
+        gap: 8px 16px !important;
+      }
+      .services-shell .scope-list ul {
+        grid-template-columns: 1fr !important;
+        gap: 8px 16px !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .services-shell {
+        font-size: 14px;
+      }
+      .services-shell .services-section { 
+        padding-top: 100px; 
+        padding-left: 16px; 
+        padding-right: 16px; 
+        padding-bottom: 60px;
+      }
+      .services-shell .panel-hero {
+        padding: 28px 16px !important;
+        gap: 24px !important;
+      }
+      .services-shell .panel-hero::before,
+      .services-shell .panel-hero::after {
+        display: none !important;
+      }
+      .services-shell .panel-hero h2 {
+        font-size: clamp(1.2rem, 5vw, 1.6rem) !important;
+        margin-bottom: 14px !important;
+      }
+      .services-shell .panel-hero p {
+        font-size: 13px;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+      .services-shell .panel-cta {
+        font-size: 11px;
+        padding: 9px 14px !important;
+      }
+      .services-shell .panel-metrics {
+        padding: 16px !important;
+      }
+      .services-shell .panel-metric .m-val {
+        font-size: 1.1rem !important;
+      }
+      .services-shell .panel-metric .m-lbl {
+        font-size: 9.5px !important;
+      }
+      .services-shell .card {
+        padding: 16px !important;
+      }
+      .services-shell .card h3 {
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+      .services-shell .card p {
+        font-size: 12.5px;
+        line-height: 1.6;
+      }
+      .services-shell .full-card {
+        padding: 16px !important;
+      }
+      .services-shell .full-card h3 {
+        font-size: 15px;
+      }
+      .services-shell .full-card p {
+        font-size: 12.5px;
+      }
+      .services-shell .ref-projects {
+        gap: 10px !important;
+      }
+      .services-shell .ref-card {
+        padding: 14px 16px !important;
+      }
+      .services-shell .ref-card .client {
+        font-size: 12px;
+      }
+      .services-shell .ref-card .detail {
+        font-size: 11px;
+      }
+      .services-shell .sub-title {
+        font-size: 16px;
+      }
+      .services-shell .sub-title::after {
+        display: none;
+      }
+      .services-shell .accent-card {
+        padding: 18px 16px !important;
+      }
+      .services-shell .accent-card h3 {
+        font-size: 15px;
+      }
+      .services-shell .accent-card p {
+        font-size: 12.5px;
+      }
+      .services-shell .tech-benefits-box {
+        padding: 16px 16px !important;
+      }
+      .services-shell .tech-benefits-list li {
+        font-size: 12px;
+      }
+      .services-shell .engineering-list {
+        padding: 16px 16px !important;
+      }
+      .services-shell .engineering-list li {
+        font-size: 12px;
+      }
+      .services-shell .scope-list {
+        padding: 16px 16px !important;
+      }
+      .services-shell .scope-list li {
+        font-size: 12px;
+      }
+      .services-shell .faq-q {
+        padding: 12px 0 !important;
+      }
+      .services-shell .faq-q span {
+        font-size: 13px;
+      }
+      .services-shell .faq-a p {
+        font-size: 12px;
+      }
+      .services-shell .step {
+        gap: 12px !important;
+        padding: 12px 0 !important;
+      }
+      .services-shell .step-num {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 11px !important;
+      }
+      .services-shell .step-content h4 {
+        font-size: 13px;
+      }
+      .services-shell .step-content p {
+        font-size: 12px;
+      }
+    }
+  `;
+
+  return `${cleaned}\n${overrides}`;
+}
+
+export function parseServicesSource(source) {
+  const emptyPanels = new Map(
+    servicePanelConfig.map((config) => [
+      config.panelId,
+      { id: config.panelId, html: "" },
+    ])
+  );
+
+  if (typeof DOMParser === "undefined") {
+    return { styles: sanitizeStyle(""), panelsById: emptyPanels };
+  }
+
+  const doc = new DOMParser().parseFromString(source, "text/html");
+  const styleText = doc.querySelector("style")?.textContent ?? "";
+  const panelsById = new Map(
+    Array.from(doc.querySelectorAll(".tab-panel")).map((panel, index) => {
+      const clonedPanel = panel.cloneNode(true);
+      cleanPanelTags(clonedPanel);
+      normalizeTextTree(clonedPanel);
+
+      const id = panel.getAttribute("id") || `panel-${index}`;
+      return [id, { id, html: stripInlineHandlers(clonedPanel.innerHTML) }];
+    })
+  );
+
+  emptyPanels.forEach((value, key) => {
+    if (!panelsById.has(key)) {
+      panelsById.set(key, value);
+    }
+  });
+
+  return {
+    styles: sanitizeStyle(styleText),
+    panelsById,
+  };
+}
+
+export function getServicePanels(parsedContent, keys) {
+  return keys
+    .map((key) => {
+      const config = serviceConfigByKey.get(key);
+      if (!config) {
+        return null;
+      }
+
+      const panel = parsedContent?.panelsById?.get(config.panelId);
+      if (!panel) {
+        return null;
+      }
+
+      return {
+        ...panel,
+        key,
+        label: config.label,
+      };
+    })
+    .filter(Boolean);
+}
+
+export function getServiceTabIndexFromSearch(visibleKeys) {
+  if (typeof window === "undefined") {
+    return 0;
+  }
+
+  const tabValue = new URLSearchParams(window.location.search).get("tab");
+  if (!tabValue) {
+    return 0;
+  }
+
+  const numeric = Number.parseInt(tabValue, 10);
+  if (Number.isFinite(numeric)) {
+    const mappedKey = servicePanelConfig[numeric]?.key;
+    const mappedVisibleIndex =
+      mappedKey ? visibleKeys.findIndex((key) => key === mappedKey) : -1;
+
+    if (mappedVisibleIndex >= 0) {
+      return mappedVisibleIndex;
+    }
+
+    return Math.min(Math.max(numeric, 0), visibleKeys.length - 1);
+  }
+
+  const normalizedValue = tabValue.toLowerCase();
+  const matchedIndex = visibleKeys.findIndex((key) => {
+    const config = serviceConfigByKey.get(key);
+    return (
+      normalizedValue === key ||
+      normalizedValue === slugify(key) ||
+      normalizedValue === slugify(config?.label || "")
+    );
+  });
+
+  return matchedIndex >= 0 ? matchedIndex : 0;
+}
+
+export function updateServiceSearch(index) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const nextSearch = `?tab=${index}`;
+  if (window.location.search !== nextSearch) {
+    window.history.replaceState(null, "", `${window.location.pathname}${nextSearch}`);
+  }
+}

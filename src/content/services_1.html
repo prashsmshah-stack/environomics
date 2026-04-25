@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Our Services | Environomics</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ?? Reset & Base ?? */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue:        #0059a2;
+  --blue-dark:   #003d70;
+  --blue-light:  #e8f2ff;
+  --green:       #2AAF6F;
+  --logo-green:  #2AAF6F;
+  --green-dark:  #003d22;
+  --green-mid:   #1a7a4e;
+  --white:       #ffffff;
+  --off-white:   #f7f9fc;
+  --text-dark:   #0d1117;
+  --text-mid:    #3a4859;
+  --text-light:  #6b7c93;
+  --border:      rgba(0,89,162,.12);
+  --shadow-sm:   0 2px 12px rgba(0,0,0,.06);
+  --shadow-md:   0 8px 32px rgba(0,0,0,.10);
+  --shadow-lg:   0 20px 60px rgba(0,0,0,.14);
+  --r:           16px;
+  --r-sm:        8px;
+  --transition:  .4s cubic-bezier(.4,0,.2,1);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--off-white);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+/* ?? Nav ?? */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 0 60px;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { height: 42px; width: auto; object-fit: contain; }
+.nav-links { display: flex; gap: 36px; align-items: center; }
+.nav-links a {
+  font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--green-dark); text-decoration: none;
+  transition: color .2s; white-space: nowrap;
+}
+.nav-links a:hover { color: var(--green); }
+
+/* ?? OFFERINGS Dropdown ?? */
+.nav-dropdown { position: relative; display: flex; align-items: center; }
+.nav-dropdown-trigger {
+  font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--green); background: none; border: none;
+  cursor: pointer; display: flex; align-items: center; gap: 5px;
+  padding: 0; height: 68px;
+}
+.nav-dropdown-trigger svg { width: 10px; height: 10px; transition: transform .2s; flex-shrink: 0; }
+.nav-dropdown:hover .nav-dropdown-trigger svg { transform: rotate(180deg); }
+
+.nav-dropdown-panel {
+  position: absolute; top: 68px; left: -32px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 12px 40px rgba(0,0,0,.10);
+  min-width: 360px;
+  padding: 10px 0 0;
+  opacity: 0; pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity .18s, transform .18s;
+}
+.nav-dropdown:hover .nav-dropdown-panel { opacity: 1; pointer-events: all; transform: translateY(0); }
+
+.nav-dropdown-item {
+  display: block; width: 100%;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 400;
+  color: #222; text-decoration: none;
+  padding: 13px 36px;
+  background: none; border: none; cursor: pointer;
+  text-align: left; transition: color .15s;
+  letter-spacing: 0; line-height: 1.4;
+}
+.nav-dropdown-item:hover { color: var(--green); }
+.nav-dropdown-item.active { color: var(--green); font-weight: 500; }
+.nav-dropdown-green-bar {
+  height: 3px; background: var(--green);
+  margin: 10px 0 0;
+}
+
+.nav-cta {
+  background: var(--green); color: #fff;
+  font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 700;
+  padding: 10px 24px; border-radius: 4px; text-decoration: none;
+  letter-spacing: .04em;
+  transition: background .2s;
+}
+.nav-cta:hover { background: var(--green-mid); }
+
+/* ?? Services Section ?? */
+.services-section {
+  max-width: 1100px; margin: 0 auto;
+  padding: 100px 40px 120px;
+}
+
+/* ?? Inline Service List Panel (matches image) ?? */
+.service-list-panel {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 8px 32px rgba(0,0,0,.07);
+  margin-bottom: 56px;
+  padding: 10px 0 0;
+}
+
+.service-list-item {
+  display: block; width: 100%;
+  font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 400;
+  color: #222;
+  background: none; border: none;
+  padding: 15px 40px;
+  text-align: left; cursor: pointer;
+  transition: color .15s, background .15s;
+  letter-spacing: 0; line-height: 1.5;
+}
+.service-list-item:hover { color: var(--green); background: #f9f9f9; }
+.service-list-item.active { color: var(--green); font-weight: 500; }
+
+.service-list-bar {
+  height: 3px;
+  background: var(--green);
+  margin: 12px 40px 0;
+  width: calc(100% - 80px);
+  border-radius: 2px;
+}
+
+/* ?? Tab Panels ?? */
+.tab-panels { position: relative; }
+.tab-panel {
+  display: none; opacity: 0;
+  animation: panelIn .4s cubic-bezier(.4,0,.2,1) both;
+}
+.tab-panel.active { display: block; opacity: 1; }
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ?? Panel Layout ?? */
+.panel-hero {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+  border-radius: var(--r); padding: 56px 60px;
+  display: grid; grid-template-columns: 1fr 340px; gap: 60px;
+  align-items: center; margin-bottom: 40px;
+  position: relative; overflow: hidden;
+}
+.panel-hero::before {
+  content: '';
+  position: absolute; right: -60px; top: -60px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.05);
+}
+.panel-hero::after {
+  content: '';
+  position: absolute; right: 60px; bottom: -80px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(42,175,111,.1);
+}
+.panel-hero-content { position: relative; z-index: 1; }
+.panel-tag {
+  display: inline-block;
+  background: rgba(42,175,111,.2); border: 1px solid rgba(42,175,111,.35);
+  color: #6ee7b7; font-family: 'DM Mono', monospace; font-size: 10.5px;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 100px; margin-bottom: 20px;
+}
+.panel-hero h2 {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+  color: #fff; line-height: 1.15; margin-bottom: 18px;
+}
+.panel-hero p {
+  font-size: 15.5px; line-height: 1.75; color: rgba(255,255,255,.72);
+  margin-bottom: 28px;
+}
+.panel-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green); color: #fff;
+  font-weight: 600; font-size: 13px;
+  padding: 12px 24px; border-radius: 8px; text-decoration: none;
+  transition: background .2s, transform .15s;
+  border: none; cursor: pointer;
+}
+.panel-cta:hover { background: var(--green-mid); transform: translateY(-1px); }
+.panel-cta svg { width: 16px; height: 16px; }
+
+.panel-metrics {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px; padding: 28px; position: relative; z-index: 1;
+  backdrop-filter: blur(8px);
+}
+.panel-metric { padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+.panel-metric:last-child { border-bottom: none; padding-bottom: 0; }
+.panel-metric:first-child { padding-top: 0; }
+.panel-metric .m-val {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem;
+  color: #fff; display: block;
+}
+.panel-metric .m-lbl {
+  font-size: 11.5px; color: rgba(255,255,255,.5);
+  text-transform: uppercase; letter-spacing: .06em; margin-top: 2px;
+  display: block;
+}
+
+/* ?? Content Grid ?? */
+.content-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  margin-bottom: 32px;
+}
+.content-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+
+/* ?? Cards ?? */
+.card {
+  background: #fff; border-radius: var(--r);
+  border: 1.5px solid var(--border);
+  padding: 28px 28px 28px;
+  transition: all var(--transition);
+  position: relative; overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(0,89,162,.2);
+}
+.card-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--blue-light); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 16px;
+  transition: transform .3s;
+}
+.card-icon .material-symbols-outlined {
+  font-size: 24px;
+  color: var(--blue);
+}
+.card:hover .card-icon { transform: scale(1.1); }
+.card h3 {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px;
+  color: var(--text-dark); margin-bottom: 10px;
+}
+.card p { font-size: 14px; line-height: 1.7; color: var(--text-mid); }
+
+/* ?? Step Process ?? */
+.process-steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: flex; gap: 24px;
+  padding: 24px 0; position: relative;
+}
+.step:not(:last-child)::after {
+  content: '';
+  position: absolute; left: 19px; top: 60px; bottom: 0;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, var(--border) 0, var(--border) 6px, transparent 6px, transparent 12px);
+}
+.step-num {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  background: var(--blue); color: #fff;
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+  box-shadow: 0 4px 12px rgba(0,89,162,.3);
+}
+.step-content { padding-top: 8px; }
+.step-content h4 {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+  color: var(--text-dark); margin-bottom: 8px;
+}
+.step-content p { font-size: 14px; line-height: 1.7; color: var(--text-mid); }
+
+/* ?? Full-width card ?? */
+.full-card {
+  background: #fff; border-radius: var(--r);
+  border: 1.5px solid var(--border);
+  padding: 32px 36px; margin-bottom: 24px;
+}
+.full-card h3 {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px;
+  color: var(--text-dark); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.full-card h3 span.icon-sm {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--blue-light); display: inline-flex;
+  align-items: center; justify-content: center; font-size: 16px;
+}
+.full-card p { font-size: 14.5px; line-height: 1.75; color: var(--text-mid); }
+
+/* ?? Tag list ?? */
+.tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.tag {
+  background: var(--blue-light); color: var(--blue);
+  font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+  padding: 5px 12px; border-radius: 100px; letter-spacing: .04em;
+}
+.tag.green { background: rgba(42,175,111,.1); color: var(--green-mid); }
+
+/* ?? FAQ ?? */
+.faq-list { display: flex; flex-direction: column; gap: 0; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.faq-q {
+  width: 100%; background: none; border: none; cursor: pointer;
+  padding: 20px 0; text-align: left;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px;
+}
+.faq-q span {
+  font-family: 'Syne', sans-serif; font-weight: 600; font-size: 15px;
+  color: var(--text-dark); line-height: 1.4;
+}
+.faq-toggle {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: var(--blue-light); color: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 300; line-height: 1;
+  transition: all .3s; font-family: monospace;
+}
+.faq-item.open .faq-toggle { background: var(--blue); color: #fff; transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .45s cubic-bezier(.4,0,.2,1), padding .3s;
+}
+.faq-a p {
+  font-size: 14.5px; line-height: 1.75; color: var(--text-mid);
+  padding-bottom: 20px;
+}
+.faq-item.open .faq-a { max-height: 400px; }
+
+/* ?? Two-col layout ?? */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* Green accent card */
+.accent-card {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+  border-radius: var(--r); padding: 32px 36px; color: #fff;
+}
+.accent-card h3 {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px;
+  margin-bottom: 12px; color: #fff;
+}
+.accent-card p { font-size: 14.5px; line-height: 1.7; color: rgba(255,255,255,.75); }
+.accent-card ul { list-style: none; margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+.accent-card ul li {
+  font-size: 13.5px; color: rgba(255,255,255,.8); display: flex; align-items: flex-start; gap: 8px;
+}
+.accent-card ul li::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #6ee7b7;
+  display: block;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+.accent-card.logo-green {
+  background: linear-gradient(135deg, var(--logo-green) 0%, #1f8a55 100%);
+}
+.accent-card.logo-green p {
+  color: rgba(255,255,255,.85);
+}
+.accent-card.logo-green .tag-list .tag,
+.accent-card.logo-green .tag-list .tag.green {
+  background: rgba(255,255,255,.18);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,.25);
+}
+
+/* Technology benefits box */
+.tech-benefits-box {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+  border-radius: var(--r);
+  padding: 28px 32px;
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+.tech-benefits-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px 24px;
+}
+.tech-benefits-list li {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.tech-benefits-list li::before {
+  content: "\2022";
+  color: rgba(255,255,255,.75);
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 2px;
+}
+/* Engineering advantages list */
+.engineering-list {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-sm);
+}
+.engineering-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px 24px;
+}
+.engineering-list li {
+  display: flex;
+  gap: 10px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-mid);
+}
+.engineering-list li::before {
+  content: "\2022";
+  color: var(--green);
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 2px;
+}
+/* HVAC scope list */
+.scope-list {
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 32px;
+  box-shadow: var(--shadow-sm);
+}
+.scope-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px 24px;
+}
+.scope-list li {
+  display: flex;
+  gap: 10px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--text-mid);
+}
+.scope-list li::before {
+  content: "\2022";
+  color: var(--green);
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 2px;
+}
+/* ?? Reference projects ?? */
+.ref-projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.ref-projects.ref-projects-compact { grid-template-columns: repeat(6, 1fr); }
+.ref-projects.ref-projects-compact .ref-card { grid-column: span 2; }
+.ref-projects.ref-projects-compact .ref-card:nth-child(4) { grid-column: 2 / span 2; }
+.ref-projects.ref-projects-compact .ref-card:nth-child(5) { grid-column: 4 / span 2; }
+.ref-card {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 18px 20px;
+  transition: all .3s;
+}
+.ref-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); border-color: var(--green); }
+.ref-card .client {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
+  color: var(--text-dark); margin-bottom: 6px;
+}
+.ref-card .detail { font-size: 12px; color: var(--text-light); line-height: 1.6; }
+.ref-card .kw {
+  font-family: 'DM Mono', monospace; font-size: 11.5px;
+  color: var(--blue); font-weight: 500; margin-top: 6px; display: block;
+}
+
+/* ?? Divider ?? */
+.divider { height: 1px; background: var(--border); margin: 40px 0; }
+
+/* ?? Section sub-title ?? */
+.sub-title {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px;
+  color: var(--text-dark); margin-bottom: 20px; margin-top: 40px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sub-title::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+/* ?? Animations ?? */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ?? Scroll reveal ?? */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ?? RESPONSIVE MEDIA QUERIES ?? */
+
+/* TABLETS & SMALL SCREENS (768px and below) */
+@media (max-width: 768px) {
+  nav {
+    padding: 0 20px;
+    height: 60px;
+  }
+  .nav-logo { height: 36px; }
+  .nav-links {
+    gap: 16px;
+    font-size: 11px;
+  }
+  .nav-cta {
+    padding: 8px 16px;
+    font-size: 11px;
+  }
+
+  .services-section {
+    padding: 60px 20px 80px;
+  }
+
+  /* Panel Hero */
+  .panel-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 20px;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.3rem, 5vw, 2rem);
+  }
+  .panel-hero p { font-size: 14px; }
+  .panel-cta {
+    font-size: 12px;
+    padding: 10px 18px;
+  }
+  .panel-metrics {
+    padding: 20px;
+  }
+  .panel-metric {
+    padding: 12px 0;
+  }
+  .panel-metric .m-val {
+    font-size: 1.3rem;
+  }
+  .panel-metric .m-lbl {
+    font-size: 10.5px;
+  }
+
+  /* Service List Panel */
+  .service-list-panel {
+    margin-bottom: 32px;
+  }
+  .service-list-item {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+  .service-list-bar {
+    margin: 10px 20px 0;
+    width: calc(100% - 40px);
+  }
+
+  /* Content Grid */
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .content-grid.three {
+    grid-template-columns: 1fr;
+  }
+
+  /* Cards */
+  .card {
+    padding: 20px;
+  }
+  .card h3 {
+    font-size: 15px;
+  }
+  .card p { font-size: 13px; }
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .card-icon .material-symbols-outlined {
+    font-size: 18px;
+  }
+
+  /* Steps */
+  .process-steps {
+    gap: 8px;
+  }
+  .step {
+    gap: 16px;
+    padding: 16px 0;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .step-content h4 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .step-content p {
+    font-size: 13px;
+  }
+  .step:not(:last-child)::after {
+    left: 17px;
+    top: 50px;
+  }
+
+  /* Full Cards */
+  .full-card {
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .full-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .full-card p {
+    font-size: 13.5px;
+  }
+  .full-card h3 span.icon-sm {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  /* Tag List */
+  .tag-list {
+    gap: 6px;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  /* FAQ */
+  .faq-q {
+    padding: 16px 0;
+    gap: 12px;
+  }
+  .faq-q span {
+    font-size: 14px;
+  }
+  .faq-toggle {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+  .faq-a p {
+    font-size: 13px;
+    padding-bottom: 16px;
+  }
+  .faq-item.open .faq-a {
+    max-height: 600px;
+  }
+
+  /* Two Column */
+  .two-col {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Accent Card */
+  .accent-card {
+    padding: 24px 20px;
+  }
+  .accent-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .accent-card p {
+    font-size: 13.5px;
+  }
+  .accent-card ul li {
+    font-size: 12.5px;
+  }
+
+  /* Reference Projects */
+  .ref-projects {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .ref-projects.ref-projects-compact {
+    grid-template-columns: 1fr;
+  }
+  .ref-projects.ref-projects-compact .ref-card {
+    grid-column: span 1;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(4) {
+    grid-column: 1;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(5) {
+    grid-column: 1;
+  }
+  .ref-card {
+    padding: 16px 18px;
+  }
+  .ref-card .client {
+    font-size: 13px;
+  }
+  .ref-card .detail {
+    font-size: 11.5px;
+  }
+  .ref-card .kw {
+    font-size: 10.5px;
+  }
+
+  /* Tech Benefits & Lists */
+  .tech-benefits-box {
+    padding: 20px 20px;
+  }
+  .tech-benefits-list {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .tech-benefits-list li {
+    font-size: 13px;
+  }
+
+  .engineering-list {
+    padding: 20px 20px;
+  }
+  .engineering-list ul {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .engineering-list li {
+    font-size: 13px;
+  }
+
+  .scope-list {
+    padding: 20px 20px;
+  }
+  .scope-list ul {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .scope-list li {
+    font-size: 13px;
+  }
+
+  /* Sub Title */
+  .sub-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+    margin-top: 28px;
+  }
+  .divider {
+    margin: 24px 0;
+  }
+}
+
+/* SMALL PHONES (480px and below) */
+@media (max-width: 480px) {
+  html { scroll-behavior: auto; }
+  
+  nav {
+    padding: 0 16px;
+    height: 56px;
+  }
+  .nav-logo { height: 32px; }
+  .nav-links {
+    gap: 12px;
+    font-size: 10px;
+  }
+  .nav-links a {
+    display: none;
+  }
+  .nav-links a:first-child {
+    display: block;
+  }
+  .nav-dropdown-trigger {
+    font-size: 10px;
+  }
+  .nav-cta {
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+
+  .services-section {
+    padding: 80px 16px 60px;
+  }
+
+  /* Panel Hero */
+  .panel-hero {
+    padding: 28px 16px;
+    gap: 24px;
+  }
+  .panel-hero::before {
+    display: none;
+  }
+  .panel-hero::after {
+    display: none;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+    margin-bottom: 14px;
+  }
+  .panel-hero p {
+    font-size: 13px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .panel-tag {
+    font-size: clamp(1rem, 4vw, 1.4rem);
+    margin-bottom: 12px;
+  }
+  .panel-cta {
+    font-size: 11px;
+    padding: 9px 14px;
+    gap: 4px;
+  }
+  .panel-cta svg {
+    width: 14px;
+    height: 14px;
+  }
+  .panel-metrics {
+    padding: 16px;
+    gap: 0;
+  }
+  .panel-metric {
+    padding: 10px 0;
+  }
+  .panel-metric .m-val {
+    font-size: 1.1rem;
+  }
+  .panel-metric .m-lbl {
+    font-size: 9.5px;
+  }
+
+  /* Service List */
+  .service-list-panel {
+    margin-bottom: 24px;
+  }
+  .service-list-item {
+    font-size: 12px;
+    padding: 10px 16px;
+    line-height: 1.4;
+  }
+  .service-list-bar {
+    margin: 8px 16px 0;
+    width: calc(100% - 32px);
+  }
+
+  /* Content Grid */
+  .content-grid {
+    gap: 12px;
+  }
+
+  /* Cards */
+  .card {
+    padding: 16px;
+  }
+  .card h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .card-icon .material-symbols-outlined {
+    font-size: 16px;
+  }
+
+  /* Steps */
+  .step {
+    gap: 12px;
+    padding: 12px 0;
+  }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    font-size: 11px;
+  }
+  .step-content h4 {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .step:not(:last-child)::after {
+    left: 15px;
+    top: 44px;
+  }
+
+  /* Full Card */
+  .full-card {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .full-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .full-card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .full-card h3 span.icon-sm {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  /* Tag List */
+  .tag-list {
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .tag {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+
+  /* FAQ */
+  .faq-q {
+    padding: 12px 0;
+  }
+  .faq-q span {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .faq-toggle {
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .faq-a p {
+    font-size: 12px;
+    padding-bottom: 12px;
+    line-height: 1.5;
+  }
+  .faq-item.open .faq-a {
+    max-height: 800px;
+  }
+
+  /* Two Column */
+  .two-col {
+    gap: 12px;
+  }
+
+  /* Accent Card */
+  .accent-card {
+    padding: 18px 16px;
+  }
+  .accent-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .accent-card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .accent-card ul li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  /* Reference Projects */
+  .ref-projects {
+    gap: 10px;
+  }
+  .ref-card {
+    padding: 14px 16px;
+  }
+  .ref-card .client {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .ref-card .detail {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .ref-card .kw {
+    font-size: 9.5px;
+    margin-top: 4px;
+  }
+
+  /* Tech Benefits & Lists */
+  .tech-benefits-box {
+    padding: 16px 16px;
+  }
+  .tech-benefits-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .tech-benefits-list li::before {
+    margin-top: 4px;
+  }
+
+  .engineering-list {
+    padding: 16px 16px;
+  }
+  .engineering-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .engineering-list li::before {
+    margin-top: 4px;
+  }
+
+  .scope-list {
+    padding: 16px 16px;
+  }
+  .scope-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .scope-list li::before {
+    margin-top: 4px;
+  }
+
+  /* Sub Title */
+  .sub-title {
+    font-size: 16px;
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+  .sub-title::after {
+    display: none;
+  }
+  .divider {
+    margin: 16px 0;
+  }
+}
+
+/* TABLETS (769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  nav {
+    padding: 0 30px;
+  }
+  .nav-links { gap: 24px; }
+
+  .services-section {
+    padding: 80px 30px 100px;
+    max-width: 100%;
+  }
+
+  .panel-hero {
+    grid-template-columns: 1fr 280px;
+    gap: 40px;
+    padding: 48px 40px;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+  }
+  .panel-metrics {
+    padding: 24px;
+  }
+
+  .content-grid {
+    gap: 18px;
+  }
+  .content-grid.three {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .content-grid.three > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .ref-projects {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .ref-projects.ref-projects-compact {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .ref-projects.ref-projects-compact .ref-card {
+    grid-column: span 2;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(4) {
+    grid-column: 1 / span 2;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(5) {
+    grid-column: 3 / span 2;
+  }
+
+  .tech-benefits-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .engineering-list ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .scope-list ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ?? Footer ?? */
+footer {
+  background: var(--green-dark); color: #fff;
+  padding: 60px 40px 32px;
+  text-align: center;
+}
+footer p { font-size: 14px; color: rgba(255,255,255,.5); }
+
+/* ?? RESPONSIVE MEDIA QUERIES ?? */
+
+/* TABLETS & SMALL SCREENS (768px and below) */
+@media (max-width: 768px) {
+  nav {
+    padding: 0 20px;
+    height: 60px;
+  }
+  .nav-logo { height: 36px; }
+  .nav-links {
+    gap: 16px;
+    font-size: 11px;
+  }
+  .nav-cta {
+    padding: 8px 16px;
+    font-size: 11px;
+  }
+
+  .services-section {
+    padding: 60px 20px 80px;
+  }
+
+  /* Panel Hero */
+  .panel-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 20px;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.3rem, 5vw, 2rem);
+  }
+  .panel-hero p { font-size: 14px; }
+  .panel-cta {
+    font-size: 12px;
+    padding: 10px 18px;
+  }
+  .panel-metrics {
+    padding: 20px;
+  }
+  .panel-metric {
+    padding: 12px 0;
+  }
+  .panel-metric .m-val {
+    font-size: 1.3rem;
+  }
+  .panel-metric .m-lbl {
+    font-size: 10.5px;
+  }
+
+  /* Service List Panel */
+  .service-list-panel {
+    margin-bottom: 32px;
+  }
+  .service-list-item {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+  .service-list-bar {
+    margin: 10px 20px 0;
+    width: calc(100% - 40px);
+  }
+
+  /* Content Grid */
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .content-grid.three {
+    grid-template-columns: 1fr;
+  }
+
+  /* Cards */
+  .card {
+    padding: 20px;
+  }
+  .card h3 {
+    font-size: 15px;
+  }
+  .card p { font-size: 13px; }
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .card-icon .material-symbols-outlined {
+    font-size: 18px;
+  }
+
+  /* Steps */
+  .process-steps {
+    gap: 8px;
+  }
+  .step {
+    gap: 16px;
+    padding: 16px 0;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .step-content h4 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .step-content p {
+    font-size: 13px;
+  }
+  .step:not(:last-child)::after {
+    left: 17px;
+    top: 50px;
+  }
+
+  /* Full Cards */
+  .full-card {
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .full-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .full-card p {
+    font-size: 13.5px;
+  }
+  .full-card h3 span.icon-sm {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  /* Tag List */
+  .tag-list {
+    gap: 6px;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  /* FAQ */
+  .faq-q {
+    padding: 16px 0;
+    gap: 12px;
+  }
+  .faq-q span {
+    font-size: 14px;
+  }
+  .faq-toggle {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+  .faq-a p {
+    font-size: 13px;
+    padding-bottom: 16px;
+  }
+  .faq-item.open .faq-a {
+    max-height: 600px;
+  }
+
+  /* Two Column */
+  .two-col {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Accent Card */
+  .accent-card {
+    padding: 24px 20px;
+  }
+  .accent-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .accent-card p {
+    font-size: 13.5px;
+  }
+  .accent-card ul li {
+    font-size: 12.5px;
+  }
+
+  /* Reference Projects */
+  .ref-projects {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .ref-projects.ref-projects-compact {
+    grid-template-columns: 1fr;
+  }
+  .ref-projects.ref-projects-compact .ref-card {
+    grid-column: span 1;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(4) {
+    grid-column: 1;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(5) {
+    grid-column: 1;
+  }
+  .ref-card {
+    padding: 16px 18px;
+  }
+  .ref-card .client {
+    font-size: 13px;
+  }
+  .ref-card .detail {
+    font-size: 11.5px;
+  }
+  .ref-card .kw {
+    font-size: 10.5px;
+  }
+
+  /* Tech Benefits & Lists */
+  .tech-benefits-box {
+    padding: 20px 20px;
+  }
+  .tech-benefits-list {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .tech-benefits-list li {
+    font-size: 13px;
+  }
+
+  .engineering-list {
+    padding: 20px 20px;
+  }
+  .engineering-list ul {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .engineering-list li {
+    font-size: 13px;
+  }
+
+  .scope-list {
+    padding: 20px 20px;
+  }
+  .scope-list ul {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .scope-list li {
+    font-size: 13px;
+  }
+
+  /* Sub Title */
+  .sub-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+    margin-top: 28px;
+  }
+  .divider {
+    margin: 24px 0;
+  }
+
+  footer {
+    padding: 40px 20px 24px;
+  }
+  footer p {
+    font-size: 12px;
+  }
+}
+
+</style>
+  
+  nav {
+    padding: 0 16px;
+    height: 56px;
+  }
+  .nav-logo { height: 32px; }
+  .nav-links {
+    gap: 12px;
+    font-size: 10px;
+  }
+  .nav-links a {
+    display: none;
+  }
+  .nav-links a:first-child {
+    display: block;
+  }
+  .nav-dropdown-trigger {
+    font-size: 10px;
+  }
+  .nav-cta {
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+
+  .services-section {
+    padding: 50px 16px 60px;
+  }
+
+  /* Panel Hero */
+  .panel-hero {
+    padding: 28px 16px;
+    gap: 24px;
+  }
+  .panel-hero::before {
+    display: none;
+  }
+  .panel-hero::after {
+    display: none;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+    margin-bottom: 14px;
+  }
+  .panel-hero p {
+    font-size: 13px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .panel-tag {
+    font-size: clamp(1rem, 4vw, 1.4rem);
+    margin-bottom: 12px;
+  }
+  .panel-cta {
+    font-size: 11px;
+    padding: 9px 14px;
+    gap: 4px;
+  }
+  .panel-cta svg {
+    width: 14px;
+    height: 14px;
+  }
+  .panel-metrics {
+    padding: 16px;
+    gap: 0;
+  }
+  .panel-metric {
+    padding: 10px 0;
+  }
+  .panel-metric .m-val {
+    font-size: 1.1rem;
+  }
+  .panel-metric .m-lbl {
+    font-size: 9.5px;
+  }
+
+  /* Service List */
+  .service-list-panel {
+    margin-bottom: 24px;
+  }
+  .service-list-item {
+    font-size: 12px;
+    padding: 10px 16px;
+    line-height: 1.4;
+  }
+  .service-list-bar {
+    margin: 8px 16px 0;
+    width: calc(100% - 32px);
+  }
+
+  /* Content Grid */
+  .content-grid {
+    gap: 12px;
+  }
+
+  /* Cards */
+  .card {
+    padding: 16px;
+  }
+  .card h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .card-icon .material-symbols-outlined {
+    font-size: 16px;
+  }
+
+  /* Steps */
+  .step {
+    gap: 12px;
+    padding: 12px 0;
+  }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    font-size: 11px;
+  }
+  .step-content h4 {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .step:not(:last-child)::after {
+    left: 15px;
+    top: 44px;
+  }
+
+  /* Full Card */
+  .full-card {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .full-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .full-card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .full-card h3 span.icon-sm {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  /* Tag List */
+  .tag-list {
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .tag {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+
+  /* FAQ */
+  .faq-q {
+    padding: 12px 0;
+  }
+  .faq-q span {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .faq-toggle {
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .faq-a p {
+    font-size: 12px;
+    padding-bottom: 12px;
+    line-height: 1.5;
+  }
+  .faq-item.open .faq-a {
+    max-height: 800px;
+  }
+
+  /* Two Column */
+  .two-col {
+    gap: 12px;
+  }
+
+  /* Accent Card */
+  .accent-card {
+    padding: 18px 16px;
+  }
+  .accent-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .accent-card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .accent-card ul li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  /* Reference Projects */
+  .ref-projects {
+    gap: 10px;
+  }
+  .ref-card {
+    padding: 14px 16px;
+  }
+  .ref-card .client {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .ref-card .detail {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .ref-card .kw {
+    font-size: 9.5px;
+    margin-top: 4px;
+  }
+
+  /* Tech Benefits & Lists */
+  .tech-benefits-box {
+    padding: 16px 16px;
+  }
+  .tech-benefits-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .tech-benefits-list li::before {
+    margin-top: 4px;
+  }
+
+  .engineering-list {
+    padding: 16px 16px;
+  }
+  .engineering-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .engineering-list li::before {
+    margin-top: 4px;
+  }
+
+  .scope-list {
+    padding: 16px 16px;
+  }
+  .scope-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .scope-list li::before {
+    margin-top: 4px;
+  }
+
+  /* Sub Title */
+  .sub-title {
+    font-size: 16px;
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+  .sub-title::after {
+    display: none;
+  }
+  .divider {
+    margin: 16px 0;
+  }
+
+  footer {
+    padding: 32px 16px 20px;
+  }
+  footer p {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}
+
+/* TABLETS (769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  nav {
+    padding: 0 30px;
+  }
+  .nav-links { gap: 24px; }
+
+  .services-section {
+    padding: 80px 30px 100px;
+    max-width: 100%;
+  }
+
+  .panel-hero {
+    grid-template-columns: 1fr 280px;
+    gap: 40px;
+    padding: 48px 40px;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+  }
+  .panel-metrics {
+    padding: 24px;
+  }
+
+  .content-grid {
+    gap: 18px;
+  }
+  .content-grid.three {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .content-grid.three > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .ref-projects {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .ref-projects.ref-projects-compact {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .ref-projects.ref-projects-compact .ref-card {
+    grid-column: span 2;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(4) {
+    grid-column: 1 / span 2;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(5) {
+    grid-column: 3 / span 2;
+  }
+
+  .tech-benefits-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .engineering-list ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .scope-list ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <img class="nav-logo" src="https://lh3.googleusercontent.com/aida/ADBb0uj96aEgeY21K1iMz8HWwFHXhFwZwExhJwAK9L9lqyJa_pQtVJ1bgbf2P9CiwVtS8tXf_I0NCCpAIbQcqaQDrEnzC_mNvcflwjANbACCRcCAw0f5pbTikWkyrOd2LVmqMq8E6oTuwQtkcYHVepTD4QFoK7oZmz_cOTbBavnuq2UvUC_yJmKb-KKW7qhYVNZMKkCQ1pYjVpe7AfDiP3d2p3ZJscWjoqCFPxvaFOTJEgHj9I3DIpF2ExsDKtfzUWkh5tcV5MDRjC7c" alt="Environomics"/>
+  <div class="nav-links">
+    <a href="#">About Us</a>
+
+    <!-- OFFERINGS DROPDOWN -->
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-trigger">
+        Offerings
+        <svg viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown-panel">
+        <button class="nav-dropdown-item active" onclick="switchTab(0)">SOLAR ROOFTOP SOLUTIONS</button>
+        <button class="nav-dropdown-item" onclick="switchTab(1)">GROUND-MOUNT SOLAR PLANTS</button>
+        <button class="nav-dropdown-item" onclick="switchTab(2)">SOLAR OPERATIONS &amp; MAINTENANCE</button>
+        <button class="nav-dropdown-item" onclick="switchTab(3)">HVAC &amp; PHARMACEUTICAL CLEAN ROOMS</button>
+        <button class="nav-dropdown-item" onclick="switchTab(4)">ELECTRIFICATION, AUTOMATION &amp; ENERGY AUDITS</button>
+        <div class="nav-dropdown-green-bar"></div>
+      </div>
+    </div>
+
+    <a href="#">Projects</a>
+    <a href="#">Investors</a>
+    <a href="#">Clients</a>
+    <a href="#">Contact</a>
+  </div>
+  <a class="nav-cta" href="#">Free Assessment ?</a>
+</nav>
+
+<!-- SERVICES SECTION -->
+<section class="services-section">
+
+  <!-- INLINE SERVICE LIST (like the dropdown panel in the image) -->
+  <div class="service-list-panel">
+    <button class="service-list-item active" onclick="switchTab(0)">SOLAR ROOFTOP SOLUTIONS</button>
+    <button class="service-list-item" onclick="switchTab(1)">GROUND-MOUNT SOLAR PLANTS</button>
+    <button class="service-list-item" onclick="switchTab(2)">SOLAR OPERATIONS &amp; MAINTENANCE</button>
+    <button class="service-list-item" onclick="switchTab(3)">HVAC &amp; PHARMACEUTICAL CLEAN ROOMS</button>
+    <button class="service-list-item" onclick="switchTab(4)">ELECTRIFICATION, AUTOMATION &amp; ENERGY AUDITS</button>
+    <div class="service-list-bar"></div>
+  </div>
+
+  <!-- TAB PANELS -->
+  <div class="tab-panels">
+
+    <!-- PANEL 0: SOLAR ROOFTOP -->
+    <div class="tab-panel active" id="panel0">
+      <div class="panel-hero">
+        <div class="panel-hero-content">
+          <div class="panel-tag">04 — Solar Rooftop Solutions</div>
+          <h2>Your Rooftop, Reimagined — Turn Idle Space into a 25-Year High-Yield Energy Asset</h2>
+          <p>For commercial and industrial facilities in India, a well-engineered rooftop solar system delivers payback in 3–5 years, zero fuel cost, and a system life of 25+ years. At ₹8–12/kWh tariffs, a 500 kWp plant generates ₹40–60 lakh in annual savings — every year, for 25 years.</p>
+          <button class="panel-cta">Request Free Site Assessment <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+        <div class="panel-metrics">
+          <div class="panel-metric"><span class="m-val">3–5 Yrs</span><span class="m-lbl">Typical Payback</span></div>
+          <div class="panel-metric"><span class="m-val">25+ Yrs</span><span class="m-lbl">System Lifespan</span></div>
+          <div class="panel-metric"><span class="m-val">80%</span><span class="m-lbl">Energy Cost Reduction</span></div>
+          <div class="panel-metric"><span class="m-val">40%</span><span class="m-lbl">Accelerated Depreciation Y1</span></div>
+        </div>
+      </div>
+
+      <div class="sub-title">Our 6-Step Rooftop Process</div>
+      <div class="content-grid">
+        <div class="process-steps">
+          <div class="step"><div class="step-num">01</div><div class="step-content"><h4>Site Assessment &amp; Load Analysis</h4><p>Detailed on-site survey: roof structure, orientation, shading analysis, connected load profile, and grid interconnection feasibility. PVsyst simulation models expected annual generation before a proposal is submitted.</p></div></div>
+          <div class="step"><div class="step-num">02</div><div class="step-content"><h4>System Design &amp; Engineering</h4><p>Custom design per site — module selection, inverter architecture, mounting structure type, shadow-free layout, DC/AC protection. Structural engineering for wind (IS 875) and seismic (IS 1893) loads as standard.</p></div></div>
+          <div class="step"><div class="step-num">03</div><div class="step-content"><h4>Procurement &amp; Quality</h4><p>Tier-1 modules and inverters from IEC 61215 / IEC 61730 / BIS-certified manufacturers only. Electroluminescence testing on every batch. No grey-market components — ever.</p></div></div>
+        </div>
+        <div class="process-steps">
+          <div class="step"><div class="step-num">04</div><div class="step-content"><h4>Installation &amp; Safety</h4><p>Certified crews follow IS/IEC safety protocols. DC/AC isolators, Type-II surge arrestors, RCCB, and earthing as standard — not optional extras. CPCB/DISCOM compliance documentation included.</p></div></div>
+          <div class="step"><div class="step-num">05</div><div class="step-content"><h4>Commissioning &amp; Grid Sync</h4><p>String-level IV curve testing, insulation resistance, protection relay settings, and grid synchronisation under DISCOM supervision. Full commissioning report with all test data handed to client.</p></div></div>
+          <div class="step"><div class="step-num">06</div><div class="step-content"><h4>Monitoring &amp; O&amp;M</h4><p>All installations connected to real-time remote monitoring. Clients receive monthly generation reports, CO₂ savings certificates, and automated performance deviation alerts. AMC contracts available.</p></div></div>
+        </div>
+      </div>
+
+      <div class="sub-title">Technology &amp; Policy Benefits</div>
+      <div class="tech-benefits-box">
+        <ul class="tech-benefits-list">
+          <li>High-efficiency mono-PERC and Bifacial modules (up to 22% efficiency)</li>
+          <li>String inverter, central inverter, and hybrid (solar + battery) configurations</li>
+          <li>Hot-dip galvanised steel and mill-finished aluminium mounting structures</li>
+          <li>Type II &amp; Type I surge protection, RCCB, string monitoring</li>
+          <li>AI-assisted remote monitoring with yield deviation alerts</li>
+          <li>Battery storage integration (BESS) for self-consumption maximisation</li>
+          <li>Net metering, open access, and ISTS waiver coordination - handled by Environomics as part of EPC scope</li>
+        </ul>
+      </div>
+
+      <div class="sub-title">Reference Projects</div>
+      <div class="ref-projects ref-projects-compact">
+        <div class="ref-card"><div class="client">Baxter Pharmaceutical</div><div class="detail">Pharma-grade rooftop install</div><span class="kw">1,300 kWp — 2024</span></div>
+        <div class="ref-card"><div class="client">Otsuka Pharmaceuticals</div><div class="detail">Still above P50 in 2025 — 7 yrs live</div><span class="kw">2,024 kWp — 2018</span></div>
+        <div class="ref-card"><div class="client">Colgate-Palmolive</div><div class="detail">Global FMCG — rooftop</div><span class="kw">250 kWp — 2025</span></div>
+        <div class="ref-card"><div class="client">Fuji SilverTech</div><div class="detail">Above modelled yield</div><span class="kw">528.5 kWp — 2025</span></div>
+        <div class="ref-card"><div class="client">Swiss Pharma</div><div class="detail">Rooftop</div><span class="kw">200 kWp  Installed 2021</span></div>
+      </div>
+
+      <div class="sub-title">Frequently Asked Questions</div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the payback period for industrial rooftop solar in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>For commercial and industrial consumers, the typical payback period is 3 to 5 years, depending on sanctioned load, current tariff rate, and roof space. At ₹8–10/kWh industrial tariffs, a 500 kWp system typically saves ₹35–50 lakh annually — recovering capital within 4 years.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the minimum rooftop area required for solar installation?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>As a rule of thumb, 10–12 sq. metres of shadow-free rooftop area is required per kWp of installed capacity. A 100 kWp system requires approximately 1,000–1,200 sq. metres. Environomics conducts a free site assessment to confirm the exact usable area for your facility.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>Does my company qualify for accelerated depreciation on solar?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Yes. Under the Income Tax Act, solar power systems qualify for 40% accelerated depreciation in Year 1, effectively reducing the net capital cost significantly for companies that pay corporate tax. Environomics provides the full asset documentation required to claim this benefit.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>Can I export excess solar power back to the grid in Gujarat?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Yes, under GUVNL's net metering policy, eligible consumers can export surplus solar power to the grid and receive credit against their electricity bill. Environomics handles the complete net metering application and DISCOM approval process as part of the EPC scope.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What happens to a solar plant after 25 years?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Quality mono-PERC and bifacial modules carry a manufacturer's 25-year linear power output warranty, guaranteeing at least 80% of nameplate capacity at year 25. After 25 years, modules can often continue operating at reduced output. Inverters typically require replacement at 10–15 years — factored into our O&M planning.</p></div></div>
+      </div>
+    </div>
+
+    <!-- PANEL 1: GROUND MOUNT -->
+    <div class="tab-panel" id="panel1">
+      <div class="panel-hero">
+        <div class="panel-hero-content">
+          <div class="panel-tag">05 — Ground-Mount Solar Plants</div>
+          <h2>MW-Scale Solar Engineering — Designed for Maximum Yield, Built to Last 25 Years</h2>
+          <p>Where rooftop space runs out or energy demand outgrows what a rooftop can supply, a ground-mounted plant is the practical answer. Environomics has designed and commissioned ground-mount plants from 100 kWp to 4.2 MWp — serving captive consumers, IPPs, and group-captive structures across India.</p>
+          <button class="panel-cta">Get a Feasibility Assessment <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+        <div class="panel-metrics">
+          <div class="panel-metric"><span class="m-val">100 kWp₹4.2 MWp</span><span class="m-lbl">Project Scale Range</span></div>
+          <div class="panel-metric"><span class="m-val">₹3.5–5/kWh</span><span class="m-lbl">Effective Power Cost (OA)</span></div>
+          <div class="panel-metric"><span class="m-val">P50/P90</span><span class="m-lbl">Yield Forecast Standard</span></div>
+          <div class="panel-metric"><span class="m-val">6–9 Months</span><span class="m-lbl">Design to Commission (2MW)</span></div>
+        </div>
+      </div>
+
+      <div class="sub-title">Engineering Advantages</div>
+      <div class="engineering-list">
+        <ul>
+          <li>PVsyst / SAM simulation for site-specific yield modelling — P50/P90 generation forecasts</li>
+          <li>Optimal tilt and azimuth engineering using 20-year TMY irradiance data</li>
+          <li>Foundation design per soil bearing capacity — driven pile, screw anchor, or ballasted</li>
+          <li>Single-axis tracker-ready designs — up to 25% yield gain over fixed tilt</li>
+          <li>HT/LT internal cabling designed for minimum losses (copper / ACSR as required)</li>
+          <li>Grid interconnection at 33 kV or 11 kV per DISCOM / GETCO requirements</li>
+          <li>Shadow-free layout via precision CAD — row spacing validated by simulation</li>
+          <li>ISTS waiver and open access regulatory compliance — managed fully in-house by Environomics</li>
+          <li>Bankable engineering documentation for project finance and lenders</li>
+        </ul>
+      </div>
+
+      <div class="sub-title">Reference Projects</div>
+      <div class="ref-projects">
+        <div class="ref-card"><div class="client">GRG Cotspin</div><div class="detail">Textiles</div><span class="kw">4,200 kWp  Installed 2023</span></div>
+        <div class="ref-card"><div class="client">Honda India</div><div class="detail">Automotive</div><span class="kw">2,500 kWp  Installed 2023</span></div>
+        <div class="ref-card"><div class="client">Welspun Group</div><div class="detail">Textiles</div><span class="kw">2,000 kWp  Installed 2024</span></div>
+        <div class="ref-card"><div class="client">Siemens Energy</div><div class="detail">Engineering</div><span class="kw">1,300 kWp  Installed 2023</span></div>
+        <div class="ref-card"><div class="client">Raviraj Foils</div><div class="detail">Manufacturing</div><span class="kw">999 + 900 kWp  Installed 2022–2023</span></div>
+        <div class="ref-card"><div class="client">Jindal</div><div class="detail">Steel</div><span class="kw">1,000 kWp  Installed 2017</span></div>
+      </div>
+
+      <div class="sub-title">Frequently Asked Questions</div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the minimum land area needed for a 1 MW solar plant?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A 1 MWp ground-mount solar plant requires approximately 4–5 acres of shadow-free land, depending on module efficiency and mounting structure type. Environomics conducts a free feasibility assessment including land evaluation.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is open access solar in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Open access allows large electricity consumers (typically above 100 kW contracted demand) to purchase power from an independent solar plant instead of the utility grid, using the state transmission network. Environomics manages the complete open access application and approval process in Gujarat and other states.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is a group captive solar structure?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A group captive solar plant is jointly owned by multiple industrial consumers who collectively meet the 26% ownership and 51% consumption criteria under the Electricity Act. This structure provides access to solar power at ₹3.5–5/kWh — well below DISCOM tariffs. Environomics provides full EPC and regulatory support.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>How long does it take to commission a 2 MW solar plant?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A 2 MWp ground-mount solar plant typically takes 6–9 months from site clearance to grid commissioning, including design, procurement, civil works, erection, and DISCOM approval. Environomics provides a detailed project schedule at proposal stage.</p></div></div>
+      </div>
+    </div>
+
+    <!-- PANEL 2: O&M -->
+    <div class="tab-panel" id="panel2">
+      <div class="panel-hero">
+        <div class="panel-hero-content">
+          <div class="panel-tag">Solar O&amp;M</div>
+          <h2>Solar Operation and Maintenance</h2>
+          <p>A solar power plant runs for 25 years. Whether it delivers close to projected yield across that whole period — or quietly underperforms by 15–20% — comes down almost entirely to how well it is maintained. Our O&M is built around one idea: catch problems before they cost money.</p>
+          <button class="panel-cta">Book a Free Health Check <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+        <div class="panel-metrics">
+          <div class="panel-metric"><span class="m-val">4–8 hrs</span><span class="m-lbl">SLA Emergency Response</span></div>
+          <div class="panel-metric"><span class="m-val">&lt;24 hrs</span><span class="m-lbl">MTTR — Inverter Faults</span></div>
+          <div class="panel-metric"><span class="m-val">75–80%</span><span class="m-lbl">Target Performance Ratio</span></div>
+          <div class="panel-metric"><span class="m-val">Any EPC</span><span class="m-lbl">Third-Party Plant Accepted</span></div>
+        </div>
+      </div>
+
+      <div class="sub-title">O&amp;M Services Scope</div>
+      <div class="content-grid">
+        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">build</span></div><h3>Scheduled Preventive Maintenance</h3><p>Quarterly or monthly inspection cycles covering: module cleaning and soiling loss measurement, mounting structure inspection and re-torquing, string and combiner box checks, inverter servicing per OEM schedule, earthing resistance testing, and protection relay verification. All work documented with time-stamped service reports.</p></div>
+        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">monitoring</span></div><h3>Remote Monitoring &amp; Performance Analytics</h3><p>All Environomics-maintained plants are connected to real-time SCADA monitoring platforms tracking generation (kWh), specific yield (kWh/kWp/day), performance ratio (PR), plant availability, and inverter health. Automated alerts flag deviations &gt;5% from baseline — enabling remote diagnosis before downtime impacts revenue.</p></div>
+        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">handyman</span></div><h3>Corrective Maintenance &amp; Emergency Response</h3><p>SLA-bound emergency response — typically 4–8 hours on-site for critical faults. Strategic spares inventory maintained by our service team: modules, inverters, string combiners, cables, and protection devices. Target MTTR (Mean Time To Repair): &lt;24 hours for inverter faults, &lt;48 hours for structural issues.</p></div>
+        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">analytics</span></div><h3>Annual Performance Audit</h3><p>Annual benchmarking of actual plant yield against original PVsyst P50 model. Degradation analysis, soiling coefficient assessment, inverter efficiency curve review, and structural inspection report. Findings delivered with a prioritised corrective action plan and estimated revenue impact of each intervention.</p></div>
+      </div>
+
+      <div class="sub-title">The Financial Case for Professional O&amp;M</div>
+      <div class="two-col">
+        <div class="accent-card logo-green">
+          <h3>Revenue Impact of Neglect</h3>
+          <ul>
+            <li>1% improvement in plant availability on a 1 MWp plant = ₹80,000+ additional annual revenue</li>
+            <li>Soiling losses without regular cleaning = 5–15% yield reduction (higher in Gujarat's dusty conditions)</li>
+            <li>Undetected string faults persist silently for months, eroding returns without triggering alarms</li>
+            <li>Inverter replacement managed proactively = 50% lower cost vs. emergency replacement</li>
+          </ul>
+        </div>
+        <div class="accent-card logo-green">
+          <h3>Third-Party O&amp;M</h3>
+          <p>Whether your plant was installed by Environomics or any other EPC contractor, our O&M team can take it on, run a thorough performance health check, and have it operating to full compliance within 30 days.</p>
+          <p style="margin-top:12px;">Third-party O&M from Environomics is typically 60–70% lower cost than in-house maintenance teams — with documented SLAs, not verbal commitments.</p>
+          <div class="tag-list">
+            <span class="tag green">Any EPC Accepted</span>
+            <span class="tag green">Free Health Check</span>
+            <span class="tag green">30-Day Onboarding</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-title">Frequently Asked Questions</div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>Can Environomics take over O&M for a solar plant not installed by them?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Yes. Environomics offers third-party O&M services for any grid-tied solar plant in India, regardless of who installed it. We conduct a free 1-day performance health check before taking on any third-party asset, providing a detailed condition report and performance gap analysis.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>How often should solar panels be cleaned in Gujarat?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>In Gujarat's climate, with its combination of dust, industrial particulates, and low average rainfall, solar panels should be cleaned at minimum every 4–6 weeks. Without regular cleaning, soiling losses of 10–15% are common. Environomics schedules cleaning as part of all AMC contracts.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is a good Performance Ratio (PR) for a solar plant in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A well-maintained solar plant in Gujarat should achieve a PR of 75–80%. Plants below 70% are underperforming and typically indicate soiling, inverter issues, or string faults. Environomics' remote monitoring tracks PR in real time and alerts our team when PR drops below the agreed threshold.</p></div></div>
+      </div>
+    </div>
+
+    <!-- PANEL 3: HVAC -->
+    <div class="tab-panel" id="panel3">
+      <div class="panel-hero">
+        <div class="panel-hero-content">
+          <div class="panel-tag">07 — HVAC &amp; Pharmaceutical Clean Rooms</div>
+          <h2>Precision Climate Control — Engineered to Your Process, Not Just Your Building</h2>
+          <p>In pharmaceuticals, biotech, food processing, and precision manufacturing, the environment inside your facility directly affects what comes out of it. Temperature, humidity, differential pressure, and particulate count are regulatory requirements — not just comfort settings.</p>
+          <button class="panel-cta">Discuss Your Project <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+        <div class="panel-metrics">
+          <div class="panel-metric"><span class="m-val">Grade A–D</span><span class="m-lbl">GMP Clean Room Classifications</span></div>
+          <div class="panel-metric"><span class="m-val">ISO 14644</span><span class="m-lbl">International Standard</span></div>
+          <div class="panel-metric"><span class="m-val">IQ/OQ/PQ</span><span class="m-lbl">Full Qualification Support</span></div>
+          <div class="panel-metric"><span class="m-val">4–8 Months</span><span class="m-lbl">Design to PQ Completion</span></div>
+        </div>
+      </div>
+
+      <div class="sub-title">Scope of Services</div>
+      <div class="scope-list">
+        <ul>
+          <li>Psychrometric system design and peak load calculation</li>
+          <li>Air Handling Unit (AHU) selection, sizing, and installation</li>
+          <li>Clean room classification per ISO 14644-1 / EU GMP Grade A-D / WHO GMP</li>
+          <li>HEPA (H13/H14) and ULPA filtration design and integrity testing</li>
+          <li>Differential pressure cascade design for contamination control</li>
+          <li>Compressed air integration for process and breathing air systems</li>
+          <li>BMS/BAS integration - automated monitoring, alarm management, and data logging</li>
+          <li>Qualification documentation: IQ, OQ, PQ - complete protocol and report support</li>
+          <li>Preventive maintenance contracts and annual re-qualification services</li>
+          <li>Energy efficiency optimisation - heat recovery, variable frequency drives</li>
+        </ul>
+      </div>
+
+      <div class="sub-title">Sectors &amp; Standards</div>
+      <div class="scope-list">
+        <ul>
+          <li>Pharmaceutical API manufacturing and formulation facilities</li>
+          <li>Biotech and vaccine manufacturing</li>
+          <li>Food &amp; Beverage processing and cold chain</li>
+          <li>Medical device manufacturing</li>
+          <li>Research and quality control laboratories</li>
+          <li>Automotive paint booths and clean assembly areas</li>
+        </ul>
+      </div>
+
+
+      <div class="sub-title">Frequently Asked Questions</div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between ISO 14644 and GMP Grade A–D classification?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>ISO 14644-1 is an international standard classifying clean rooms by airborne particulate count (ISO 1–9). EU GMP and WHO GMP use a parallel classification of Grade A–D, where Grade A corresponds roughly to ISO 5 and Grade D to ISO 8. Environomics designs to whichever standard governs your regulatory audit.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What qualification documents are required for a pharmaceutical clean room?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A pharmaceutical clean room requires Installation Qualification (IQ), Operational Qualification (OQ), and Performance Qualification (PQ). Environomics provides full protocol preparation, execution support, and documentation of all qualification activities as part of our EPC scope.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>How long does it take to build a pharmaceutical clean room in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A typical pharmaceutical clean room project (300–1,000 sq.m) takes 4–8 months from design approval to PQ completion, depending on complexity, cleanroom class, and regulatory requirements. Environomics provides a detailed project schedule at the proposal stage.</p></div></div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: ELECTRIFICATION & AUTOMATION -->
+    <div class="tab-panel" id="panel4">
+      <div class="panel-hero">
+        <div class="panel-hero-content">
+          <div class="panel-tag">08 — Electrification, Automation &amp; Energy Audits</div>
+          <h2>Complete the Circle — Integrated Power, Control &amp; Intelligence for Your Facility</h2>
+          <p>Manual utility operations create variability, safety risk, and unnecessary energy spend. Environomics delivers the complete electrical and automation backbone of industrial facilities — from HT/LT substations and compressed air systems to PLC/SCADA automation and BEE-certified energy audits.</p>
+          <button class="panel-cta">Request an Energy Audit <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+        <div class="panel-metrics">
+          <div class="panel-metric"><span class="m-val">20–30%</span><span class="m-lbl">Typical Air Leakage Savings</span></div>
+          <div class="panel-metric"><span class="m-val">15–25%</span><span class="m-lbl">Specific Power Reduction</span></div>
+          <div class="panel-metric"><span class="m-val">BEE Certified</span><span class="m-lbl">Energy Auditors</span></div>
+          <div class="panel-metric"><span class="m-val">ISO 50001</span><span class="m-lbl">Implementation Support</span></div>
+        </div>
+      </div>
+
+      <div class="sub-title">Service Areas</div>
+      <div class="content-grid">
+        <div class="full-card">
+          <h3><span class="icon-sm">&#128736;</span> Compressed Air Systems</h3>
+          <p>Compressed air systems are among the most energy-intensive utilities on a plant floor — and among the most neglected. Unaudited networks typically lose 20–30% to leaks, with no alarm to show for it.</p>
+          <p style="margin-top: 12px;">Environomics designs and commissions compressed air systems covering compressor selection, dryer and filtration systems, distribution network design, and leak detection. Our automation sequences compressors by actual load demand — cutting part-load inefficiency and typically reducing specific power consumption by 15–25%.</p>
+          <div class="tag-list">
+            <span class="tag">Compressor Selection</span>
+            <span class="tag">Leak Detection</span>
+            <span class="tag">Load Sequencing</span>
+            <span class="tag">ATEX/IECEx</span>
+          </div>
+        </div>
+        <div class="full-card">
+          <h3><span class="icon-sm">&#128268;</span> HT/LT Electrical Infrastructure</h3>
+          <p>From HT/LT substation design and switchgear selection to internal cable sizing, busbar trunking, power factor correction (PFC), and DG synchronisation panels — Environomics handles the complete electrical backbone of industrial facilities.</p>
+          <p style="margin-top: 12px;">Certified in IS and IEC standards, DGVCL/GETCO interconnection requirements, hazardous area classifications (ATEX/IECEx), and industrial earthing design.</p>
+          <div class="tag-list">
+            <span class="tag">HT/LT Substation</span>
+            <span class="tag">Power Factor Correction</span>
+            <span class="tag">DG Synchronisation</span>
+            <span class="tag">IS/IEC Certified</span>
+          </div>
+        </div>
+        <div class="full-card">
+          <h3><span class="icon-sm">&#129302;</span> Industrial Automation — PLC &amp; SCADA</h3>
+          <p>Environomics deploys PLC and SCADA-based automation for compressed air, HVAC, and power distribution systems — covering load sequencing, alarm management, and remote visibility.</p>
+          <p style="margin-top: 12px;">In practice: lower energy bills, fewer manual interventions, clean audit trails for ISO and regulatory compliance, and a dashboard your facility managers can actually use.</p>
+          <div class="tag-list">
+            <span class="tag">PLC Programming</span>
+            <span class="tag">SCADA Dashboard</span>
+            <span class="tag">Remote Visibility</span>
+            <span class="tag">ISO Audit Trail</span>
+          </div>
+        </div>
+        <div class="full-card">
+          <h3><span class="icon-sm">&#128161;</span> Energy Audits &amp; Efficiency Consulting</h3>
+          <p>Bureau of Energy Efficiency (BEE) certified auditors assess electrical systems, HVAC, compressed air, and lighting — calculating the efficiency opportunity in each area with payback periods and ROI figures.</p>
+          <p style="margin-top: 12px;">We implement the agreed measures and measure savings against the original baseline so you can see exactly what changed. ISO 50001 implementation support also available.</p>
+          <div class="tag-list">
+            <span class="tag green">BEE Certified</span>
+            <span class="tag green">ISO 50001</span>
+            <span class="tag green">Baseline Measurement</span>
+            <span class="tag green">ROI Calculation</span>
+          </div>
+        </div>
+      </div>
+
+      
+      </div>
+    </div>
+
+  </div><!-- /tab-panels -->
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 Environomics Projects LLP &middot; Ahmedabad, Gujarat, India &middot; <a href="/cdn-cgi/l/email-protection#264f484049664348504f544948494b4f455508484352084f48" style="color:rgba(255,255,255,.5); text-decoration: none;"><span class="__cf_email__" data-cfemail="670e090108270209110e150809080a0e041449090213490e09">[email&#160;protected]</span></a></p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ?? Tab Switching ??
+function switchTab(idx) {
+  // Sync inline service list
+  document.querySelectorAll('.service-list-item').forEach((b, i) => b.classList.toggle('active', i === idx));
+  // Sync panels
+  document.querySelectorAll('.tab-panel').forEach((p, i) => {
+    p.classList.remove('active');
+    if (i === idx) {
+      p.classList.add('active');
+      p.style.animation = 'none';
+      requestAnimationFrame(() => { p.style.animation = ''; });
+    }
+  });
+  // Sync nav dropdown
+  document.querySelectorAll('.nav-dropdown-item').forEach((item, i) => {
+    item.classList.toggle('active', i === idx);
+  });
+  // Scroll to content
+  document.querySelector('.tab-panels').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ?? FAQ Toggle ??
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  // close all in this panel
+  btn.closest('.tab-panel').querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ?? Scroll Reveal ??
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.card, .full-card, .ref-card, .step, .accent-card').forEach(el => {
+  el.classList.add('reveal');
+  observer.observe(el);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
