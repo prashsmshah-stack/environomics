@@ -84,17 +84,30 @@ function normalizeTextTree(root) {
   textNodes.forEach((node) => {
     node.textContent = normalizeVisibleText(node.textContent ?? "");
   });
+
 }
 
-function cleanPanelTags(root) {
+function stripPanelTagPrefix(value = "") {
+  return String(value ?? "")
+    .replace(/^\s*\d+\s*(?:[\u2012-\u2015-]+|[âÃ¢€"'`]+)?\s*/u, "")
+    .trim();
+}
+
+function cleanPanelTags(root, panelId) {
   if (!root) {
     return;
   }
+
+  const panelLabel = servicePanelConfig.find((config) => config.panelId === panelId)?.label ?? "";
 
   root.querySelectorAll(".panel-tag").forEach((node) => {
     node.textContent = (node.textContent ?? "")
       .replace(/^\s*\d+\s*[â€“â€”-]\s*/, "")
       .trim();
+  });
+  root.querySelectorAll(".panel-tag").forEach((node) => {
+    const cleanedText = stripPanelTagPrefix(node.textContent ?? "");
+    node.textContent = cleanedText || panelLabel;
   });
 }
 
@@ -112,28 +125,19 @@ function sanitizeStyle(styleText = "") {
   cleaned = cleaned.replace(/(^|\n)\s*footer[^{]*\{[\s\S]*?\}\s*/gi, "");
 
   const overrides = `
-    .services-shell { background: var(--off-white); min-height: 100vh; }
+    .services-shell { background: var(--off-white); min-height: 100vh; font-family: "Inter", sans-serif; }
     .services-shell .services-section { padding-top: 80px; }
     .services-shell .panel-cta { text-decoration: none; }
-    .services-shell { font-family: "Inter", sans-serif; }
-    .services-shell p,
-    .services-shell li,
-    .services-shell .panel-hero p,
-    .services-shell .panel-metric .m-lbl,
-    .services-shell .card p,
-    .services-shell .step-content p,
-    .services-shell .full-card p,
-    .services-shell .accent-card p,
-    .services-shell .faq-a p,
-    .services-shell .ref-card .detail {
-      font-family: "Inter", sans-serif;
+    .services-shell * {
+      font-family: inherit;
     }
     .services-shell h1,
     .services-shell h2,
     .services-shell h3,
     .services-shell h4,
+    .services-shell h5,
+    .services-shell h6,
     .services-shell .sub-title,
-    .services-shell .panel-tag,
     .services-shell .panel-metric .m-val,
     .services-shell .card h3,
     .services-shell .step-num,
@@ -141,29 +145,107 @@ function sanitizeStyle(styleText = "") {
     .services-shell .full-card h3,
     .services-shell .accent-card h3,
     .services-shell .ref-card .client,
-    .services-shell .faq-q span,
-    .services-shell .service-list-item {
+    .services-shell .faq-q span {
       font-family: "Plus Jakarta Sans", sans-serif;
     }
-    .services-shell .panel-cta,
-    .services-shell .tag,
-    .services-shell .ref-card .kw,
-    .services-shell .faq-toggle {
-      font-family: "Inter", sans-serif;
-    }
     .services-shell .panel-tag {
-      display: block;
+      display: inline-block;
       margin-bottom: 18px;
-      padding: 0;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
+      padding: 6px 14px;
+      border: 1px solid rgba(110, 231, 183, 0.4);
+      border-radius: 999px;
+      background: rgba(42, 175, 111, 0.18);
       color: #6ee7b7;
-      font-size: clamp(1.45rem, 2.4vw, 2.15rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.12;
-      text-transform: none;
+      font-family: "Inter", sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    .services-shell .service-intro-copy {
+      display: grid;
+      gap: 14px;
+    }
+    .services-shell .content-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .services-shell .card,
+    .services-shell .service-media-card,
+    .services-shell .service-pillar {
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+    .services-shell .card {
+      border-radius: 24px;
+      padding: 24px 24px 22px;
+    }
+    .services-shell .card h3 {
+      margin-bottom: 10px;
+      color: #091322;
+    }
+    .services-shell .card p {
+      margin: 0;
+      color: #5f6775;
+      line-height: 1.7;
+    }
+    .services-shell .service-media-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .services-shell .service-media-card {
+      overflow: hidden;
+      border-radius: 24px;
+    }
+    .services-shell .service-media-card img {
+      display: block;
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+    .services-shell .service-media-caption {
+      display: grid;
+      gap: 4px;
+      padding: 16px 18px 18px;
+    }
+    .services-shell .service-media-caption strong,
+    .services-shell .service-pillar h3 {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      color: #091322;
+    }
+    .services-shell .service-media-caption strong {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .services-shell .service-media-caption span {
+      font-size: 13px;
+      color: #5f6775;
+      line-height: 1.6;
+    }
+    .services-shell .service-pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .services-shell .service-pillar {
+      padding: 20px 22px;
+      border-radius: 22px;
+    }
+    .services-shell .service-pillar h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .services-shell .service-pillar p {
+      margin: 0;
+      color: #5f6775;
+      line-height: 1.7;
     }
     @media (max-width: 768px) {
       .services-shell .services-section { 
@@ -234,6 +316,13 @@ function sanitizeStyle(styleText = "") {
       .services-shell .scope-list ul {
         grid-template-columns: 1fr !important;
         gap: 8px 16px !important;
+      }
+      .services-shell .service-media-grid,
+      .services-shell .service-pillar-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .services-shell .service-media-card img {
+        height: 220px !important;
       }
     }
     @media (max-width: 480px) {
@@ -341,6 +430,35 @@ function sanitizeStyle(styleText = "") {
       .services-shell .scope-list li {
         font-size: 12px;
       }
+      .services-shell .card {
+        padding: 16px !important;
+        border-radius: 18px;
+      }
+      .services-shell .service-media-card {
+        border-radius: 18px;
+      }
+      .services-shell .service-media-card img {
+        height: 190px !important;
+      }
+      .services-shell .service-media-caption {
+        padding: 14px 14px 16px !important;
+      }
+      .services-shell .service-media-caption strong {
+        font-size: 14px;
+      }
+      .services-shell .service-media-caption span {
+        font-size: 12px;
+      }
+      .services-shell .service-pillar {
+        padding: 16px !important;
+        border-radius: 18px;
+      }
+      .services-shell .service-pillar h3 {
+        font-size: 14px;
+      }
+      .services-shell .service-pillar p {
+        font-size: 12px;
+      }
       .services-shell .faq-q {
         padding: 12px 0 !important;
       }
@@ -387,11 +505,11 @@ export function parseServicesSource(source) {
   const styleText = doc.querySelector("style")?.textContent ?? "";
   const panelsById = new Map(
     Array.from(doc.querySelectorAll(".tab-panel")).map((panel, index) => {
+      const id = panel.getAttribute("id") || `panel-${index}`;
       const clonedPanel = panel.cloneNode(true);
-      cleanPanelTags(clonedPanel);
+      cleanPanelTags(clonedPanel, id);
       normalizeTextTree(clonedPanel);
 
-      const id = panel.getAttribute("id") || `panel-${index}`;
       return [id, { id, html: stripInlineHandlers(clonedPanel.innerHTML) }];
     })
   );
@@ -442,6 +560,10 @@ export function getServiceTabIndexFromSearch(visibleKeys) {
 
   const numeric = Number.parseInt(tabValue, 10);
   if (Number.isFinite(numeric)) {
+    if (numeric >= 0 && numeric < visibleKeys.length) {
+      return numeric;
+    }
+
     const mappedKey = servicePanelConfig[numeric]?.key;
     const mappedVisibleIndex =
       mappedKey ? visibleKeys.findIndex((key) => key === mappedKey) : -1;
@@ -466,12 +588,13 @@ export function getServiceTabIndexFromSearch(visibleKeys) {
   return matchedIndex >= 0 ? matchedIndex : 0;
 }
 
-export function updateServiceSearch(index) {
+export function updateServiceSearch(index, visibleKeys = servicesPagePanelKeys) {
   if (typeof window === "undefined") {
     return;
   }
 
-  const nextSearch = `?tab=${index}`;
+  const nextKey = visibleKeys[index] ?? visibleKeys[0] ?? "solar-rooftop";
+  const nextSearch = `?tab=${encodeURIComponent(nextKey)}`;
   if (window.location.search !== nextSearch) {
     window.history.replaceState(null, "", `${window.location.pathname}${nextSearch}`);
   }

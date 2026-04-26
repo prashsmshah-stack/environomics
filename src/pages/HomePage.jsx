@@ -72,14 +72,14 @@ const services = [
     description: "Commercial and industrial rooftop solar solutions engineered for maximum yield and ROI.",
     image: serviceImage1,
     alt: "Solar Rooftop",
-    href: "/services?tab=0",
+    href: "/services?tab=solar-rooftop",
   },
   {
     title: "Ground Mount",
     description: "Utility-scale deployments with advanced tracking and grid-integration capabilities.",
     image: serviceImage2,
     alt: "Ground Mount Solar",
-    href: "/services?tab=1",
+    href: "/services?tab=ground-mount",
   },
   {
     title: "Operations & Maintenance",
@@ -93,7 +93,7 @@ const services = [
     description: "Specialized environmental control for pharmaceutical and high-tech manufacturing.",
     image: serviceImage4,
     alt: "HVAC & Clean Room Systems",
-    href: "/services?tab=2",
+    href: "/services?tab=hvac",
   },
 ];
 

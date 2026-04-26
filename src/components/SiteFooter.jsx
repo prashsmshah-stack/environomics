@@ -16,10 +16,10 @@ import {
 } from "../lib/siteContent";
 
 const footerServices = [
-  { label: "Solar EPC Solutions", href: "/services?tab=0" },
-  { label: "Industrial HVAC", href: "/services?tab=2" },
-  { label: "Clean Room Engineering", href: "/services?tab=2" },
-  { label: "Electrical Automation", href: "/services?tab=3" },
+  { label: "Solar EPC Solutions", href: "/services?tab=solar-rooftop" },
+  { label: "Industrial HVAC", href: "/services?tab=hvac" },
+  { label: "Clean Room Engineering", href: "/services?tab=hvac" },
+  { label: "Electrical Automation", href: "/services?tab=automation" },
   { label: "O&M Services", href: "/om" },
 ];
 

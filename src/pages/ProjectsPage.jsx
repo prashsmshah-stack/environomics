@@ -328,12 +328,8 @@ export default function ProjectsPage() {
                     {project.name}
                   </h3>
 
-                  <p className="optika-medium mb-3 text-lg text-primary sm:text-xl">
+                  <p className="optika-medium mb-5 text-lg text-primary sm:text-xl">
                     {project.capacity}
-                  </p>
-
-                  <p className="helixa-regular mb-5 text-sm leading-relaxed text-tertiary">
-                    {project.description}
                   </p>
 
                   <a

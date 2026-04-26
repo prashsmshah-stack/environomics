@@ -38,6 +38,11 @@ const pageMetadata = {
     description:
       "Explore Environomics solar operations and maintenance services covering preventive maintenance, remote monitoring, corrective response, and third-party plant support.",
   },
+  "/om/gallery": {
+    title: "Solar O&M Image Gallery",
+    description:
+      "View full Environomics solar operations and maintenance images in a separate tab with room for supporting captions and project notes below each image.",
+  },
   "/clients": {
     title: "Clients and Installation Portfolio",
     description:

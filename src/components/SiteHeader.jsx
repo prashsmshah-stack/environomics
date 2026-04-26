@@ -23,7 +23,7 @@ const servicesMenu = [
     title: "Solar Rooftop Solutions",
     description:
       "Engineering led rooftop EPC for commercial and industrial facilities with high yield design, fast payback, and long term monitoring.",
-    href: "/services?tab=0",
+    href: "/services?tab=solar-rooftop",
     image: serviceImage1,
     imageAlt: "Solar rooftop solutions",
   },
@@ -31,7 +31,7 @@ const servicesMenu = [
     title: "Ground Mount Solar Plants",
     description:
       "MW scale ground mounted plants optimized for land use, grid integration, and dependable generation across captive and IPP models.",
-    href: "/services?tab=1",
+    href: "/services?tab=ground-mount",
     image: serviceImage2,
     imageAlt: "Ground mount solar plants",
   },
@@ -39,7 +39,7 @@ const servicesMenu = [
     title: "HVAC & Pharmaceutical Clean Rooms",
     description:
       "Cleanroom HVAC engineering with GMP aligned design, validation, and airflow control for precision manufacturing.",
-    href: "/services?tab=2",
+    href: "/services?tab=hvac",
     image: serviceImage4,
     imageAlt: "HVAC and pharmaceutical clean rooms",
   },
@@ -47,7 +47,7 @@ const servicesMenu = [
     title: "Electrification, Automation & Energy Audits",
     description:
       "Industrial electrification, automation retrofits, and energy audits to reduce losses and improve operational efficiency.",
-    href: "/services?tab=3",
+    href: "/services?tab=automation",
     image: null,
     imageAlt: "",
   },
