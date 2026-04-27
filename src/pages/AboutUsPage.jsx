@@ -345,32 +345,60 @@ export default function AboutUsPage() {
 
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
               {leaders.map((leader, index) => (
-                <div
+                <article
                   key={leader.name}
-                  className="leader-card-premium group reveal flex flex-col overflow-hidden rounded-[2.5rem] border border-white shadow-xl md:flex-row"
+                  className="leader-card-premium group reveal relative isolate overflow-hidden rounded-[2rem] border border-[#d9e8f7] bg-white shadow-[0_24px_60px_rgba(0,89,162,0.10)]"
                   style={index === 1 ? { transitionDelay: "200ms" } : undefined}
                 >
-                  <div className="relative overflow-hidden md:w-2/5">
-                    <img
-                      src={leader.image}
-                      alt={leader.name}
-                      className="h-full w-full object-contain bg-gray-50 transition-transform duration-700 group-hover:scale-105"
-                      onError={(event) => handleImageError(event, leader.name, "portrait")}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-deep-navy/40 to-transparent" />
+                  <div
+                    aria-hidden="true"
+                    className="absolute right-6 top-6 flex items-center gap-2"
+                  >
+                    <span className="h-2.5 w-2.5 rounded-full bg-solar-blue/35" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-growth-green/55" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-solar-blue/18" />
                   </div>
-                  <div className="flex h-full flex-col items-start justify-start bg-white p-6 text-left sm:p-8 lg:p-12 md:w-3/5">
-                    <div className="mb-6 flex min-h-[4.75rem] w-full flex-col items-start justify-start text-left sm:mb-8">
-                      <h3 className="optika-bold text-2xl text-deep-navy sm:text-3xl">{leader.name}</h3>
-                      <p className="helixa-bold mt-3 text-[13px] uppercase tracking-[0.2em] text-solar-blue">
-                        {leader.role}
+
+                  <div className="relative m-3 rounded-[1.6rem] border border-[#eef4fb] bg-[linear-gradient(180deg,#ffffff_0%,#f8fbff_100%)] p-6 sm:p-8">
+                    <div className="relative z-10 flex items-center gap-4 pr-16">
+                      <div className="relative h-36 w-36 shrink-0 overflow-hidden rounded-full border-[7px] border-solar-blue/12 bg-slate-100 shadow-[0_20px_36px_rgba(0,89,162,0.14)] sm:h-40 sm:w-40">
+                        <img
+                          src={leader.image}
+                          alt={leader.name}
+                          className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                          onError={(event) => handleImageError(event, leader.name, "portrait")}
+                        />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="optika-bold text-2xl leading-tight text-deep-navy sm:text-[2rem]">
+                          {leader.name}
+                        </h3>
+                        <p className="helixa-regular mt-1 text-base text-slate-500 sm:text-lg">
+                          {leader.role}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 h-px bg-[linear-gradient(90deg,#0059a2_0%,rgba(0,89,162,0.16)_100%)]" />
+
+                    <div className="relative z-10 mt-7">
+                      <p className="helixa-regular text-[15px] leading-8 text-on-surface-variant sm:text-[16px]">
+                        {leader.description}
                       </p>
                     </div>
-                    <p className="helixa-regular w-full text-sm leading-relaxed text-on-surface-variant sm:text-[15px] md:max-w-[34ch]">
-                      {leader.description}
-                    </p>
+
+                    <div className="mt-7 h-px bg-[linear-gradient(90deg,#0059a2_0%,rgba(0,89,162,0.16)_100%)]" />
+
+                    <div className="mt-5 flex items-center justify-between gap-4">
+                      <span className="helixa-bold text-[11px] uppercase tracking-[0.28em] text-solar-blue">
+                        Leadership
+                      </span>
+                      <span className="helixa-bold text-[11px] uppercase tracking-[0.28em] text-growth-green">
+                        Environomics
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </article>
               ))}
             </div>
           </div>

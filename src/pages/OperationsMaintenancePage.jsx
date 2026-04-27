@@ -9,6 +9,40 @@ import {
 } from "../lib/servicesContent";
 import { OPERATIONS_MAINTENANCE_GALLERY_PATH } from "../lib/operationsMaintenanceGallery";
 
+const operationsMaintenanceServiceIcons = {
+  "Scheduled Preventive Maintenance": `
+    <svg class="om-service-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M14.7 6.1a4.3 4.3 0 0 0-5.65 5.65L4.5 16.3a1.5 1.5 0 0 0 0 2.12l1.08 1.08a1.5 1.5 0 0 0 2.12 0l4.55-4.55a4.3 4.3 0 0 0 5.65-5.65l-2.65 2.65-3.3-.7-.7-3.3 2.65-2.65Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  `,
+  "Remote Monitoring & Performance Analytics": `
+    <svg class="om-service-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="M7 16v-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="M12 16V10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="M17 16V7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="m6 11.5 4-4 3.3 3.3L19 5.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  `,
+  "Corrective Maintenance & Emergency Response": `
+    <svg class="om-service-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="m7 7 10 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="m17 7-2.6 2.6 2 2L19 9a2.2 2.2 0 0 0-2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="m5 15 4-4 4 4-4 4H7l-2-2v-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="m8.4 5.1 1.8 1.8-4.9 4.9a2.4 2.4 0 0 1-3.4 0l3.1-3.1a2.4 2.4 0 0 1 3.4-3.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  `,
+  "Annual Performance Audit": `
+    <svg class="om-service-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="5.2" y="4.8" width="13.6" height="14.4" rx="1.8" stroke="currentColor" stroke-width="1.8"></rect>
+      <path d="M9 14.8v-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="M12 14.8V9.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="M15 14.8v-2.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+      <path d="M8.2 8h7.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+    </svg>
+  `,
+};
+
 const omGalleryStyles = `
   .services-shell .om-cta-row {
     display: flex;
@@ -32,12 +66,35 @@ const omGalleryStyles = `
     width: 18px;
     height: 18px;
   }
+  .services-shell .om-service-icon {
+    display: block;
+    width: 24px;
+    height: 24px;
+    color: #0059a2;
+  }
   @media (max-width: 768px) {
     .services-shell .om-cta-row {
       gap: 10px;
     }
   }
 `;
+
+function replaceOperationsMaintenanceServiceIcons(container) {
+  if (!container) {
+    return;
+  }
+
+  const cards = container.querySelectorAll(".content-grid .card");
+  cards.forEach((card) => {
+    const title = card.querySelector("h3")?.textContent?.trim();
+    const icon = card.querySelector(".card-icon");
+    const iconMarkup = title ? operationsMaintenanceServiceIcons[title] : "";
+
+    if (icon && iconMarkup) {
+      icon.innerHTML = iconMarkup;
+    }
+  });
+}
 
 function enhanceOperationsMaintenancePanelHtml(panelHtml) {
   if (typeof DOMParser === "undefined" || !panelHtml) {
@@ -54,6 +111,7 @@ function enhanceOperationsMaintenancePanelHtml(panelHtml) {
   }
 
   panelTag?.remove();
+  replaceOperationsMaintenanceServiceIcons(container);
 
   const ctaRow = doc.createElement("div");
   ctaRow.className = "om-cta-row";
@@ -64,9 +122,7 @@ function enhanceOperationsMaintenancePanelHtml(panelHtml) {
   const galleryButton = doc.createElement("a");
   galleryButton.className = "panel-cta om-gallery-cta";
   galleryButton.href = OPERATIONS_MAINTENANCE_GALLERY_PATH;
-  galleryButton.target = "_blank";
-  galleryButton.rel = "noopener noreferrer";
-  galleryButton.setAttribute("aria-label", "Open the Solar O and M image gallery in a new tab");
+  galleryButton.setAttribute("aria-label", "View the Solar O and M image gallery");
   galleryButton.innerHTML =
     'View Solar O&amp;M Images <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"></rect><circle cx="8.5" cy="10" r="1.6"></circle><path d="M6 16l4.2-4.2a1.6 1.6 0 0 1 2.26 0L15 14.3l1.24-1.24a1.6 1.6 0 0 1 2.26 0L21 15.6"></path></svg>';
   ctaRow.appendChild(galleryButton);

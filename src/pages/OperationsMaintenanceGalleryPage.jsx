@@ -1,8 +1,34 @@
+import { useEffect, useState } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import { operationsMaintenanceGalleryItems } from "../lib/operationsMaintenanceGallery";
 
 export default function OperationsMaintenanceGalleryPage() {
+  const [activeImageIndex, setActiveImageIndex] = useState(null);
+  const activeItem =
+    activeImageIndex === null ? null : operationsMaintenanceGalleryItems[activeImageIndex];
+
+  useEffect(() => {
+    if (!activeItem || typeof document === "undefined") {
+      return undefined;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setActiveImageIndex(null);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeItem]);
+
   return (
     <div className="bg-white font-body text-on-surface selection:bg-solar-blue/20">
       <SiteHeader />
@@ -16,16 +42,9 @@ export default function OperationsMaintenanceGalleryPage() {
             >
               Back to O&amp;M Services
             </a>
-            <p className="mt-8 text-sm font-black uppercase tracking-[0.28em] text-white/70">
-              Solar O&amp;M Gallery
-            </p>
-            <h1 className="mt-4 max-w-4xl text-4xl font-black leading-[0.96] text-white sm:text-5xl lg:text-[4.5rem]">
-              Full O&amp;M Images In A Separate Tab
+            <h1 className="mt-8 max-w-4xl text-4xl font-black leading-[0.96] text-white sm:text-5xl lg:text-[4.5rem]">
+              Solar O&amp;M Image Gallery
             </h1>
-            <p className="mt-6 max-w-3xl text-base leading-7 text-white/82 sm:text-lg">
-              Every image is shown in full without the old modal crop. Each image also has a text
-              section below it so there is clear space for captions, notes, or project details.
-            </p>
           </section>
 
           <section className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -34,15 +53,23 @@ export default function OperationsMaintenanceGalleryPage() {
                 key={item.src}
                 className="flex h-full flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_48px_rgba(15,23,42,0.08)]"
               >
-                <div className="border-b border-slate-100 bg-slate-50 px-4 py-4">
+                <button
+                  type="button"
+                  onClick={() => setActiveImageIndex(index)}
+                  className="group relative block border-b border-slate-100 bg-slate-50 px-4 py-4 text-left"
+                  aria-label={`Open ${item.title}`}
+                >
                   <img
                     src={item.src}
                     alt={item.alt}
-                    className="block aspect-[4/3] w-full rounded-[18px] bg-white object-cover"
+                    className="block aspect-[4/3] w-full rounded-[18px] bg-white object-cover transition duration-500 group-hover:scale-[1.02]"
                     loading={index === 0 ? "eager" : "lazy"}
                     decoding="async"
                   />
-                </div>
+                  <span className="pointer-events-none absolute right-8 top-8 inline-flex items-center rounded-full bg-white/92 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#0f4f88] shadow-[0_10px_24px_rgba(15,79,136,0.12)]">
+                    View
+                  </span>
+                </button>
 
                 <div className="flex flex-1 flex-col justify-between gap-4 px-5 py-5">
                   <div>
@@ -50,34 +77,47 @@ export default function OperationsMaintenanceGalleryPage() {
                       {item.title}
                     </h2>
                   </div>
-
-                  <div className="flex flex-wrap items-center gap-3">
-                    <a
-                      href={item.src}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-[#c8def8] bg-[#f3f8fe] px-4 py-2 text-sm font-bold text-[#0f4f88] transition hover:-translate-y-0.5 hover:border-[#8ec0f5] hover:bg-[#eaf4ff]"
-                    >
-                      Open Original Image
-                      <svg
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        aria-hidden="true"
-                        className="h-4 w-4"
-                      >
-                        <path d="M6 3h7v7" />
-                        <path d="M13 3 3 13" />
-                      </svg>
-                    </a>
-                  </div>
                 </div>
               </article>
             ))}
           </section>
         </div>
       </main>
+
+      {activeItem ? (
+        <div
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/88 px-4 py-6 backdrop-blur-sm sm:px-8"
+          onClick={() => setActiveImageIndex(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={activeItem.title}
+        >
+          <div
+            className="relative w-full max-w-6xl overflow-hidden rounded-[28px] border border-white/12 bg-slate-900 shadow-[0_32px_80px_rgba(15,23,42,0.45)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setActiveImageIndex(null)}
+              className="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-black/35 text-2xl text-white transition hover:bg-black/55"
+              aria-label="Close image viewer"
+            >
+              &times;
+            </button>
+
+            <div className="bg-[radial-gradient(circle_at_top,#15385f_0%,#020617_65%)] px-3 pb-3 pt-16 sm:px-6 sm:pb-6 sm:pt-20">
+              <img
+                src={activeItem.src}
+                alt={activeItem.alt}
+                className="max-h-[78vh] w-full rounded-[20px] bg-slate-950 object-contain"
+              />
+              <div className="px-2 pb-2 pt-5 text-white sm:px-1">
+                <p className="text-xl font-black tracking-[-0.03em]">{activeItem.title}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <SiteFooter />
     </div>
