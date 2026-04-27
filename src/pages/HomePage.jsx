@@ -8,11 +8,16 @@ import {
   normalizeSingleLineText,
   singleLineClampStyle,
 } from "../lib/contentLayout";
+import {
+  CATALOGUE_PDF_PATH,
+  DEFAULT_SECONDARY_CTA,
+  normalizeSecondaryCta,
+} from "../lib/siteContent";
 import aboutEnvironomicsImage from "../../imgs/450x600 copy.jpg.jpeg";
 import serviceImage1 from "../../imgs/S1.png";
 import serviceImage2 from "../../imgs/S2.png";
 import serviceImage3 from "../../imgs/S3.png";
-import serviceImage4 from "../../imgs/S4.png";
+import serviceImage4 from "../../imgs/HVAC-IMAGE.jpeg";
 
 const heroBackgroundImage = "/imgs/hero-2560.jpg";
 const heroBackgroundImageSmall = "/imgs/hero-1600.jpg";
@@ -20,13 +25,12 @@ const defaultHomeContent = {
   title: "India's Trusted\nTurnkey EPC Partner",
   subtitle: "Solar, HVAC & Industrial Utilities",
   ctaPrimary: "Explore Our Projects",
-  ctaSecondary: "Get a Free Feasibility Report",
+  ctaSecondary: DEFAULT_SECONDARY_CTA,
 };
 
 const certifications = [
-  "ISO Certified",
   "In-house R&D",
-  "Tier-1 Components",
+  "Quality Components",
   "24/7 Support",
 ];
 
@@ -68,28 +72,62 @@ const services = [
     description: "Commercial and industrial rooftop solar solutions engineered for maximum yield and ROI.",
     image: serviceImage1,
     alt: "Solar Rooftop",
-    href: "/services?tab=0",
+    href: "/services?tab=solar-rooftop",
   },
   {
     title: "Ground Mount",
     description: "Utility-scale deployments with advanced tracking and grid-integration capabilities.",
     image: serviceImage2,
     alt: "Ground Mount Solar",
-    href: "/services?tab=1",
+    href: "/services?tab=ground-mount",
   },
   {
     title: "Operations & Maintenance",
     description: "Comprehensive O&M services ensuring peak performance and system longevity.",
     image: serviceImage3,
     alt: "Operations & Maintenance",
-    href: "/services?tab=2",
+    href: "/om",
   },
   {
     title: "HVAC & Clean Room Systems",
     description: "Specialized environmental control for pharmaceutical and high-tech manufacturing.",
     image: serviceImage4,
     alt: "HVAC & Clean Room Systems",
-    href: "/services?tab=3",
+    href: "/services?tab=hvac",
+  },
+];
+
+const homepagePlaceholderCards = [
+  {
+    icon: "image",
+    title: "Homepage Placeholder 01",
+    description:
+      "Use this slot for a featured milestone, announcement, certification update, or client success highlight.",
+    accent: "border-primary/20 bg-gradient-to-br from-primary/10 to-primary/5 text-primary",
+  },
+  {
+    icon: "space_dashboard",
+    title: "Homepage Placeholder 02",
+    description:
+      "Use this slot for a campaign banner, product spotlight, case study teaser, or any custom homepage content.",
+    accent: "border-growth-green/20 bg-gradient-to-br from-growth-green/10 to-growth-green/5 text-growth-green",
+  },
+];
+
+const featuredVideos = [
+  {
+    id: "environomics-projects",
+    title: "Environomics Projects",
+    embedUrl: "https://www.youtube-nocookie.com/embed/c98iCb4pRg4?rel=0",
+    watchUrl: "https://youtu.be/c98iCb4pRg4",
+    kind: "embed",
+  },
+  {
+    id: "more-videos-soon",
+    title: "More Videos Coming Soon",
+    description:
+      "Use this space for another Environomics YouTube feature, plant walkthrough, or client testimonial.",
+    kind: "placeholder",
   },
 ];
 
@@ -192,7 +230,7 @@ export default function HomePage() {
     defaultHomeContent.ctaPrimary
   );
   const secondaryCta = normalizeSingleLineText(
-    homeContent.ctaSecondary,
+    normalizeSecondaryCta(homeContent.ctaSecondary, defaultHomeContent.ctaSecondary),
     defaultHomeContent.ctaSecondary
   );
 
@@ -247,10 +285,16 @@ export default function HomePage() {
                 </span>
                 <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
               </a>
-              <a href="/contact?focus=form" className="helixa-bold flex w-full min-w-0 items-center justify-center rounded-xl border border-white/25 bg-white/12 px-8 py-4 text-white backdrop-blur-sm transition-all hover:bg-white/20 sm:w-auto">
+              <a
+                href={CATALOGUE_PDF_PATH}
+                target="_blank"
+                rel="noreferrer"
+                className="helixa-bold flex w-full min-w-0 items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/12 px-8 py-4 text-white backdrop-blur-sm transition-all hover:bg-white/20 sm:w-auto"
+              >
                 <span className="block max-w-full" style={singleLineClampStyle} title={secondaryCta}>
                   {secondaryCta}
                 </span>
+                <span className="material-symbols-outlined" data-icon="download">download</span>
               </a>
             </div>
           </div>
@@ -278,9 +322,9 @@ export default function HomePage() {
                   <p className="helixa-regular">
                     For over a decade, Environomics Projects LLP has delivered EPC projects for India&apos;s reputed commercial and industrial clients. Based in Ahmedabad, Gujarat, we are a turnkey EPC company we design, procure, build, and maintain the utility infrastructure that runs your operations. That includes megawatt-scale solar plants, pharmaceutical HVAC systems, compressed air networks, and industrial automation.
                   </p>
-                  <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
                     {certifications.map((item) => (
-                      <li key={item} className="flex items-center gap-2 helixa-bold text-on-surface">
+                      <li key={item} className="flex items-center gap-2 helixa-bold text-on-surface sm:justify-center">
                         <span className="material-symbols-outlined text-secondary" data-icon="check_circle">check_circle</span>
                         {item}
                       </li>
@@ -308,6 +352,71 @@ export default function HomePage() {
                   ) : null}
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-transparent pb-16 pt-12 sm:pb-20 sm:pt-14 lg:pb-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 className="optika-bold mb-4 text-center text-3xl text-on-surface sm:text-4xl">
+              {featuredVideos[0].title}
+            </h2>
+            <p className="helixa-regular mx-auto mb-12 max-w-3xl text-center text-sm leading-relaxed text-on-surface-variant sm:mb-16 sm:text-base">
+              Featured from our YouTube presence, with room to add more Environomics videos here.
+            </p>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              {featuredVideos.map((video) =>
+                video.kind === "embed" ? (
+                  <article
+                    key={video.id}
+                    className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_18px_48px_rgba(15,23,42,0.08)]"
+                  >
+                    <div className="aspect-video overflow-hidden bg-slate-950">
+                      <iframe
+                        src={video.embedUrl}
+                        title={video.title}
+                        className="h-full w-full"
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      />
+                    </div>
+                    <div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6">
+                      <div>
+                        <p className="optika-bold text-xl text-on-surface">{video.title}</p>
+                        <p className="helixa-regular mt-1 text-sm text-slate-500">
+                          Watch on YouTube
+                        </p>
+                      </div>
+                      <a
+                        href={video.watchUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="helixa-bold inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm text-white transition hover:bg-primary/90"
+                      >
+                        Open
+                        <span className="material-symbols-outlined text-base">open_in_new</span>
+                      </a>
+                    </div>
+                  </article>
+                ) : (
+                  <div
+                    key={video.id}
+                    className="group aspect-video overflow-hidden rounded-[24px] border border-slate-200 bg-slate-100 shadow-sm transition-all hover:shadow-lg"
+                  >
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-200 to-slate-300">
+                      <div className="px-6 text-center">
+                        <span className="material-symbols-outlined mb-3 block text-5xl text-slate-500">
+                          play_circle
+                        </span>
+                        <p className="optika-bold text-lg text-slate-700">{video.title}</p>
+                        <p className="mt-2 text-sm text-slate-500">{video.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              )}
             </div>
           </div>
         </section>

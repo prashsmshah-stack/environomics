@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -526,6 +526,613 @@ nav {
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
+/* ?? RESPONSIVE MEDIA QUERIES ?? */
+
+/* TABLETS & SMALL SCREENS (768px and below) */
+@media (max-width: 768px) {
+  nav {
+    padding: 0 20px;
+    height: 60px;
+  }
+  .nav-logo { height: 36px; }
+  .nav-links {
+    gap: 16px;
+    font-size: 11px;
+  }
+  .nav-cta {
+    padding: 8px 16px;
+    font-size: 11px;
+  }
+
+  .services-section {
+    padding: 60px 20px 80px;
+  }
+
+  /* Panel Hero */
+  .panel-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 20px;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.3rem, 5vw, 2rem);
+  }
+  .panel-hero p { font-size: 14px; }
+  .panel-cta {
+    font-size: 12px;
+    padding: 10px 18px;
+  }
+  .panel-metrics {
+    padding: 20px;
+  }
+  .panel-metric {
+    padding: 12px 0;
+  }
+  .panel-metric .m-val {
+    font-size: 1.3rem;
+  }
+  .panel-metric .m-lbl {
+    font-size: 10.5px;
+  }
+
+  /* Service List Panel */
+  .service-list-panel {
+    margin-bottom: 32px;
+  }
+  .service-list-item {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+  .service-list-bar {
+    margin: 10px 20px 0;
+    width: calc(100% - 40px);
+  }
+
+  /* Content Grid */
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .content-grid.three {
+    grid-template-columns: 1fr;
+  }
+
+  /* Cards */
+  .card {
+    padding: 20px;
+  }
+  .card h3 {
+    font-size: 15px;
+  }
+  .card p { font-size: 13px; }
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .card-icon .material-symbols-outlined {
+    font-size: 18px;
+  }
+
+  /* Steps */
+  .process-steps {
+    gap: 8px;
+  }
+  .step {
+    gap: 16px;
+    padding: 16px 0;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .step-content h4 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .step-content p {
+    font-size: 13px;
+  }
+  .step:not(:last-child)::after {
+    left: 17px;
+    top: 50px;
+  }
+
+  /* Full Cards */
+  .full-card {
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .full-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .full-card p {
+    font-size: 13.5px;
+  }
+  .full-card h3 span.icon-sm {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  /* Tag List */
+  .tag-list {
+    gap: 6px;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  /* FAQ */
+  .faq-q {
+    padding: 16px 0;
+    gap: 12px;
+  }
+  .faq-q span {
+    font-size: 14px;
+  }
+  .faq-toggle {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+  .faq-a p {
+    font-size: 13px;
+    padding-bottom: 16px;
+  }
+  .faq-item.open .faq-a {
+    max-height: 600px;
+  }
+
+  /* Two Column */
+  .two-col {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Accent Card */
+  .accent-card {
+    padding: 24px 20px;
+  }
+  .accent-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .accent-card p {
+    font-size: 13.5px;
+  }
+  .accent-card ul li {
+    font-size: 12.5px;
+  }
+
+  /* Reference Projects */
+  .ref-projects {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .ref-projects.ref-projects-compact {
+    grid-template-columns: 1fr;
+  }
+  .ref-projects.ref-projects-compact .ref-card {
+    grid-column: span 1;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(4) {
+    grid-column: 1;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(5) {
+    grid-column: 1;
+  }
+  .ref-card {
+    padding: 16px 18px;
+  }
+  .ref-card .client {
+    font-size: 13px;
+  }
+  .ref-card .detail {
+    font-size: 11.5px;
+  }
+  .ref-card .kw {
+    font-size: 10.5px;
+  }
+
+  /* Tech Benefits & Lists */
+  .tech-benefits-box {
+    padding: 20px 20px;
+  }
+  .tech-benefits-list {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .tech-benefits-list li {
+    font-size: 13px;
+  }
+
+  .engineering-list {
+    padding: 20px 20px;
+  }
+  .engineering-list ul {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .engineering-list li {
+    font-size: 13px;
+  }
+
+  .scope-list {
+    padding: 20px 20px;
+  }
+  .scope-list ul {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .scope-list li {
+    font-size: 13px;
+  }
+
+  /* Sub Title */
+  .sub-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+    margin-top: 28px;
+  }
+  .divider {
+    margin: 24px 0;
+  }
+}
+
+/* SMALL PHONES (480px and below) */
+@media (max-width: 480px) {
+  html { scroll-behavior: auto; }
+  
+  nav {
+    padding: 0 16px;
+    height: 56px;
+  }
+  .nav-logo { height: 32px; }
+  .nav-links {
+    gap: 12px;
+    font-size: 10px;
+  }
+  .nav-links a {
+    display: none;
+  }
+  .nav-links a:first-child {
+    display: block;
+  }
+  .nav-dropdown-trigger {
+    font-size: 10px;
+  }
+  .nav-cta {
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+
+  .services-section {
+    padding: 80px 16px 60px;
+  }
+
+  /* Panel Hero */
+  .panel-hero {
+    padding: 28px 16px;
+    gap: 24px;
+  }
+  .panel-hero::before {
+    display: none;
+  }
+  .panel-hero::after {
+    display: none;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+    margin-bottom: 14px;
+  }
+  .panel-hero p {
+    font-size: 13px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .panel-tag {
+    font-size: clamp(1rem, 4vw, 1.4rem);
+    margin-bottom: 12px;
+  }
+  .panel-cta {
+    font-size: 11px;
+    padding: 9px 14px;
+    gap: 4px;
+  }
+  .panel-cta svg {
+    width: 14px;
+    height: 14px;
+  }
+  .panel-metrics {
+    padding: 16px;
+    gap: 0;
+  }
+  .panel-metric {
+    padding: 10px 0;
+  }
+  .panel-metric .m-val {
+    font-size: 1.1rem;
+  }
+  .panel-metric .m-lbl {
+    font-size: 9.5px;
+  }
+
+  /* Service List */
+  .service-list-panel {
+    margin-bottom: 24px;
+  }
+  .service-list-item {
+    font-size: 12px;
+    padding: 10px 16px;
+    line-height: 1.4;
+  }
+  .service-list-bar {
+    margin: 8px 16px 0;
+    width: calc(100% - 32px);
+  }
+
+  /* Content Grid */
+  .content-grid {
+    gap: 12px;
+  }
+
+  /* Cards */
+  .card {
+    padding: 16px;
+  }
+  .card h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .card-icon .material-symbols-outlined {
+    font-size: 16px;
+  }
+
+  /* Steps */
+  .step {
+    gap: 12px;
+    padding: 12px 0;
+  }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    font-size: 11px;
+  }
+  .step-content h4 {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .step:not(:last-child)::after {
+    left: 15px;
+    top: 44px;
+  }
+
+  /* Full Card */
+  .full-card {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .full-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .full-card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .full-card h3 span.icon-sm {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  /* Tag List */
+  .tag-list {
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .tag {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+
+  /* FAQ */
+  .faq-q {
+    padding: 12px 0;
+  }
+  .faq-q span {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .faq-toggle {
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .faq-a p {
+    font-size: 12px;
+    padding-bottom: 12px;
+    line-height: 1.5;
+  }
+  .faq-item.open .faq-a {
+    max-height: 800px;
+  }
+
+  /* Two Column */
+  .two-col {
+    gap: 12px;
+  }
+
+  /* Accent Card */
+  .accent-card {
+    padding: 18px 16px;
+  }
+  .accent-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .accent-card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .accent-card ul li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  /* Reference Projects */
+  .ref-projects {
+    gap: 10px;
+  }
+  .ref-card {
+    padding: 14px 16px;
+  }
+  .ref-card .client {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .ref-card .detail {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .ref-card .kw {
+    font-size: 9.5px;
+    margin-top: 4px;
+  }
+
+  /* Tech Benefits & Lists */
+  .tech-benefits-box {
+    padding: 16px 16px;
+  }
+  .tech-benefits-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .tech-benefits-list li::before {
+    margin-top: 4px;
+  }
+
+  .engineering-list {
+    padding: 16px 16px;
+  }
+  .engineering-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .engineering-list li::before {
+    margin-top: 4px;
+  }
+
+  .scope-list {
+    padding: 16px 16px;
+  }
+  .scope-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .scope-list li::before {
+    margin-top: 4px;
+  }
+
+  /* Sub Title */
+  .sub-title {
+    font-size: 16px;
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+  .sub-title::after {
+    display: none;
+  }
+  .divider {
+    margin: 16px 0;
+  }
+}
+
+/* TABLETS (769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  nav {
+    padding: 0 30px;
+  }
+  .nav-links { gap: 24px; }
+
+  .services-section {
+    padding: 80px 30px 100px;
+    max-width: 100%;
+  }
+
+  .panel-hero {
+    grid-template-columns: 1fr 280px;
+    gap: 40px;
+    padding: 48px 40px;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+  }
+  .panel-metrics {
+    padding: 24px;
+  }
+
+  .content-grid {
+    gap: 18px;
+  }
+  .content-grid.three {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .content-grid.three > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .ref-projects {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .ref-projects.ref-projects-compact {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .ref-projects.ref-projects-compact .ref-card {
+    grid-column: span 2;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(4) {
+    grid-column: 1 / span 2;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(5) {
+    grid-column: 3 / span 2;
+  }
+
+  .tech-benefits-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .engineering-list ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .scope-list ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* ?? Footer ?? */
 footer {
   background: var(--green-dark); color: #fff;
@@ -533,6 +1140,626 @@ footer {
   text-align: center;
 }
 footer p { font-size: 14px; color: rgba(255,255,255,.5); }
+
+/* ?? RESPONSIVE MEDIA QUERIES ?? */
+
+/* TABLETS & SMALL SCREENS (768px and below) */
+@media (max-width: 768px) {
+  nav {
+    padding: 0 20px;
+    height: 60px;
+  }
+  .nav-logo { height: 36px; }
+  .nav-links {
+    gap: 16px;
+    font-size: 11px;
+  }
+  .nav-cta {
+    padding: 8px 16px;
+    font-size: 11px;
+  }
+
+  .services-section {
+    padding: 60px 20px 80px;
+  }
+
+  /* Panel Hero */
+  .panel-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 20px;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.3rem, 5vw, 2rem);
+  }
+  .panel-hero p { font-size: 14px; }
+  .panel-cta {
+    font-size: 12px;
+    padding: 10px 18px;
+  }
+  .panel-metrics {
+    padding: 20px;
+  }
+  .panel-metric {
+    padding: 12px 0;
+  }
+  .panel-metric .m-val {
+    font-size: 1.3rem;
+  }
+  .panel-metric .m-lbl {
+    font-size: 10.5px;
+  }
+
+  /* Service List Panel */
+  .service-list-panel {
+    margin-bottom: 32px;
+  }
+  .service-list-item {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+  .service-list-bar {
+    margin: 10px 20px 0;
+    width: calc(100% - 40px);
+  }
+
+  /* Content Grid */
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .content-grid.three {
+    grid-template-columns: 1fr;
+  }
+
+  /* Cards */
+  .card {
+    padding: 20px;
+  }
+  .card h3 {
+    font-size: 15px;
+  }
+  .card p { font-size: 13px; }
+  .card-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .card-icon .material-symbols-outlined {
+    font-size: 18px;
+  }
+
+  /* Steps */
+  .process-steps {
+    gap: 8px;
+  }
+  .step {
+    gap: 16px;
+    padding: 16px 0;
+  }
+  .step-num {
+    width: 36px;
+    height: 36px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .step-content h4 {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .step-content p {
+    font-size: 13px;
+  }
+  .step:not(:last-child)::after {
+    left: 17px;
+    top: 50px;
+  }
+
+  /* Full Cards */
+  .full-card {
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .full-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .full-card p {
+    font-size: 13.5px;
+  }
+  .full-card h3 span.icon-sm {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  /* Tag List */
+  .tag-list {
+    gap: 6px;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  /* FAQ */
+  .faq-q {
+    padding: 16px 0;
+    gap: 12px;
+  }
+  .faq-q span {
+    font-size: 14px;
+  }
+  .faq-toggle {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+  .faq-a p {
+    font-size: 13px;
+    padding-bottom: 16px;
+  }
+  .faq-item.open .faq-a {
+    max-height: 600px;
+  }
+
+  /* Two Column */
+  .two-col {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Accent Card */
+  .accent-card {
+    padding: 24px 20px;
+  }
+  .accent-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .accent-card p {
+    font-size: 13.5px;
+  }
+  .accent-card ul li {
+    font-size: 12.5px;
+  }
+
+  /* Reference Projects */
+  .ref-projects {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .ref-projects.ref-projects-compact {
+    grid-template-columns: 1fr;
+  }
+  .ref-projects.ref-projects-compact .ref-card {
+    grid-column: span 1;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(4) {
+    grid-column: 1;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(5) {
+    grid-column: 1;
+  }
+  .ref-card {
+    padding: 16px 18px;
+  }
+  .ref-card .client {
+    font-size: 13px;
+  }
+  .ref-card .detail {
+    font-size: 11.5px;
+  }
+  .ref-card .kw {
+    font-size: 10.5px;
+  }
+
+  /* Tech Benefits & Lists */
+  .tech-benefits-box {
+    padding: 20px 20px;
+  }
+  .tech-benefits-list {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .tech-benefits-list li {
+    font-size: 13px;
+  }
+
+  .engineering-list {
+    padding: 20px 20px;
+  }
+  .engineering-list ul {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .engineering-list li {
+    font-size: 13px;
+  }
+
+  .scope-list {
+    padding: 20px 20px;
+  }
+  .scope-list ul {
+    grid-template-columns: 1fr;
+    gap: 8px 16px;
+  }
+  .scope-list li {
+    font-size: 13px;
+  }
+
+  /* Sub Title */
+  .sub-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+    margin-top: 28px;
+  }
+  .divider {
+    margin: 24px 0;
+  }
+
+  footer {
+    padding: 40px 20px 24px;
+  }
+  footer p {
+    font-size: 12px;
+  }
+}
+
+</style>
+  
+  nav {
+    padding: 0 16px;
+    height: 56px;
+  }
+  .nav-logo { height: 32px; }
+  .nav-links {
+    gap: 12px;
+    font-size: 10px;
+  }
+  .nav-links a {
+    display: none;
+  }
+  .nav-links a:first-child {
+    display: block;
+  }
+  .nav-dropdown-trigger {
+    font-size: 10px;
+  }
+  .nav-cta {
+    padding: 6px 12px;
+    font-size: 10px;
+  }
+
+  .services-section {
+    padding: 50px 16px 60px;
+  }
+
+  /* Panel Hero */
+  .panel-hero {
+    padding: 28px 16px;
+    gap: 24px;
+  }
+  .panel-hero::before {
+    display: none;
+  }
+  .panel-hero::after {
+    display: none;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+    margin-bottom: 14px;
+  }
+  .panel-hero p {
+    font-size: 13px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .panel-tag {
+    font-size: clamp(1rem, 4vw, 1.4rem);
+    margin-bottom: 12px;
+  }
+  .panel-cta {
+    font-size: 11px;
+    padding: 9px 14px;
+    gap: 4px;
+  }
+  .panel-cta svg {
+    width: 14px;
+    height: 14px;
+  }
+  .panel-metrics {
+    padding: 16px;
+    gap: 0;
+  }
+  .panel-metric {
+    padding: 10px 0;
+  }
+  .panel-metric .m-val {
+    font-size: 1.1rem;
+  }
+  .panel-metric .m-lbl {
+    font-size: 9.5px;
+  }
+
+  /* Service List */
+  .service-list-panel {
+    margin-bottom: 24px;
+  }
+  .service-list-item {
+    font-size: 12px;
+    padding: 10px 16px;
+    line-height: 1.4;
+  }
+  .service-list-bar {
+    margin: 8px 16px 0;
+    width: calc(100% - 32px);
+  }
+
+  /* Content Grid */
+  .content-grid {
+    gap: 12px;
+  }
+
+  /* Cards */
+  .card {
+    padding: 16px;
+  }
+  .card h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .card-icon .material-symbols-outlined {
+    font-size: 16px;
+  }
+
+  /* Steps */
+  .step {
+    gap: 12px;
+    padding: 12px 0;
+  }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    font-size: 11px;
+  }
+  .step-content h4 {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .step:not(:last-child)::after {
+    left: 15px;
+    top: 44px;
+  }
+
+  /* Full Card */
+  .full-card {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .full-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .full-card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .full-card h3 span.icon-sm {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  /* Tag List */
+  .tag-list {
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .tag {
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+
+  /* FAQ */
+  .faq-q {
+    padding: 12px 0;
+  }
+  .faq-q span {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .faq-toggle {
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .faq-a p {
+    font-size: 12px;
+    padding-bottom: 12px;
+    line-height: 1.5;
+  }
+  .faq-item.open .faq-a {
+    max-height: 800px;
+  }
+
+  /* Two Column */
+  .two-col {
+    gap: 12px;
+  }
+
+  /* Accent Card */
+  .accent-card {
+    padding: 18px 16px;
+  }
+  .accent-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .accent-card p {
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .accent-card ul li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  /* Reference Projects */
+  .ref-projects {
+    gap: 10px;
+  }
+  .ref-card {
+    padding: 14px 16px;
+  }
+  .ref-card .client {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .ref-card .detail {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .ref-card .kw {
+    font-size: 9.5px;
+    margin-top: 4px;
+  }
+
+  /* Tech Benefits & Lists */
+  .tech-benefits-box {
+    padding: 16px 16px;
+  }
+  .tech-benefits-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .tech-benefits-list li::before {
+    margin-top: 4px;
+  }
+
+  .engineering-list {
+    padding: 16px 16px;
+  }
+  .engineering-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .engineering-list li::before {
+    margin-top: 4px;
+  }
+
+  .scope-list {
+    padding: 16px 16px;
+  }
+  .scope-list li {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .scope-list li::before {
+    margin-top: 4px;
+  }
+
+  /* Sub Title */
+  .sub-title {
+    font-size: 16px;
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+  .sub-title::after {
+    display: none;
+  }
+  .divider {
+    margin: 16px 0;
+  }
+
+  footer {
+    padding: 32px 16px 20px;
+  }
+  footer p {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}
+
+/* TABLETS (769px to 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  nav {
+    padding: 0 30px;
+  }
+  .nav-links { gap: 24px; }
+
+  .services-section {
+    padding: 80px 30px 100px;
+    max-width: 100%;
+  }
+
+  .panel-hero {
+    grid-template-columns: 1fr 280px;
+    gap: 40px;
+    padding: 48px 40px;
+  }
+  .panel-hero h2 {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+  }
+  .panel-metrics {
+    padding: 24px;
+  }
+
+  .content-grid {
+    gap: 18px;
+  }
+  .content-grid.three {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .content-grid.three > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .ref-projects {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .ref-projects.ref-projects-compact {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .ref-projects.ref-projects-compact .ref-card {
+    grid-column: span 2;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(4) {
+    grid-column: 1 / span 2;
+  }
+  .ref-projects.ref-projects-compact .ref-card:nth-child(5) {
+    grid-column: 3 / span 2;
+  }
+
+  .tech-benefits-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .engineering-list ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .scope-list ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 </style>
 </head>
 <body>
@@ -590,12 +1817,12 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
       <div class="panel-hero">
         <div class="panel-hero-content">
           <div class="panel-tag">Solar Rooftop Solutions</div>
-          <h2>Your Rooftop, Reimagined — Turn Idle Space into a 25-Year High-Yield Energy Asset</h2>
-          <p>For commercial and industrial facilities in India, a well-engineered rooftop solar system delivers payback in 3–5 years, zero fuel cost, and a system life of 25+ years. At ₹8–12/kWh tariffs, a 500 kWp plant generates ₹40–60 lakh in annual savings — every year, for 25 years.</p>
+          <h2>Solar Rooftop Solutions</h2>
+          <p>ENVIRONOMICS Solar Rooftop installations offer unmatched energy and revenue opportunities for residential, commercial, and industrial sites. From large manufacturing plants to residential buildings, rooftops can be utilized for solar power generation. We provide both off-grid and grid-tied solutions for diverse applications, ensuring self-sustainability for industry and meeting the energy needs of commercial and industrial establishments. Our commitment lies in delivering versatile and sustainable solar solutions for a greener future.</p>
           <button class="panel-cta">Request Free Site Assessment <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
         </div>
         <div class="panel-metrics">
-          <div class="panel-metric"><span class="m-val">3–5 Yrs</span><span class="m-lbl">Typical Payback</span></div>
+          <div class="panel-metric"><span class="m-val">3&ndash;5 Yrs</span><span class="m-lbl">Typical Payback</span></div>
           <div class="panel-metric"><span class="m-val">25+ Yrs</span><span class="m-lbl">System Lifespan</span></div>
           <div class="panel-metric"><span class="m-val">80%</span><span class="m-lbl">Energy Cost Reduction</span></div>
           <div class="panel-metric"><span class="m-val">40%</span><span class="m-lbl">Accelerated Depreciation Y1</span></div>
@@ -606,13 +1833,13 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
       <div class="content-grid">
         <div class="process-steps">
           <div class="step"><div class="step-num">01</div><div class="step-content"><h4>Site Assessment &amp; Load Analysis</h4><p>Detailed on-site survey: roof structure, orientation, shading analysis, connected load profile, and grid interconnection feasibility. PVsyst simulation models expected annual generation before a proposal is submitted.</p></div></div>
-          <div class="step"><div class="step-num">02</div><div class="step-content"><h4>System Design &amp; Engineering</h4><p>Custom design per site — module selection, inverter architecture, mounting structure type, shadow-free layout, DC/AC protection. Structural engineering for wind (IS 875) and seismic (IS 1893) loads as standard.</p></div></div>
-          <div class="step"><div class="step-num">03</div><div class="step-content"><h4>Procurement &amp; Quality</h4><p>Tier-1 modules and inverters from IEC 61215 / IEC 61730 / BIS-certified manufacturers only. Electroluminescence testing on every batch. No grey-market components — ever.</p></div></div>
+          <div class="step"><div class="step-num">02</div><div class="step-content"><h4>System Design &amp; Engineering</h4><p>Custom design per site &mdash; module selection, inverter architecture, mounting structure type, shadow-free layout, DC/AC protection. Structural engineering for wind (IS 875) and seismic (IS 1893) loads as standard.</p></div></div>
+          <div class="step"><div class="step-num">03</div><div class="step-content"><h4>Procurement &amp; Quality</h4><p>Tier-1 modules and inverters from IEC 61215 / IEC 61730 / BIS-certified manufacturers only. Electroluminescence testing on every batch. No grey-market components ever.</p></div></div>
         </div>
         <div class="process-steps">
-          <div class="step"><div class="step-num">04</div><div class="step-content"><h4>Installation &amp; Safety</h4><p>Certified crews follow IS/IEC safety protocols. DC/AC isolators, Type-II surge arrestors, RCCB, and earthing as standard — not optional extras. CPCB/DISCOM compliance documentation included.</p></div></div>
+          <div class="step"><div class="step-num">04</div><div class="step-content"><h4>Installation &amp; Safety</h4><p>Certified crews follow IS/IEC safety protocols. DC/AC isolators, Type-II surge arrestors, RCCB, and earthing as standard, not optional extras. CPCB/DISCOM compliance documentation included.</p></div></div>
           <div class="step"><div class="step-num">05</div><div class="step-content"><h4>Commissioning &amp; Grid Sync</h4><p>String-level IV curve testing, insulation resistance, protection relay settings, and grid synchronisation under DISCOM supervision. Full commissioning report with all test data handed to client.</p></div></div>
-          <div class="step"><div class="step-num">06</div><div class="step-content"><h4>Monitoring &amp; O&amp;M</h4><p>All installations connected to real-time remote monitoring. Clients receive monthly generation reports, CO₂ savings certificates, and automated performance deviation alerts. AMC contracts available.</p></div></div>
+          <div class="step"><div class="step-num">06</div><div class="step-content"><h4>Monitoring &amp; O&amp;M</h4><p>All installations connected to real-time remote monitoring. Clients receive monthly generation reports, CO&#8322; savings certificates, and automated performance deviation alerts. AMC contracts available.</p></div></div>
         </div>
       </div>
 
@@ -631,20 +1858,20 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
 
       <div class="sub-title">Reference Projects</div>
       <div class="ref-projects ref-projects-compact">
-        <div class="ref-card"><div class="client">Baxter Pharmaceutical</div><div class="detail">Pharma-grade rooftop install</div><span class="kw">1,300 kWp — 2024</span></div>
-        <div class="ref-card"><div class="client">Otsuka Pharmaceuticals</div><div class="detail">Still above P50 in 2025 — 7 yrs live</div><span class="kw">2,024 kWp — 2018</span></div>
-        <div class="ref-card"><div class="client">Colgate-Palmolive</div><div class="detail">Global FMCG — rooftop</div><span class="kw">250 kWp — 2025</span></div>
-        <div class="ref-card"><div class="client">Fuji SilverTech</div><div class="detail">Above modelled yield</div><span class="kw">528.5 kWp — 2025</span></div>
+        <div class="ref-card"><div class="client">Baxter Pharmaceutical</div><div class="detail">Pharma-grade rooftop install</div><span class="kw">1,300 kWp &mdash; 2024</span></div>
+        <div class="ref-card"><div class="client">Otsuka Pharmaceuticals</div><div class="detail">Still above P50 in 2025 &mdash; 7 yrs live</div><span class="kw">2,024 kWp &mdash; 2018</span></div>
+        <div class="ref-card"><div class="client">Colgate-Palmolive</div><div class="detail">Global FMCG &mdash; rooftop</div><span class="kw">250 kWp &mdash; 2025</span></div>
+        <div class="ref-card"><div class="client">Fuji SilverTech</div><div class="detail">Above modelled yield</div><span class="kw">528.5 kWp &mdash; 2025</span></div>
         <div class="ref-card"><div class="client">Swiss Pharma</div><div class="detail">Rooftop</div><span class="kw">200 kWp  Installed 2021</span></div>
       </div>
 
       <div class="sub-title">Frequently Asked Questions</div>
       <div class="faq-list">
-        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the payback period for industrial rooftop solar in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>For commercial and industrial consumers, the typical payback period is 3 to 5 years, depending on sanctioned load, current tariff rate, and roof space. At ₹8–10/kWh industrial tariffs, a 500 kWp system typically saves ₹35–50 lakh annually — recovering capital within 4 years.</p></div></div>
-        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the minimum rooftop area required for solar installation?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>As a rule of thumb, 10–12 sq. metres of shadow-free rooftop area is required per kWp of installed capacity. A 100 kWp system requires approximately 1,000–1,200 sq. metres. Environomics conducts a free site assessment to confirm the exact usable area for your facility.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the payback period for industrial rooftop solar in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>For commercial and industrial consumers, the typical payback period is 3 to 5 years, depending on sanctioned load, current tariff rate, and roof space. At &#8377;8&ndash;10/kWh industrial tariffs, a 500 kWp system typically saves &#8377;35&ndash;50 lakh annually &mdash; recovering capital within 4 years.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the minimum rooftop area required for solar installation?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>As a rule of thumb, 10&ndash;12 sq. metres of shadow-free rooftop area is required per kWp of installed capacity. A 100 kWp system requires approximately 1,000&ndash;1,200 sq. metres. Environomics conducts a free site assessment to confirm the exact usable area for your facility.</p></div></div>
         <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>Does my company qualify for accelerated depreciation on solar?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Yes. Under the Income Tax Act, solar power systems qualify for 40% accelerated depreciation in Year 1, effectively reducing the net capital cost significantly for companies that pay corporate tax. Environomics provides the full asset documentation required to claim this benefit.</p></div></div>
         <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>Can I export excess solar power back to the grid in Gujarat?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Yes, under GUVNL's net metering policy, eligible consumers can export surplus solar power to the grid and receive credit against their electricity bill. Environomics handles the complete net metering application and DISCOM approval process as part of the EPC scope.</p></div></div>
-        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What happens to a solar plant after 25 years?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Quality mono-PERC and bifacial modules carry a manufacturer's 25-year linear power output warranty, guaranteeing at least 80% of nameplate capacity at year 25. After 25 years, modules can often continue operating at reduced output. Inverters typically require replacement at 10–15 years — factored into our O&M planning.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What happens to a solar plant after 25 years?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Quality mono-PERC and bifacial modules carry a manufacturer's 25-year linear power output warranty, guaranteeing at least 80% of nameplate capacity at year 25. After 25 years, modules can often continue operating at reduced output. Inverters typically require replacement at 10&ndash;15 years &mdash; factored into our O&amp;M planning.</p></div></div>
       </div>
     </div>
 
@@ -652,30 +1879,30 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
     <div class="tab-panel" id="panel1">
       <div class="panel-hero">
         <div class="panel-hero-content">
-          <div class="panel-tag">Ground-Mount Solar Plants</div>
-          <h2>MW-Scale Solar Engineering — Designed for Maximum Yield, Built to Last 25 Years</h2>
-          <p>Where rooftop space runs out or energy demand outgrows what a rooftop can supply, a ground-mounted plant is the practical answer. Environomics has designed and commissioned ground-mount plants from 100 kWp to 4.2 MWp — serving captive consumers, IPPs, and group-captive structures across India.</p>
+          <div class="panel-tag">Solar Ground-Mount Solutions</div>
+          <h2>Solar Ground-Mount Solutions</h2>
+          <p>ENVIRONOMICS Solar Ground Mounted Solution is an effective and efficient approach to solar energy harnessing, ideal for open spaces. Transforming unused land into a valuable resource for clean power production, this system caters to both large-scale industrial applications and smaller installations. Ensuring optimal solar exposure for maximum energy output, it stands as a strategic choice for businesses and communities aiming for sustainability, minimizing environmental impact and enhancing energy independence.</p>
           <button class="panel-cta">Get a Feasibility Assessment <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
         </div>
         <div class="panel-metrics">
-          <div class="panel-metric"><span class="m-val">100 kWp₹4.2 MWp</span><span class="m-lbl">Project Scale Range</span></div>
-          <div class="panel-metric"><span class="m-val">₹3.5–5/kWh</span><span class="m-lbl">Effective Power Cost (OA)</span></div>
+          <div class="panel-metric"><span class="m-val">100 kWp, 4.2 MWp</span><span class="m-lbl">Project Scale Range</span></div>
+          <div class="panel-metric"><span class="m-val">&#8377;3.5&ndash;5/kWh</span><span class="m-lbl">Effective Power Cost (OA)</span></div>
           <div class="panel-metric"><span class="m-val">P50/P90</span><span class="m-lbl">Yield Forecast Standard</span></div>
-          <div class="panel-metric"><span class="m-val">6–9 Months</span><span class="m-lbl">Design to Commission (2MW)</span></div>
+          <div class="panel-metric"><span class="m-val">6&ndash;9 Months</span><span class="m-lbl">Design to Commission (2MW)</span></div>
         </div>
       </div>
 
       <div class="sub-title">Engineering Advantages</div>
       <div class="engineering-list">
         <ul>
-          <li>PVsyst / SAM simulation for site-specific yield modelling — P50/P90 generation forecasts</li>
+          <li>PVsyst / SAM simulation for site-specific yield modelling &mdash; P50/P90 generation forecasts</li>
           <li>Optimal tilt and azimuth engineering using 20-year TMY irradiance data</li>
-          <li>Foundation design per soil bearing capacity — driven pile, screw anchor, or ballasted</li>
-          <li>Single-axis tracker-ready designs — up to 25% yield gain over fixed tilt</li>
+          <li>Foundation design per soil bearing capacity &mdash; driven pile, screw anchor, or ballasted</li>
+          <li>Single-axis tracker-ready designs &mdash; up to 25% yield gain over fixed tilt</li>
           <li>HT/LT internal cabling designed for minimum losses (copper / ACSR as required)</li>
           <li>Grid interconnection at 33 kV or 11 kV per DISCOM / GETCO requirements</li>
-          <li>Shadow-free layout via precision CAD — row spacing validated by simulation</li>
-          <li>ISTS waiver and open access regulatory compliance — managed fully in-house by Environomics</li>
+          <li>Shadow-free layout via precision CAD &mdash; row spacing validated by simulation</li>
+          <li>ISTS waiver and open access regulatory compliance &mdash; managed fully in-house by Environomics</li>
           <li>Bankable engineering documentation for project finance and lenders</li>
         </ul>
       </div>
@@ -686,16 +1913,16 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
         <div class="ref-card"><div class="client">Honda India</div><div class="detail">Automotive</div><span class="kw">2,500 kWp  Installed 2023</span></div>
         <div class="ref-card"><div class="client">Welspun Group</div><div class="detail">Textiles</div><span class="kw">2,000 kWp  Installed 2024</span></div>
         <div class="ref-card"><div class="client">Siemens Energy</div><div class="detail">Engineering</div><span class="kw">1,300 kWp  Installed 2023</span></div>
-        <div class="ref-card"><div class="client">Raviraj Foils</div><div class="detail">Manufacturing</div><span class="kw">999 + 900 kWp  Installed 2022–2023</span></div>
+        <div class="ref-card"><div class="client">Raviraj Foils</div><div class="detail">Manufacturing</div><span class="kw">999 + 900 kWp  Installed 2022&ndash;2023</span></div>
         <div class="ref-card"><div class="client">Jindal</div><div class="detail">Steel</div><span class="kw">1,000 kWp  Installed 2017</span></div>
       </div>
 
       <div class="sub-title">Frequently Asked Questions</div>
       <div class="faq-list">
-        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the minimum land area needed for a 1 MW solar plant?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A 1 MWp ground-mount solar plant requires approximately 4–5 acres of shadow-free land, depending on module efficiency and mounting structure type. Environomics conducts a free feasibility assessment including land evaluation.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the minimum land area needed for a 1 MW solar plant?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A 1 MWp ground-mount solar plant requires approximately 4&ndash;5 acres of shadow-free land, depending on module efficiency and mounting structure type. Environomics conducts a free feasibility assessment including land evaluation.</p></div></div>
         <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is open access solar in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Open access allows large electricity consumers (typically above 100 kW contracted demand) to purchase power from an independent solar plant instead of the utility grid, using the state transmission network. Environomics manages the complete open access application and approval process in Gujarat and other states.</p></div></div>
-        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is a group captive solar structure?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A group captive solar plant is jointly owned by multiple industrial consumers who collectively meet the 26% ownership and 51% consumption criteria under the Electricity Act. This structure provides access to solar power at ₹3.5–5/kWh — well below DISCOM tariffs. Environomics provides full EPC and regulatory support.</p></div></div>
-        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>How long does it take to commission a 2 MW solar plant?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A 2 MWp ground-mount solar plant typically takes 6–9 months from site clearance to grid commissioning, including design, procurement, civil works, erection, and DISCOM approval. Environomics provides a detailed project schedule at proposal stage.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is a group captive solar structure?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A group captive solar plant is jointly owned by multiple industrial consumers who collectively meet the 26% ownership and 51% consumption criteria under the Electricity Act. This structure provides access to solar power at &#8377;3.5&ndash;5/kWh &mdash; well below DISCOM tariffs. Environomics provides full EPC and regulatory support.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>How long does it take to commission a 2 MW solar plant?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A 2 MWp ground-mount solar plant typically takes 6&ndash;9 months from site clearance to grid commissioning, including design, procurement, civil works, erection, and DISCOM approval. Environomics provides a detailed project schedule at proposal stage.</p></div></div>
       </div>
     </div>
 
@@ -703,15 +1930,16 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
     <div class="tab-panel" id="panel2">
       <div class="panel-hero">
         <div class="panel-hero-content">
-          <div class="panel-tag">06 — Solar Operations &amp; Maintenance</div>
-          <h2>Your Solar Asset Works 365 Days a Year. So Do We.</h2>
-          <p>A solar power plant runs for 25 years. Whether it delivers close to projected yield across that whole period — or quietly underperforms by 15–20% — comes down almost entirely to how well it is maintained. Our O&M is built around one idea: catch problems before they cost money.</p>
+          <div class="panel-tag">Solar O&amp;M</div>
+          <h2>Solar Operations &amp; Maintenance</h2>
+          <p class="om-hero-lead">Your Solar Asset Works 365 Days a Year. So Do We.</p>
+          <p class="om-hero-copy">A solar power plant runs for 25 years. Whether it delivers close to projected yield across that whole period or quietly underperforms by 15&ndash;20% comes down almost entirely to how well it is maintained. Our O&amp;M is built around one idea: catch problems before they cost money.</p>
           <button class="panel-cta">Book a Free Health Check <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
         </div>
         <div class="panel-metrics">
-          <div class="panel-metric"><span class="m-val">4–8 hrs</span><span class="m-lbl">SLA Emergency Response</span></div>
-          <div class="panel-metric"><span class="m-val">&lt;24 hrs</span><span class="m-lbl">MTTR — Inverter Faults</span></div>
-          <div class="panel-metric"><span class="m-val">75–80%</span><span class="m-lbl">Target Performance Ratio</span></div>
+          <div class="panel-metric"><span class="m-val">4&ndash;8 hrs</span><span class="m-lbl">SLA Emergency Response</span></div>
+          <div class="panel-metric"><span class="m-val">&lt;24 hrs</span><span class="m-lbl">MTTR &ndash; Inverter Faults</span></div>
+          <div class="panel-metric"><span class="m-val">75&ndash;80%</span><span class="m-lbl">Target Performance Ratio</span></div>
           <div class="panel-metric"><span class="m-val">Any EPC</span><span class="m-lbl">Third-Party Plant Accepted</span></div>
         </div>
       </div>
@@ -719,8 +1947,8 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
       <div class="sub-title">O&amp;M Services Scope</div>
       <div class="content-grid">
         <div class="card"><div class="card-icon"><span class="material-symbols-outlined">build</span></div><h3>Scheduled Preventive Maintenance</h3><p>Quarterly or monthly inspection cycles covering: module cleaning and soiling loss measurement, mounting structure inspection and re-torquing, string and combiner box checks, inverter servicing per OEM schedule, earthing resistance testing, and protection relay verification. All work documented with time-stamped service reports.</p></div>
-        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">monitoring</span></div><h3>Remote Monitoring &amp; Performance Analytics</h3><p>All Environomics-maintained plants are connected to real-time SCADA monitoring platforms tracking generation (kWh), specific yield (kWh/kWp/day), performance ratio (PR), plant availability, and inverter health. Automated alerts flag deviations &gt;5% from baseline — enabling remote diagnosis before downtime impacts revenue.</p></div>
-        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">handyman</span></div><h3>Corrective Maintenance &amp; Emergency Response</h3><p>SLA-bound emergency response — typically 4–8 hours on-site for critical faults. Strategic spares inventory maintained by our service team: modules, inverters, string combiners, cables, and protection devices. Target MTTR (Mean Time To Repair): &lt;24 hours for inverter faults, &lt;48 hours for structural issues.</p></div>
+        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">monitoring</span></div><h3>Remote Monitoring &amp; Performance Analytics</h3><p>All Environomics-maintained plants are connected to real-time SCADA monitoring platforms tracking generation (kWh), specific yield (kWh/kWp/day), performance ratio (PR), plant availability, and inverter health. Automated alerts flag deviations &gt;5% from baseline, enabling remote diagnosis before downtime impacts revenue.</p></div>
+        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">handyman</span></div><h3>Corrective Maintenance &amp; Emergency Response</h3><p>SLA-bound emergency response, typically 4&ndash;8 hours on-site for critical faults. Strategic spares inventory maintained by our service team: modules, inverters, string combiners, cables, and protection devices. Target MTTR (Mean Time To Repair): &lt;24 hours for inverter faults, &lt;48 hours for structural issues.</p></div>
         <div class="card"><div class="card-icon"><span class="material-symbols-outlined">analytics</span></div><h3>Annual Performance Audit</h3><p>Annual benchmarking of actual plant yield against original PVsyst P50 model. Degradation analysis, soiling coefficient assessment, inverter efficiency curve review, and structural inspection report. Findings delivered with a prioritised corrective action plan and estimated revenue impact of each intervention.</p></div>
       </div>
 
@@ -730,7 +1958,7 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
           <h3>Revenue Impact of Neglect</h3>
           <ul>
             <li>1% improvement in plant availability on a 1 MWp plant = ₹80,000+ additional annual revenue</li>
-            <li>Soiling losses without regular cleaning = 5–15% yield reduction (higher in Gujarat's dusty conditions)</li>
+            <li>Soiling losses without regular cleaning = 5 to 15% yield reduction (higher in Gujarat's dusty conditions)</li>
             <li>Undetected string faults persist silently for months, eroding returns without triggering alarms</li>
             <li>Inverter replacement managed proactively = 50% lower cost vs. emergency replacement</li>
           </ul>
@@ -738,7 +1966,7 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
         <div class="accent-card logo-green">
           <h3>Third-Party O&amp;M</h3>
           <p>Whether your plant was installed by Environomics or any other EPC contractor, our O&M team can take it on, run a thorough performance health check, and have it operating to full compliance within 30 days.</p>
-          <p style="margin-top:12px;">Third-party O&M from Environomics is typically 60–70% lower cost than in-house maintenance teams — with documented SLAs, not verbal commitments.</p>
+          <p style="margin-top:12px;">Third-party O&amp;M from Environomics is typically 60 to 70% lower cost than maintaining a dedicated in-house team, with documented SLAs instead of verbal commitments.</p>
           <div class="tag-list">
             <span class="tag green">Any EPC Accepted</span>
             <span class="tag green">Free Health Check</span>
@@ -750,8 +1978,8 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
       <div class="sub-title">Frequently Asked Questions</div>
       <div class="faq-list">
         <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>Can Environomics take over O&M for a solar plant not installed by them?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>Yes. Environomics offers third-party O&M services for any grid-tied solar plant in India, regardless of who installed it. We conduct a free 1-day performance health check before taking on any third-party asset, providing a detailed condition report and performance gap analysis.</p></div></div>
-        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>How often should solar panels be cleaned in Gujarat?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>In Gujarat's climate, with its combination of dust, industrial particulates, and low average rainfall, solar panels should be cleaned at minimum every 4–6 weeks. Without regular cleaning, soiling losses of 10–15% are common. Environomics schedules cleaning as part of all AMC contracts.</p></div></div>
-        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is a good Performance Ratio (PR) for a solar plant in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A well-maintained solar plant in Gujarat should achieve a PR of 75–80%. Plants below 70% are underperforming and typically indicate soiling, inverter issues, or string faults. Environomics' remote monitoring tracks PR in real time and alerts our team when PR drops below the agreed threshold.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>How often should solar panels be cleaned in Gujarat?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>In Gujarat's climate, with its combination of dust, industrial particulates, and low average rainfall, solar panels should be cleaned at minimum every 4 to 6 weeks. Without regular cleaning, soiling losses of 10 to 15% are common. Environomics schedules cleaning as part of all AMC contracts.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is a good Performance Ratio (PR) for a solar plant in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A well-maintained solar plant in Gujarat should achieve a PR of 75 to 80%. Plants below 70% are underperforming and typically indicate soiling, inverter issues, or string faults. Environomics' remote monitoring tracks PR in real time and alerts our team when PR drops below the agreed threshold.</p></div></div>
       </div>
     </div>
 
@@ -759,53 +1987,46 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
     <div class="tab-panel" id="panel3">
       <div class="panel-hero">
         <div class="panel-hero-content">
-          <div class="panel-tag">HVAC &amp; Pharmaceutical Clean Rooms</div>
-          <h2>Precision Climate Control — Engineered to Your Process, Not Just Your Building</h2>
-          <p>In pharmaceuticals, biotech, food processing, and precision manufacturing, the environment inside your facility directly affects what comes out of it. Temperature, humidity, differential pressure, and particulate count are regulatory requirements — not just comfort settings.</p>
+          <div class="panel-tag">HVAC &amp; Clean Rooms</div>
+          <h2>HVAC &amp; Clean Rooms</h2>
+          <p>We have expertise in the Supply and Installation of Clean Rooms with cleanliness levels of ISO Class 1 to 8 / Class 1 to Class 1,00,000 for pharmaceutical companies, the semiconductor industry, operation theatres, component manufacturing, biosafety labs, and the like. In addition to clean rooms, we offer services that include:</p>
           <button class="panel-cta">Discuss Your Project <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
         </div>
         <div class="panel-metrics">
-          <div class="panel-metric"><span class="m-val">Grade A–D</span><span class="m-lbl">GMP Clean Room Classifications</span></div>
+          <div class="panel-metric"><span class="m-val">Grade A&ndash;D</span><span class="m-lbl">GMP Clean Room Classifications</span></div>
           <div class="panel-metric"><span class="m-val">ISO 14644</span><span class="m-lbl">International Standard</span></div>
           <div class="panel-metric"><span class="m-val">IQ/OQ/PQ</span><span class="m-lbl">Full Qualification Support</span></div>
-          <div class="panel-metric"><span class="m-val">4–8 Months</span><span class="m-lbl">Design to PQ Completion</span></div>
+          <div class="panel-metric"><span class="m-val">4&ndash;8 Months</span><span class="m-lbl">Design to PQ Completion</span></div>
         </div>
       </div>
 
       <div class="sub-title">Scope of Services</div>
       <div class="scope-list">
         <ul>
-          <li>Psychrometric system design and peak load calculation</li>
-          <li>Air Handling Unit (AHU) selection, sizing, and installation</li>
-          <li>Clean room classification per ISO 14644-1 / EU GMP Grade A-D / WHO GMP</li>
-          <li>HEPA (H13/H14) and ULPA filtration design and integrity testing</li>
-          <li>Differential pressure cascade design for contamination control</li>
-          <li>Compressed air integration for process and breathing air systems</li>
-          <li>BMS/BAS integration - automated monitoring, alarm management, and data logging</li>
-          <li>Qualification documentation: IQ, OQ, PQ - complete protocol and report support</li>
-          <li>Preventive maintenance contracts and annual re-qualification services</li>
-          <li>Energy efficiency optimisation - heat recovery, variable frequency drives</li>
+          <li>Airborne particle count for classification / ultrafine particles / macro particles</li>
+          <li>Air flow velocity and volume test / air pressure difference test</li>
+          <li>Filter leakage test</li>
+          <li>Air flow direction test and visualization</li>
+          <li>Particle deposition test / recovery test containment leak test</li>
+          <li>HVAC system design for BS-1/2/3/4 labs</li>
         </ul>
       </div>
 
-      <div class="sub-title">Sectors &amp; Standards</div>
-      <div class="scope-list">
-        <ul>
-          <li>Pharmaceutical API manufacturing and formulation facilities</li>
-          <li>Biotech and vaccine manufacturing</li>
-          <li>Food &amp; Beverage processing and cold chain</li>
-          <li>Medical device manufacturing</li>
-          <li>Research and quality control laboratories</li>
-          <li>Automotive paint booths and clean assembly areas</li>
-        </ul>
+      <div class="sub-title">Representative Installations</div>
+      <div class="ref-projects">
+        <div class="ref-card"><div class="client">Maruti Suzuki Ltd, Rohtak</div><div class="detail">Temp Control 18&ndash;30 Deg C and RH Control 30%&ndash;80%</div><span class="kw">4,400 TR</span></div>
+        <div class="ref-card"><div class="client">Harsoria Healthcare</div><div class="detail">Clean Room Class 10,000 and 1,00,000</div><span class="kw">600 TR</span></div>
+        <div class="ref-card"><div class="client">Parle Agro Foods Pvt Ltd</div><div class="detail">Clean Room Class 10,000</div><span class="kw">1,500 TR</span></div>
+        <div class="ref-card"><div class="client">Honda Motorcycles &amp; Scooters, Vithlapur</div><div class="detail">Chiller Design and Execution</div><span class="kw">450 TR</span></div>
+        <div class="ref-card"><div class="client">Otsuka Pharmaceutical India Pvt Ltd</div><div class="detail">Clean room Class 10000</div><span class="kw">6,365 CFM  9 KW</span></div>
+        <div class="ref-card"><div class="client">Intas Pharmaceutical</div><div class="detail">37 AHUs (8 BIBO units)</div><span class="kw">6 lakh CFM  360 KW</span></div>
       </div>
-
 
       <div class="sub-title">Frequently Asked Questions</div>
       <div class="faq-list">
-        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between ISO 14644 and GMP Grade A–D classification?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>ISO 14644-1 is an international standard classifying clean rooms by airborne particulate count (ISO 1–9). EU GMP and WHO GMP use a parallel classification of Grade A–D, where Grade A corresponds roughly to ISO 5 and Grade D to ISO 8. Environomics designs to whichever standard governs your regulatory audit.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What is the difference between ISO 14644 and GMP Grade A&ndash;D classification?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>ISO 14644-1 is an international standard classifying clean rooms by airborne particulate count (ISO 1&ndash;9). EU GMP and WHO GMP use a parallel classification of Grade A&ndash;D, where Grade A corresponds roughly to ISO 5 and Grade D to ISO 8. Environomics designs to whichever standard governs your regulatory audit.</p></div></div>
         <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>What qualification documents are required for a pharmaceutical clean room?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A pharmaceutical clean room requires Installation Qualification (IQ), Operational Qualification (OQ), and Performance Qualification (PQ). Environomics provides full protocol preparation, execution support, and documentation of all qualification activities as part of our EPC scope.</p></div></div>
-        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>How long does it take to build a pharmaceutical clean room in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A typical pharmaceutical clean room project (300–1,000 sq.m) takes 4–8 months from design approval to PQ completion, depending on complexity, cleanroom class, and regulatory requirements. Environomics provides a detailed project schedule at the proposal stage.</p></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>How long does it take to build a pharmaceutical clean room in India?</span><div class="faq-toggle">+</div></button><div class="faq-a"><p>A typical pharmaceutical clean room project (300&ndash;1,000 sq.m) takes 4&ndash;8 months from design approval to PQ completion, depending on complexity, cleanroom class, and regulatory requirements. Environomics provides a detailed project schedule at the proposal stage.</p></div></div>
       </div>
     </div>
 
@@ -814,103 +2035,47 @@ footer p { font-size: 14px; color: rgba(255,255,255,.5); }
       <div class="panel-hero">
         <div class="panel-hero-content">
           <div class="panel-tag">Other Services</div>
-          <h2>Complete the Circle - Integrated Power, Control &amp; Intelligence for Your Facility</h2>
-          <p>Manual utility operations create variability, safety risk, and unnecessary energy spend. Environomics delivers the complete electrical and automation backbone of industrial facilities, from HT/LT substations and compressed air systems to PLC/SCADA automation and BEE-certified energy audits.</p>
+          <h2>Other Services</h2>
+          <p>In the realm of solar panel technology, energy audits are instrumental in optimizing efficiency, evaluating the entire system to identify potential improvements and minimize energy losses. Electrification processes play a pivotal role, transforming solar-generated power into usable electricity for diverse applications, fostering sustainability by reducing reliance on traditional energy sources. Furthermore, the integration of Automation and Supervisory Control and Data Acquisition (SCADA) systems ensures optimal performance by enabling real-time monitoring, adjusting system parameters, and providing valuable insights for proactive maintenance. This holistic approach, encompassing energy audits, electrification, and automation, contributes to a smarter, more efficient solar energy infrastructure, ultimately advancing sustainability and reliability in solar power generation.</p>
           <button class="panel-cta">Request an Energy Audit <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
         </div>
         <div class="panel-metrics">
-          <div class="panel-metric"><span class="m-val">20 to 30%</span><span class="m-lbl">Typical Air Leakage Savings</span></div>
-          <div class="panel-metric"><span class="m-val">15 to 25%</span><span class="m-lbl">Specific Power Reduction</span></div>
-          <div class="panel-metric"><span class="m-val">BEE Certified</span><span class="m-lbl">Energy Auditors</span></div>
-          <div class="panel-metric"><span class="m-val">ISO 50001</span><span class="m-lbl">Implementation Support</span></div>
+          <div class="panel-metric"><span class="m-val">5% to 30%</span><span class="m-lbl">Typical Energy Saving Opportunity</span></div>
+          <div class="panel-metric"><span class="m-val">HT &amp; LT</span><span class="m-lbl">Electrification Capability</span></div>
+          <div class="panel-metric"><span class="m-val">CEI Approved</span><span class="m-lbl">Electrical Contractor Strength</span></div>
+          <div class="panel-metric"><span class="m-val">Real-Time</span><span class="m-lbl">Automation &amp; SCADA Monitoring</span></div>
         </div>
       </div>
 
-      <div class="sub-title">Other Services</div>
-      <div class="content-grid three">
-        <div class="card">
-          <div class="card-icon"><span class="material-symbols-outlined">analytics</span></div>
-          <h3>Energy Audits</h3>
-          <p>BEE-certified audits for electrical, HVAC, compressed air, cooling water, thermal systems, and end-use equipment to identify savings opportunities, improve reliability, and support long-term compliance.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><span class="material-symbols-outlined">electrical_services</span></div>
-          <h3>Electrification</h3>
-          <p>Complete HT/LT electrification support covering substations, transformers, cabling, panels, lighting, power distribution, approvals, testing, and commissioning for industrial facilities.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><span class="material-symbols-outlined">developer_board</span></div>
-          <h3>Automation &amp; SCADA</h3>
-          <p>PLC/SCADA integration reduces manual intervention and makes utility systems more reliable, efficient, and safe through alarms, sequencing, load sharing, and real-time visibility.</p>
-        </div>
+      <div class="sub-title">Service Areas</div>
+      <div class="content-grid">
+        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">query_stats</span></div><h3>Energy Audits</h3><p>What can&apos;t be measured, can&apos;t be controlled. Environomics offers energy audits for electrical systems, HVAC systems, compressed air systems, cooling systems, boilers, overall systems, and end-use machinery to identify measurable efficiency gains and reliability improvements.</p></div>
+        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">bolt</span></div><h3>Electrification</h3><p>Environomics has the capability of complete HT as well as LT electrification jobs covering design, selection, procurement, manufacture, installation, commissioning, testing, and approval coordination for industrial and commercial facilities.</p></div>
+        <div class="card"><div class="card-icon"><span class="material-symbols-outlined">settings_input_component</span></div><h3>Automation &amp; SCADA</h3><p>Automation and Supervisory Control and Data Acquisition systems enable real-time monitoring, faster fault visibility, smarter controls, and proactive maintenance across plant utilities and energy systems.</p></div>
       </div>
 
-      <div class="sub-title">Integrated Utility Scope</div>
+      <div class="sub-title">Electrification Strength</div>
       <div class="scope-list">
         <ul>
-          <li>Electric sub-station installation with CEI approvals and utility coordination</li>
-          <li>Underground and overhead cabling work for HT/LT distribution networks</li>
-          <li>Transformers, LT and HT electric panels, VCB, PCC, MCC, and protection systems</li>
-          <li>LT lighting and commercial electrification work for plant and office areas</li>
-          <li>Compressed air system audits, leakage mapping, and specific power improvement plans</li>
-          <li>PLC/SCADA automation, remote monitoring, alarms, trips, sequencing, and load sharing</li>
-          <li>Energy audits for electrical, HVAC, compressed air, cooling, and thermal systems</li>
-          <li>BEE-certified audit reporting and ISO 50001 implementation support</li>
+          <li>Electric sub-station installation</li>
+          <li>Underground and overhead cabling work</li>
+          <li>Transformer, LT and HT electric panels, VCB, MCC</li>
+          <li>LT lighting and commercial electrification work</li>
+          <li>All compliances and drawing approvals</li>
+          <li>CEI approved electrical contractors</li>
         </ul>
       </div>
 
-      <div class="sub-title">Representative Projects</div>
-      <div class="ref-projects ref-projects-compact">
-        <div class="ref-card">
-          <div class="client">MES, Bangalore</div>
-          <div class="kw">66 KV Sub-Station Installation</div>
-          <div class="detail">66 KV Sub-Station Installation</div>
-        </div>
-        <div class="ref-card">
-          <div class="client">Arvind Limited, Bavla Unit</div>
-          <div class="kw">11 KV Ground Cabling Work from Sub-Station to Plant</div>
-          <div class="detail">3.2 Kms. length for 185 Sq. mm. HT cable with DP structure &amp; HTMC panel</div>
-        </div>
-        <div class="ref-card">
-          <div class="client">ADIENT</div>
-          <div class="kw">HT &amp; LT Electrification Work of Plant</div>
-          <div class="detail">Transformer, cables, distribution, lighting and entire electrification work of plant</div>
-        </div>
-        <div class="ref-card">
-          <div class="client">Solar Power Plants Electrification</div>
-          <div class="kw">LT, HT Cables, Transformer, ACDB, Protections, Relays, Injection with Grid at LT &amp; HT Level</div>
-          <div class="detail">Testing and commissioning for 90 MWp at Bhadla + 5 MWp rooftop across multiple clients</div>
-        </div>
-        <div class="ref-card">
-          <div class="client">Arvind, Adient, MSK, Sentossa, Fortum, High Q &amp; more</div>
-          <div class="kw">LT Lighting &amp; Commercial Electrification Work</div>
-          <div class="detail">Power distribution, lighting, fittings, protections, MCBs and ELCBs</div>
-        </div>
-        <div class="ref-card">
-          <div class="client">APCER, Arvind, Toyota Tsusho, Carnival Cinemas, Fortum, MES &amp; more</div>
-          <div class="kw">Testing and AMC for Electrical Equipment</div>
-          <div class="detail">Power transformers, HT VCB, LT panels, PCC, MCC, APFCR, DG synchronization and earthing</div>
-        </div>
-      </div>
-
-      <div class="sub-title">Execution Credentials</div>
-      <div class="content-grid">
-        <div class="full-card">
-          <h3><span class="icon-sm">&#9989;</span> CEI Approved Electrical Contractors</h3>
-          <p>Execution support backed by statutory approvals, compliance documentation, inspection coordination, and safe plant energisation.</p>
-        </div>
-        <div class="full-card">
-          <h3><span class="icon-sm">&#128268;</span> Substation, Cabling &amp; Distribution</h3>
-          <p>End-to-end delivery across substations, underground and overhead cabling, transformer integration, switchgear, and plant-wide power distribution.</p>
-        </div>
-        <div class="full-card">
-          <h3><span class="icon-sm">&#129520;</span> Testing &amp; AMC for Industrial Equipment</h3>
-          <p>Testing and maintenance coverage for power transformers, HT VCB, LT panels, PCC, MCC, APFCR, DG synchronisation systems, and earthing infrastructure.</p>
-        </div>
-        <div class="full-card">
-          <h3><span class="icon-sm">&#128200;</span> BEE Certified Audits &amp; ISO 50001</h3>
-          <p>Measured savings roadmaps, baseline analysis, and implementation support that help facilities reduce utility cost while strengthening their energy management systems.</p>
-        </div>
+      <div class="sub-title">Audit Coverage</div>
+      <div class="scope-list">
+        <ul>
+          <li>Electrical system audits</li>
+          <li>HVAC system audits including chillers and AHUs</li>
+          <li>Compressed air system audits covering compressors and dryers</li>
+          <li>Cooling system audits including cooling towers and cooling water pumps</li>
+          <li>Boiler and thermal utility assessments</li>
+          <li>Overall system and end-use machinery performance review</li>
+        </ul>
       </div>
     </div>
 
@@ -960,18 +2125,5 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.card, .full-card, .ref-card, .step, .accent-card').forEach(el => {
   el.classList.add('reveal');
   observer.observe(el);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+});
+</script>

@@ -10,6 +10,9 @@ const loadClientsPage = () => import("./pages/ClientsPage");
 const loadTestimonialsPage = () => import("./pages/TestimonialsPage");
 const loadInnovationPage = () => import("./pages/InnovationPage");
 const loadServicesPage = () => import("./pages/ServicesPage");
+const loadOperationsMaintenancePage = () => import("./pages/OperationsMaintenancePage");
+const loadOperationsMaintenanceGalleryPage = () =>
+  import("./pages/OperationsMaintenanceGalleryPage");
 const loadAdminPanelPage = () => import("./pages/AdminPanelPage");
 const loadPrivacyPolicyPage = () => import("./pages/PrivacyPolicyPage");
 
@@ -21,6 +24,8 @@ const ClientsPage = lazy(loadClientsPage);
 const TestimonialsPage = lazy(loadTestimonialsPage);
 const InnovationPage = lazy(loadInnovationPage);
 const ServicesPage = lazy(loadServicesPage);
+const OperationsMaintenancePage = lazy(loadOperationsMaintenancePage);
+const OperationsMaintenanceGalleryPage = lazy(loadOperationsMaintenanceGalleryPage);
 const AdminPanelPage = lazy(loadAdminPanelPage);
 const PrivacyPolicyPage = lazy(loadPrivacyPolicyPage);
 
@@ -31,6 +36,8 @@ const routeComponents = {
   "/contact": ContactUsPage,
   "/projects": ProjectsPage,
   "/services": ServicesPage,
+  "/om": OperationsMaintenancePage,
+  "/om/gallery": OperationsMaintenanceGalleryPage,
   "/clients": ClientsPage,
   "/testimonials": TestimonialsPage,
   "/innovation": InnovationPage,
@@ -45,6 +52,8 @@ const routePreloaders = {
   "/contact": loadContactUsPage,
   "/projects": loadProjectsPage,
   "/services": loadServicesPage,
+  "/om": loadOperationsMaintenancePage,
+  "/om/gallery": loadOperationsMaintenanceGalleryPage,
   "/clients": loadClientsPage,
   "/testimonials": loadTestimonialsPage,
   "/innovation": loadInnovationPage,

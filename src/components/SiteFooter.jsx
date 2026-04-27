@@ -7,19 +7,28 @@ import {
   normalizeSingleLineText,
   singleLineClampStyle,
 } from "../lib/contentLayout";
+import {
+  CONTACT_EMAILS_DISPLAY,
+  CONTACT_PHONE,
+  formatContactEmails,
+  normalizeContactPhone,
+  parseContactEmails,
+} from "../lib/siteContent";
 
 const footerServices = [
-  { label: "Solar EPC Solutions", href: "/services?tab=0" },
-  { label: "Industrial HVAC", href: "/services?tab=3" },
-  { label: "Clean Room Engineering", href: "/services?tab=3" },
-  { label: "Electrical Automation", href: "/services?tab=4" },
-  { label: "O&M Services", href: "/services?tab=2" },
+  { label: "Solar EPC Solutions", href: "/services?tab=solar-rooftop" },
+  { label: "Industrial HVAC", href: "/services?tab=hvac" },
+  { label: "Clean Room Engineering", href: "/services?tab=hvac" },
+  { label: "Electrical Automation", href: "/services?tab=automation" },
+  { label: "O&M Services", href: "/om" },
 ];
 
 const footerLinks = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
   { label: "Our Projects", href: "/projects" },
+  { label: "O&M", href: "/om" },
+  { label: "Our Clients", href: "/clients" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Innovation & R&D", href: "/innovation" },
   { label: "Contact Us", href: "/contact" },
@@ -27,8 +36,8 @@ const footerLinks = [
 ];
 
 const fallbackContact = {
-  phone: "09998112299",
-  email: "info@environomics.in",
+  phone: CONTACT_PHONE,
+  email: CONTACT_EMAILS_DISPLAY,
   address: "417 Ratna High Street, Naranpura, Ahmedabad, 380013, Gujarat, India",
   linkedin: "https://www.linkedin.com/company/environomics-projects-llp/",
   socials: [
@@ -37,6 +46,20 @@ const fallbackContact = {
       platform: "LinkedIn",
       handle: "@environomics-projects-llp",
       url: "https://www.linkedin.com/company/environomics-projects-llp/",
+      logo: "",
+    },
+    {
+      id: "social_youtube",
+      platform: "YouTube",
+      handle: "Environomics Projects",
+      url: "https://www.youtube.com/watch?v=c98iCb4pRg4",
+      logo: "",
+    },
+    {
+      id: "social_whatsapp",
+      platform: "WhatsApp",
+      handle: "+917981758833",
+      url: "https://wa.me/917981758833",
       logo: "",
     },
   ],
@@ -83,6 +106,32 @@ function LinkedInIcon({ className = "" }) {
   );
 }
 
+function YouTubeIcon({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={className}
+      fill="currentColor"
+    >
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+    </svg>
+  );
+}
+
+function WhatsAppIcon({ className = "" }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className={className}
+      fill="currentColor"
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+    </svg>
+  );
+}
+
 function getAddressLines(address) {
   return normalizeDisplayLines(address, {
     fallback: fallbackContact.address,
@@ -94,6 +143,14 @@ function getAddressLines(address) {
 function SocialLinkIcon({ social }) {
   if (/linkedin/i.test(social.platform ?? "")) {
     return <LinkedInIcon className="h-5 w-5" />;
+  }
+
+  if (/youtube/i.test(social.platform ?? "")) {
+    return <YouTubeIcon className="h-5 w-5" />;
+  }
+
+  if (/whatsapp/i.test(social.platform ?? "")) {
+    return <WhatsAppIcon className="h-5 w-5" />;
   }
 
   if (social.logo) {
@@ -118,8 +175,8 @@ export default function SiteFooter() {
     return {
       ...fallbackContact,
       ...backendContact,
-      phone: normalizeSingleLineText(backendContact.phone, fallbackContact.phone),
-      email: normalizeSingleLineText(backendContact.email, fallbackContact.email),
+      phone: normalizeContactPhone(backendContact.phone, fallbackContact.phone),
+      email: formatContactEmails(backendContact.email),
       address: String(backendContact.address ?? "").trim() || fallbackContact.address,
       linkedin: normalizeSingleLineText(
         backendContact.linkedin,
@@ -131,6 +188,7 @@ export default function SiteFooter() {
           : fallbackContact.socials,
     };
   }, [content]);
+  const contactEmails = useMemo(() => parseContactEmails(contact.email), [contact.email]);
   const settings = useMemo(
     () => ({
       ...fallbackSettings,
@@ -252,11 +310,22 @@ export default function SiteFooter() {
                 </div>
                 <span style={singleLineClampStyle} title={contact.phone}>{contact.phone}</span>
               </li>
-              <li className="flex min-w-0 items-center gap-4">
+              <li className="flex min-w-0 items-start gap-4">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5">
                   <Icon name="mail" className="!text-xl text-white" />
                 </div>
-                <span style={singleLineClampStyle} title={contact.email}>{contact.email}</span>
+                <div className="min-w-0 pt-0.5">
+                  {contactEmails.map((email) => (
+                    <a
+                      key={email}
+                      href={`mailto:${email}`}
+                      className="block break-all transition-colors hover:text-white/80"
+                      title={email}
+                    >
+                      {email}
+                    </a>
+                  ))}
+                </div>
               </li>
             </ul>
           </div>
