@@ -131,6 +131,20 @@ function sanitizeStyle(styleText = "") {
     .services-shell * {
       font-family: inherit;
     }
+    .services-shell .material-symbols-outlined {
+      font-family: "Material Symbols Outlined";
+      font-weight: normal;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
     .services-shell h1,
     .services-shell h2,
     .services-shell h3,
@@ -247,6 +261,112 @@ function sanitizeStyle(styleText = "") {
       color: #5f6775;
       line-height: 1.7;
     }
+    .services-shell .service-area-tabs {
+      display: grid;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .services-shell .service-area-tab-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .services-shell .service-area-tab {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 16px 18px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 20px;
+      background: #ffffff;
+      color: #0f172a;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .services-shell .service-area-tab:hover {
+      transform: translateY(-2px);
+      border-color: rgba(0, 89, 162, 0.18);
+      box-shadow: var(--shadow-md);
+    }
+    .services-shell .service-area-tab.active {
+      border-color: rgba(0, 89, 162, 0.22);
+      background: linear-gradient(135deg, #ffffff 0%, #eef6ff 100%);
+      box-shadow: 0 16px 32px rgba(0, 89, 162, 0.12);
+    }
+    .services-shell .service-area-tab-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #e8f2ff;
+      color: #0059a2;
+      flex-shrink: 0;
+    }
+    .services-shell .service-area-tab-icon svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+    .services-shell .service-area-tab span:last-child {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    .services-shell .service-area-panels {
+      position: relative;
+    }
+    .services-shell .service-area-panel {
+      display: none;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 26px;
+      padding: 28px 28px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .services-shell .service-area-panel.active {
+      display: block;
+    }
+    .services-shell .service-area-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .services-shell .service-area-panel-header .card-icon {
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+    .services-shell .service-area-panel-header h3 {
+      margin: 0;
+      color: #091322;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 23px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+    .services-shell .service-area-panel p + p {
+      margin-top: 14px;
+    }
+    .services-shell .service-area-panel-svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      color: #0059a2;
+    }
+    .services-shell .service-area-panel .tag {
+      padding: 7px 12px;
+      font-size: 10.5px;
+      font-family: "Inter", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
     @media (max-width: 768px) {
       .services-shell .services-section { 
         padding-top: 60px; 
@@ -320,6 +440,21 @@ function sanitizeStyle(styleText = "") {
       .services-shell .service-media-grid,
       .services-shell .service-pillar-grid {
         grid-template-columns: 1fr !important;
+      }
+      .services-shell .service-area-tab-list {
+        grid-template-columns: 1fr 1fr !important;
+      }
+      .services-shell .service-area-tab {
+        padding: 14px 16px;
+      }
+      .services-shell .service-area-panel {
+        padding: 22px 20px 20px !important;
+      }
+      .services-shell .service-area-panel-header {
+        align-items: flex-start;
+      }
+      .services-shell .service-area-panel-header h3 {
+        font-size: 19px;
       }
       .services-shell .service-media-card img {
         height: 220px !important;
@@ -452,6 +587,26 @@ function sanitizeStyle(styleText = "") {
       .services-shell .service-pillar {
         padding: 16px !important;
         border-radius: 18px;
+      }
+      .services-shell .service-area-tab-list {
+        grid-template-columns: 1fr !important;
+      }
+      .services-shell .service-area-tab-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+      }
+      .services-shell .service-area-tab span:last-child {
+        font-size: 12px;
+      }
+      .services-shell .service-area-panel-header h3 {
+        font-size: 17px;
+      }
+      .services-shell .service-area-panel p {
+        font-size: 12.5px !important;
+      }
+      .services-shell .service-area-panel .tag {
+        font-size: 10px;
       }
       .services-shell .service-pillar h3 {
         font-size: 14px;

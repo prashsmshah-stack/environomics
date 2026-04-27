@@ -62,6 +62,29 @@ export default function ServicesPage() {
   }, [activeIndex]);
 
   const handlePanelClick = (event) => {
+    const serviceAreaTab = event.target.closest("[data-service-area-tab]");
+    if (serviceAreaTab) {
+      event.preventDefault();
+
+      const nextTabId = serviceAreaTab.getAttribute("data-service-area-tab");
+      const panel = serviceAreaTab.closest(".tab-panel");
+      if (!nextTabId || !panel) {
+        return;
+      }
+
+      panel.querySelectorAll("[data-service-area-tab]").forEach((button) => {
+        const isActive = button.getAttribute("data-service-area-tab") === nextTabId;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+
+      panel.querySelectorAll("[data-service-area-panel]").forEach((contentPanel) => {
+        const isActive = contentPanel.getAttribute("data-service-area-panel") === nextTabId;
+        contentPanel.classList.toggle("active", isActive);
+      });
+      return;
+    }
+
     const cta = event.target.closest(".panel-cta");
     if (cta) {
       event.preventDefault();
