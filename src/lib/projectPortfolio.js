@@ -1,5 +1,6 @@
 import { resolveMediaUrl } from "./api";
 import { normalizeSingleLineText } from "./contentLayout";
+import { getLocalCompanyLogo } from "./companyLogoRegistry";
 
 const industryOrder = [
   "Automotive",
@@ -290,6 +291,7 @@ export function getPublishedProjects(content) {
   if (!backendProjects) {
     return fallbackProjects.map((project, index) => {
       const description = project.description ?? project.meta ?? "";
+      const preferredLogo = getLocalCompanyLogo(project.name, project.brand?.src);
 
       return {
         ...project,
@@ -297,6 +299,10 @@ export function getPublishedProjects(content) {
         slug: normalizeProjectSlug(project.name),
         description,
         year: getProjectYear(description),
+        brand: {
+          ...project.brand,
+          src: preferredLogo,
+        },
       };
     });
   }
@@ -314,6 +320,7 @@ export function getPublishedProjects(content) {
       descriptionSource,
       presentation?.description ?? presentation?.meta ?? ""
     );
+    const localCompanyLogo = getLocalCompanyLogo(normalizedName);
 
     return {
       id: project.id ?? `project-${index}`,
@@ -333,6 +340,7 @@ export function getPublishedProjects(content) {
       brand: {
         kind: "image",
         src:
+          localCompanyLogo ||
           companyLogo ||
           presentation?.brand?.src ||
           fallbackProjectMedia(name || "Project", "logo"),

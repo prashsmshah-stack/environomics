@@ -4,30 +4,10 @@ import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import { usePublicContent } from "../context/PublicContentContext";
 import { resolveMediaUrl } from "../lib/api";
+import { getLocalCompanyLogo } from "../lib/companyLogoRegistry";
 import {
   normalizeSingleLineText,
 } from "../lib/contentLayout";
-
-const supplementalClientLogoModules = {
-  ...import.meta.glob("../../imgs/Dangee Dums logo.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/Shree Bhagwat Vidyapith Trust Logo.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/The Pioneer Magnesia Works logo.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-};
-
-const supplementalClientLogoFilenames = [
-  "Dangee Dums logo.jpeg",
-  "Shree Bhagwat Vidyapith Trust Logo.jpeg",
-  "The Pioneer Magnesia Works logo.jpeg",
-];
 
 const fallbackClients = [
   { n: "GRG Cotspin", s: "Textiles", y: "2023", c: "4,200 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2023_GRG_cotspin.jpeg" },
@@ -62,37 +42,23 @@ const fallbackClients = [
   { n: "Bharat Beams", s: "Manufacturing", y: "2018", c: "100 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/bharat-beams-private-limited-120x120-1.jpg" },
 ];
 
-function getAssetFilename(path = "") {
-  return path.split("/").pop() ?? "";
-}
-
-function formatClientNameFromLogoFilename(filename = "") {
-  return String(filename ?? "")
-    .replace(/\.[^.]+$/, "")
-    .replace(/\blogo\b/gi, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function getSupplementalClients() {
-  const allowedFiles = new Set(supplementalClientLogoFilenames);
-
-  return Object.entries(supplementalClientLogoModules)
-    .map(([path, src]) => {
-      const filename = getAssetFilename(path);
-      return { filename, src };
-    })
-    .filter((item) => allowedFiles.has(item.filename))
-    .sort((left, right) => left.filename.localeCompare(right.filename))
-    .map((item, index) => ({
-      id: `supplemental-client-${index + 1}`,
-      n: formatClientNameFromLogoFilename(item.filename),
-      s: "Industrial",
-      y: "",
-      c: "",
-      l: item.src,
-    }));
-}
+const supplementalClients = [
+  { id: "supplemental-client-1", n: "Dangee Dums", s: "Industrial", y: "", c: "" },
+  {
+    id: "supplemental-client-2",
+    n: "Shree Bhagwat Vidyapith Trust",
+    s: "Industrial",
+    y: "",
+    c: "",
+  },
+  {
+    id: "supplemental-client-3",
+    n: "The Pioneer Magnesia Works",
+    s: "Industrial",
+    y: "",
+    c: "",
+  },
+];
 
 function logoFallback(label) {
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
@@ -145,24 +111,27 @@ export default function ClientsPage() {
   `;
 
   const { content } = usePublicContent();
-  const supplementalClients = useMemo(() => getSupplementalClients(), []);
   const clients = useMemo(() => {
     const backendClients =
       Array.isArray(content?.clients) && content.clients.length ? content.clients : null;
 
     const baseClients = !backendClients
-      ? fallbackClients
+      ? fallbackClients.map((client) => ({
+          ...client,
+          l: getLocalCompanyLogo(client.n, client.l),
+        }))
       : backendClients.map((client, index) => {
           const name = String(client.name ?? "").trim();
           const companyLogo = resolveMediaUrl(client.companyLogo ?? "");
+          const normalizedName = normalizeSingleLineText(name, `Client ${index + 1}`);
 
           return {
             id: client.id ?? `client-${index}`,
-            n: normalizeSingleLineText(name, `Client ${index + 1}`),
+            n: normalizedName,
             s: normalizeSingleLineText(client.category, "Industrial"),
             y: normalizeSingleLineText(client.year),
             c: normalizeSingleLineText(client.capacity),
-            l: companyLogo,
+            l: getLocalCompanyLogo(normalizedName, companyLogo),
           };
         });
 
@@ -176,7 +145,10 @@ export default function ClientsPage() {
       }
 
       existingNames.add(lookupKey);
-      mergedClients.push(client);
+      mergedClients.push({
+        ...client,
+        l: getLocalCompanyLogo(client.n),
+      });
     });
 
     return mergedClients;
