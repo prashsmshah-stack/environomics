@@ -2,6 +2,15 @@ import { useEffect, useMemo, useState } from "react";
 import adminLogo from "../../imgs/Logo White.png";
 import loginLogo from "../../imgs/LOGO (1).png";
 import { getApiBase, resolveMediaUrl } from "../lib/api";
+import { testimonialShowcase } from "../lib/testimonialShowcase";
+import {
+  CONTACT_EMAILS_DISPLAY,
+  CONTACT_PHONE,
+  DEFAULT_SECONDARY_CTA,
+  formatContactEmails,
+  normalizeContactPhone,
+  normalizeSecondaryCta,
+} from "../lib/siteContent";
 import { notifyPublicContentUpdated } from "../lib/publicContentSync";
 
 const AUTH_KEY = "environomics-admin-preview-auth";
@@ -11,7 +20,7 @@ const AUTH_MODE_KEY = "environomics-admin-preview-mode";
 const CONTENT_KEY = "environomics-admin-preview-content";
 const PROJECTS_PRESET_VERSION = "original-website-projects-v2";
 const CLIENTS_PRESET_VERSION = "original-website-clients-v1";
-const TESTIMONIALS_PRESET_VERSION = "original-website-testimonials-v1";
+const TESTIMONIALS_PRESET_VERSION = "original-website-testimonials-v2";
 const ITEMS_PER_PAGE = 5;
 
 const seoPageConfigs = [
@@ -527,17 +536,7 @@ const originalWebsiteClients = [
   },
 ];
 
-const defaultTestimonial = {
-  title: "Siemens Energy",
-  tag: "Heavy Engineering",
-  subtitle: "Procurement Manager",
-  capacity: "1,300 kWp",
-  installed: "2023",
-  description:
-    "Siemens Energy chose Environomics for a 1,300 kWp plant. High technical competence demonstrated through complex grid synchronization.",
-  image:
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuARxk8ADAlMFXx1_XzykiIURdmsCuKigrN7TPedb0Axs5e01oXwTZAGjKhcsqpc5mYsIsT0NMMWGqu8trCdTWGQjB62JKMsEvIgKEpprQVhmFH8syxxvMQreQffwkFsjFNEWGAGJ2PzfRQ-jG314613mt69gmN5tVgGkJgNvykdtVLWmpqeDedLKWnYOgNdA11yy1x-lQ_XH5iDSU7DGR9WZNW71EHQnW2Th0mnMo7OsmtWBGzcVRm_sZxL3V3qlbwk6s_G7NKyP68",
-};
+const defaultTestimonial = { ...testimonialShowcase[0] };
 
 const emptyTestimonialDraft = {
   title: "",
@@ -549,82 +548,9 @@ const emptyTestimonialDraft = {
   image: "",
 };
 
-const originalWebsiteTestimonials = [
-  {
-    title: "Colgate-Palmolive",
-    tag: "Global FMCG",
-    subtitle: "Operations Head",
-    capacity: "250 kWp",
-    installed: "2025",
-    description:
-      "A global FMCG brand trusted Environomics with its energy infrastructure. Professional execution and high attention to detail.",
-    image: "/imgs/projects/colgate-palmolive.jpg",
-  },
-  {
-    title: "Baxter Pharmaceutical",
-    tag: "Life Sciences",
-    subtitle: "Plant Director",
-    capacity: "1,300 kWp",
-    installed: "2024",
-    description:
-      "Baxter Pharmaceutical needed a pharma-grade install with strict hygiene protocols. Environomics delivered it on schedule and exceeded our expectations.",
-    image: "/imgs/projects/baxter-pharma.jpg",
-  },
-  {
-    title: "Fuji SilverTech",
-    tag: "Precast Engineering",
-    subtitle: "Project Lead",
-    capacity: "528.5 kWp",
-    installed: "2025",
-    description:
-      "Fuji SilverTech delivered 528.5 kWp on time and above the modelled yield. The real time monitoring system is excellent.",
-    image: "/imgs/projects/fuji-silvertech.jpg",
-  },
-  { ...defaultTestimonial },
-  {
-    title: "Honda India",
-    tag: "Automotive",
-    subtitle: "Engineering Head",
-    capacity: "2,500 kWp",
-    installed: "2023",
-    description:
-      "Honda India demands perfection. 2,500 kWp system delivered on time. The performance stability has been critical for our operations.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDav4tQEK2a2RUCp3ixxqlUpj-IIXYIXRs8U4FWzzImUhSkULpPDfZrWkLeWtTUer6_28gHtenaSKgmGz5A3KA_Fj-7C3OOtN9wnxT2AcrCveJ1pBKxDxDQtRNyXmNC1Hm_Ju9Pl-u2mfL8mS79nrdYperp-3CI4A43uTytnUYXJQyNfxFn2vMtz4tq8dihPcTbElQ3lMQzGw3uGw6VPLGg03IQ_ZYIJIf4KE3Ltew7O-wlUn-7qs6uuNLQIbUeEr0eeBnfyPDMPHM",
-  },
-  {
-    title: "Welspun Group",
-    tag: "Textiles & Steel",
-    subtitle: "Group Operations",
-    capacity: "2,000 kWp",
-    installed: "2024",
-    description:
-      "One of Environomics' largest installations delivered 2,000 kWp for Welspun Group. It is a flagship in scale and reliability for our manufacturing hub.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAfS0Q52AlpCsTv09DwjadsivCDWpP1Lia_9Wly7kfJcnjq0i2X1Q-Qx3er7OpAqeGqmsaxe1SDmP4VzfoCy2swRDdbIudXYgnFkN3zhPZ0OkXZcPz4ZdwH69FFctSNtlVYTHe_CKewEb-dw5cngJtuigjTwVOUGynQRuN-00BlZsp_TpfLOMMQOy9tYMUotERIKzdca-dOZ_72PrY9k_v8cRAZ0ENxcb51CK_Tj07dovnnIelYEFxwsnae3LCsw3zgW5lR0TX22C0",
-  },
-  {
-    title: "Otsuka Pharmaceuticals",
-    tag: "Pharma Legacy",
-    subtitle: "Energy Director",
-    capacity: "2,024 kWp",
-    installed: "2018",
-    description:
-      "Installed in 2018 for Otsuka Pharmaceuticals. Still running above projection in 2025. A testament to the build quality and engineering.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBrJEBvC_ce_UtqJFNGtfmiMZWM_k2cdkXGEpz5-OcDZ5Y3UPgob2Y_XiGsDgi4vCkTAd0b8emF1V7Y7WvnfR1kMks2yYrHj0KNTRAQRwOawd40_XltYAp9oq6VNbsZJYHpKyu3YDw0rCvCo8nt5YkCLiHB9Y-CZg7f6lkxJGyYdOm3ttY6RFRb_AOdat0bajEGT6okmYmwjGjSIBLllOPyfsxr_qk9d3zUGxG0WyMPGNprttZPa2X_Kf4bKiwdTzdH1l-9cuUKDUM",
-  },
-  {
-    title: "Raviraj Foils",
-    tag: "Packaging",
-    subtitle: "Managing Director",
-    capacity: "2,100 kWp",
-    installed: "2022",
-    description:
-      "Scaling solar across multiple phases was delivered on schedule every time. Their multi phase execution strategy minimized downtime.",
-    image: "/imgs/projects/raviraj-foils.png",
-  },
-];
+const originalWebsiteTestimonials = testimonialShowcase.map((testimonial) => ({
+  ...testimonial,
+}));
 
 const defaultContent = {
   projectPresetVersion: PROJECTS_PRESET_VERSION,
@@ -634,7 +560,7 @@ const defaultContent = {
     title: "India's Trusted\nTurnkey EPC Partner",
     subtitle: "Solar, HVAC & Industrial Utilities",
     ctaPrimary: "Explore Our Projects",
-    ctaSecondary: "Get a Free Feasibility Report",
+    ctaSecondary: DEFAULT_SECONDARY_CTA,
   },
   projects: originalWebsiteProjects,
   clients: originalWebsiteClients,
@@ -672,8 +598,8 @@ const defaultContent = {
   ],
   testimonials: originalWebsiteTestimonials,
   contact: {
-    phone: "09998112299",
-    email: "info@environomics.in",
+    phone: CONTACT_PHONE,
+    email: CONTACT_EMAILS_DISPLAY,
     address: "Ahmedabad, Gujarat, India, 380013",
     linkedin: "https://www.linkedin.com/company/environomics-projects-llp/",
     socials: [{ ...defaultSocialLink }],
@@ -816,10 +742,19 @@ function normalizeContent(rawContent = {}) {
     projectPresetVersion: PROJECTS_PRESET_VERSION,
     clientPresetVersion: CLIENTS_PRESET_VERSION,
     testimonialPresetVersion: TESTIMONIALS_PRESET_VERSION,
-    home: { ...defaultContent.home, ...(rawContent.home ?? {}) },
+    home: {
+      ...defaultContent.home,
+      ...(rawContent.home ?? {}),
+      ctaSecondary: normalizeSecondaryCta(
+        rawContent.home?.ctaSecondary,
+        defaultContent.home.ctaSecondary
+      ),
+    },
     contact: {
       ...defaultContent.contact,
       ...rawContact,
+      phone: normalizeContactPhone(rawContact.phone, defaultContent.contact.phone),
+      email: formatContactEmails(rawContact.email),
       socials:
         Array.isArray(rawContact.socials)
           ? rawContact.socials.map(normalizeSocialLink)
@@ -3734,13 +3669,13 @@ export default function AdminPanelPage() {
                         <Field
                           label="Phone"
                           value={content.contact.phone}
-                          placeholder="09998112299"
+                          placeholder={CONTACT_PHONE}
                           onChange={(event) => updateField(setContent, "contact", "phone", event.target.value)}
                         />
                         <Field
                           label="Email"
                           value={content.contact.email}
-                          placeholder="info@environomics.in"
+                          placeholder={CONTACT_EMAILS_DISPLAY}
                           onChange={(event) => updateField(setContent, "contact", "email", event.target.value)}
                         />
                         <Field

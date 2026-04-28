@@ -3,8 +3,7 @@ import { createPortal } from "react-dom";
 import logo from "../../imgs/LOGO (1).png";
 import serviceImage1 from "../../imgs/S1.png";
 import serviceImage2 from "../../imgs/S2.png";
-import serviceImage3 from "../../imgs/S3.png";
-import serviceImage4 from "../../imgs/S4.png";
+import serviceImage4 from "../../imgs/HVAC IMAGE.jpeg";
 import { usePublicContent } from "../context/PublicContentContext";
 import { resolveMediaUrl } from "../lib/api";
 
@@ -13,6 +12,7 @@ const navItems = [
   { key: "about", label: "About Us", href: "/about" },
   { key: "services", label: "Services", href: "/services" },
   { key: "projects", label: "Our Projects", href: "/projects" },
+  { key: "om", label: "Solar O&M", href: "/om" },
   { key: "clients", label: "Our Clients", href: "/clients" },
   { key: "testimonials", label: "Testimonials", href: "/testimonials" },
   { key: "innovation", label: "Innovation & R&D", href: "/innovation" },
@@ -23,7 +23,7 @@ const servicesMenu = [
     title: "Solar Rooftop Solutions",
     description:
       "Engineering led rooftop EPC for commercial and industrial facilities with high yield design, fast payback, and long term monitoring.",
-    href: "/services?tab=0",
+    href: "/services?tab=solar-rooftop",
     image: serviceImage1,
     imageAlt: "Solar rooftop solutions",
   },
@@ -31,23 +31,15 @@ const servicesMenu = [
     title: "Ground Mount Solar Plants",
     description:
       "MW scale ground mounted plants optimized for land use, grid integration, and dependable generation across captive and IPP models.",
-    href: "/services?tab=1",
+    href: "/services?tab=ground-mount",
     image: serviceImage2,
     imageAlt: "Ground mount solar plants",
-  },
-  {
-    title: "Solar Operations & Maintenance",
-    description:
-      "Performance monitoring, preventive maintenance, and rapid response support to protect uptime and maximize lifecycle returns.",
-    href: "/services?tab=2",
-    image: serviceImage3,
-    imageAlt: "Solar operations and maintenance",
   },
   {
     title: "HVAC & Pharmaceutical Clean Rooms",
     description:
       "Cleanroom HVAC engineering with GMP aligned design, validation, and airflow control for precision manufacturing.",
-    href: "/services?tab=3",
+    href: "/services?tab=hvac",
     image: serviceImage4,
     imageAlt: "HVAC and pharmaceutical clean rooms",
   },
@@ -55,7 +47,7 @@ const servicesMenu = [
     title: "Electrification, Automation & Energy Audits",
     description:
       "Industrial electrification, automation retrofits, and energy audits to reduce losses and improve operational efficiency.",
-    href: "/services?tab=4",
+    href: "/services?tab=automation",
     image: null,
     imageAlt: "",
   },
@@ -67,6 +59,8 @@ const routeKeys = {
   "/about": "about",
   "/services": "services",
   "/projects": "projects",
+  "/projects/case-study": "projects",
+  "/om": "om",
   "/clients": "clients",
   "/testimonials": "testimonials",
   "/innovation": "innovation",

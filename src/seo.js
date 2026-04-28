@@ -1,4 +1,5 @@
 import { resolveMediaUrl } from "./lib/api";
+import { getPrimaryContactEmail } from "./lib/siteContent";
 
 const SITE_NAME = "Environomics Projects LLP";
 const WEBSITE_NAME = "Environomics";
@@ -27,6 +28,21 @@ const pageMetadata = {
     description:
       "Explore Environomics project work across rooftop solar, ground mount systems, industrial HVAC, and utility infrastructure for leading commercial and industrial clients.",
   },
+  "/projects/case-study": {
+    title: "Project Case Study",
+    description:
+      "Review detailed project information from the Environomics industrial EPC portfolio, including client, sector, installed capacity, and project imagery.",
+  },
+  "/om": {
+    title: "Solar O&M Services",
+    description:
+      "Explore Environomics solar operations and maintenance services covering preventive maintenance, remote monitoring, corrective response, and third-party plant support.",
+  },
+  "/om/gallery": {
+    title: "Solar O&M Image Gallery",
+    description:
+      "View full Environomics solar operations and maintenance images in a separate tab with room for supporting captions and project notes below each image.",
+  },
   "/clients": {
     title: "Clients and Installation Portfolio",
     description:
@@ -35,7 +51,7 @@ const pageMetadata = {
   "/services": {
     title: "Solar EPC, HVAC and Industrial Utility Services",
     description:
-      "Discover Environomics services spanning solar rooftop, ground mount plants, O&M, pharmaceutical clean rooms, electrification, automation, and energy audits.",
+      "Discover Environomics services spanning solar rooftop, ground mount plants, pharmaceutical clean rooms, electrification, automation, and energy audits.",
   },
   "/testimonials": {
     title: "Client Testimonials",
@@ -69,6 +85,7 @@ const routeToPageKey = {
   "/home": "home",
   "/about": "about",
   "/projects": "projects",
+  "/projects/case-study": "projects",
   "/clients": "clients",
   "/services": "services",
   "/testimonials": "testimonials",
@@ -184,7 +201,7 @@ function buildStructuredData({
   };
 
   if (contact?.email) {
-    organization.email = contact.email;
+    organization.email = getPrimaryContactEmail(contact.email);
   }
 
   if (contact?.address) {

@@ -17,7 +17,7 @@ import aboutEnvironomicsImage from "../../imgs/450x600 copy.jpg.jpeg";
 import serviceImage1 from "../../imgs/S1.png";
 import serviceImage2 from "../../imgs/S2.png";
 import serviceImage3 from "../../imgs/S3.png";
-import serviceImage4 from "../../imgs/HVAC-IMAGE.jpeg";
+import serviceImage4 from "../../imgs/HVAC IMAGE.jpeg";
 
 const heroBackgroundImage = "/imgs/hero-2560.jpg";
 const heroBackgroundImageSmall = "/imgs/hero-1600.jpg";

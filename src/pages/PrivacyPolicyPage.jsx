@@ -30,7 +30,7 @@ const sections = [
   {
     title: "Contact",
     body:
-      "For privacy-related questions or data requests, please contact Environomics Projects LLP through the contact page or by email at info@environomics.in.",
+      "For privacy-related questions or data requests, please contact Environomics Projects LLP through the contact page or by email at sampath.kumar@epl.net.in or engineering@epl.net.in.",
   },
 ];
 

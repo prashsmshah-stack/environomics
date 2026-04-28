@@ -8,6 +8,14 @@ import {
   normalizeSingleLineText,
   singleLineClampStyle,
 } from "../lib/contentLayout";
+import {
+  CATALOGUE_PDF_PATH,
+  CONTACT_EMAILS_DISPLAY,
+  CONTACT_PHONE,
+  formatContactEmails,
+  normalizeContactPhone,
+  parseContactEmails,
+} from "../lib/siteContent";
 
 const serviceOptions = ["Solar Rooftop", "Ground Mount", "O&M", "HVAC", "Automation", "Energy Audit", "Other"];
 const inquiryFieldDefinitions = [
@@ -30,7 +38,7 @@ const inquiryFieldDefinitions = [
   {
     key: "phone",
     label: "Phone / WhatsApp (required)",
-    placeholder: "09998112299",
+    placeholder: CONTACT_PHONE,
     type: "tel",
     required: true,
   },
@@ -50,8 +58,8 @@ const initialInquiryForm = {
 };
 
 const fallbackContact = {
-  phone: "09998112299",
-  email: "info@environomics.in",
+  phone: CONTACT_PHONE,
+  email: CONTACT_EMAILS_DISPLAY,
   address: "417 Ratna High Street, Naranpura, Ahmedabad, 380013, Gujarat, India",
   linkedin: "https://www.linkedin.com/company/environomics-projects-llp/",
   socials: [
@@ -143,8 +151,8 @@ export default function ContactUsPage() {
     return {
       ...fallbackContact,
       ...backendContact,
-      phone: normalizeSingleLineText(backendContact.phone, fallbackContact.phone),
-      email: normalizeSingleLineText(backendContact.email, fallbackContact.email),
+      phone: normalizeContactPhone(backendContact.phone, fallbackContact.phone),
+      email: formatContactEmails(backendContact.email),
       address: String(backendContact.address ?? "").trim() || fallbackContact.address,
       linkedin: normalizeSingleLineText(
         backendContact.linkedin,
@@ -156,11 +164,8 @@ export default function ContactUsPage() {
           : fallbackContact.socials,
     };
   }, [content]);
+  const contactEmails = useMemo(() => parseContactEmails(contact.email), [contact.email]);
   const addressLines = useMemo(() => getAddressLines(contact.address), [contact.address]);
-  const mailToHref = useMemo(
-    () => `mailto:${contact.email}?subject=${encodeURIComponent("Project Catalogue Request")}`,
-    [contact.email]
-  );
   const whatsappHref = useMemo(() => getWhatsAppUrl(contact.phone), [contact.phone]);
   const mapHref = useMemo(() => getMapUrl(contact.address), [contact.address]);
   const ctaCards = useMemo(
@@ -174,10 +179,10 @@ export default function ContactUsPage() {
       },
       {
         eyebrow: "Resources",
-        title: "Request Our Project Catalogue",
-        action: "Email Request",
+        title: "Download Our Project Catalogue",
+        action: "Download Now",
         color: "text-primary",
-        href: mailToHref,
+        href: CATALOGUE_PDF_PATH,
         external: true,
       },
       {
@@ -198,7 +203,7 @@ export default function ContactUsPage() {
         external: true,
       },
     ],
-    [mailToHref, whatsappHref]
+    [whatsappHref]
   );
 
   useEffect(() => {
@@ -517,16 +522,6 @@ export default function ContactUsPage() {
                     <Icon name="explore" className="text-[140px]" />
                   </div>
                 </div>
-
-                <div className="contact-card-click flex items-center gap-4 rounded-2xl border border-secondary/10 bg-secondary/5 p-5">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-white">
-                    <Icon name="verified" className="text-xl" />
-                  </div>
-                  <div>
-                    <p className="font-helixa-bold text-sm text-secondary">ISO 9001:2015 Certified</p>
-                    <p className="font-helixa-regular text-[10px] uppercase tracking-tight text-slate-500">Precision Industrial Standards</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -542,8 +537,8 @@ export default function ContactUsPage() {
                 <p className="font-helixa-regular mb-10 max-w-2xl text-base text-growth-green sm:mb-12 sm:text-lg">For immediate assistance regarding project maintenance or emergency audits, connect with our 24/7 industrial support team.</p>
                 <div className="grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
                   {[
-                    { icon: 'call', label: 'Industrial Hotline (24/7)', value: contact.phone },
-                    { icon: 'inbox', label: 'Project Support', value: contact.email },
+                    { icon: "call", label: "Industrial Hotline (24/7)", values: [contact.phone] },
+                    { icon: "inbox", label: "Project Support", values: contactEmails },
                   ].map((item) => (
                     <div key={item.label} className="group flex cursor-pointer items-center gap-6">
                       <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-outline-variant/30 bg-green-50 shadow-sm transition-all duration-300 group-hover:border-primary group-hover:bg-growth-green/90">
@@ -551,7 +546,16 @@ export default function ContactUsPage() {
                       </div>
                       <div>
                         <p className="font-helixa-bold mb-1 text-[10px] uppercase tracking-[0.2em]">{item.label}</p>
-                        <p className="font-helixa-bold text-xl tracking-tight text-growth-green sm:text-2xl md:text-3xl" style={singleLineClampStyle} title={item.value}>{item.value}</p>
+                        {item.values.map((value) => (
+                          <p
+                            key={value}
+                            className="font-helixa-bold text-xl tracking-tight text-growth-green sm:text-2xl md:text-3xl"
+                            style={singleLineClampStyle}
+                            title={value}
+                          >
+                            {value}
+                          </p>
+                        ))}
                       </div>
                     </div>
                   ))}
