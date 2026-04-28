@@ -8,32 +8,25 @@ import {
   normalizeSingleLineText,
 } from "../lib/contentLayout";
 
-const supplementalClientLogoModules = import.meta.glob("../../imgs/*.{jpeg,jpg,png,webp}", {
-  eager: true,
-  import: "default",
-});
+const supplementalClientLogoModules = {
+  ...import.meta.glob("../../imgs/Dangee Dums logo.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/Shree Bhagwat Vidyapith Trust Logo.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/The Pioneer Magnesia Works logo.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+};
 
 const supplementalClientLogoFilenames = [
   "Dangee Dums logo.jpeg",
   "Shree Bhagwat Vidyapith Trust Logo.jpeg",
   "The Pioneer Magnesia Works logo.jpeg",
-];
-
-const sectorOrder = [
-  "Automotive",
-  "Pharma",
-  "Textiles",
-  "Engineering",
-  "Chemicals",
-  "Manufacturing",
-  "Food & Bev",
-  "FMCG",
-  "Education",
-  "Steel / Infra",
-  "Healthcare",
-  "Tiles / MFG",
-  "Water Tech",
-  "Paper / MFG",
 ];
 
 const fallbackClients = [

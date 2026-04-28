@@ -2,10 +2,80 @@ import { useMemo } from "react";
 import { usePublicContent } from "../context/PublicContentContext";
 import { getProjectBySlug, handleProjectMediaError } from "../lib/projectPortfolio";
 
-const projectGalleryAssetModules = import.meta.glob("../../imgs/*.{jpeg,jpg,png,webp}", {
-  eager: true,
-  import: "default",
-});
+const projectGalleryAssetModules = {
+  ...import.meta.glob("../../imgs/AKASH FASHION IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/AMOL MINECHEM IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/BAXTER IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/BAXTER IMAGES *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/BUSCH VACUUM IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/BUSH VACUUM IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/COLGATE IMAGES *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/FUJI SILVERTECH IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/GRG IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/HONDA IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/MONGINIES IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/OTSUKA IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/RAVIRAJ FOILS IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/ROHAN DYES IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/ROHAN DYES  IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/SIEMENS IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/SOMAY IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/WELSPUN IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+};
 
 const projectGalleryPrefixes = {
   "grg-cotspin": ["GRG IMAGE"],
