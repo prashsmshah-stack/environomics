@@ -6,13 +6,14 @@ const loadHomePage = () => import("./pages/HomePage");
 const loadAboutUsPage = () => import("./pages/AboutUsPage");
 const loadContactUsPage = () => import("./pages/ContactUsPage");
 const loadProjectsPage = () => import("./pages/ProjectsPage");
+const loadProjectCaseStudyPage = () => import("./pages/ProjectCaseStudyPage");
+const loadOperationsMaintenancePage = () => import("./pages/OperationsMaintenancePage");
+const loadOperationsMaintenanceGalleryPage = () =>
+  import("./pages/OperationsMaintenanceGalleryPage");
 const loadClientsPage = () => import("./pages/ClientsPage");
 const loadTestimonialsPage = () => import("./pages/TestimonialsPage");
 const loadInnovationPage = () => import("./pages/InnovationPage");
 const loadServicesPage = () => import("./pages/ServicesPage");
-const loadOperationsMaintenancePage = () => import("./pages/OperationsMaintenancePage");
-const loadOperationsMaintenanceGalleryPage = () =>
-  import("./pages/OperationsMaintenanceGalleryPage");
 const loadAdminPanelPage = () => import("./pages/AdminPanelPage");
 const loadPrivacyPolicyPage = () => import("./pages/PrivacyPolicyPage");
 
@@ -20,12 +21,13 @@ const HomePage = lazy(loadHomePage);
 const AboutUsPage = lazy(loadAboutUsPage);
 const ContactUsPage = lazy(loadContactUsPage);
 const ProjectsPage = lazy(loadProjectsPage);
+const ProjectCaseStudyPage = lazy(loadProjectCaseStudyPage);
+const OperationsMaintenancePage = lazy(loadOperationsMaintenancePage);
+const OperationsMaintenanceGalleryPage = lazy(loadOperationsMaintenanceGalleryPage);
 const ClientsPage = lazy(loadClientsPage);
 const TestimonialsPage = lazy(loadTestimonialsPage);
 const InnovationPage = lazy(loadInnovationPage);
 const ServicesPage = lazy(loadServicesPage);
-const OperationsMaintenancePage = lazy(loadOperationsMaintenancePage);
-const OperationsMaintenanceGalleryPage = lazy(loadOperationsMaintenanceGalleryPage);
 const AdminPanelPage = lazy(loadAdminPanelPage);
 const PrivacyPolicyPage = lazy(loadPrivacyPolicyPage);
 
@@ -35,9 +37,10 @@ const routeComponents = {
   "/about": AboutUsPage,
   "/contact": ContactUsPage,
   "/projects": ProjectsPage,
-  "/services": ServicesPage,
+  "/projects/case-study": ProjectCaseStudyPage,
   "/om": OperationsMaintenancePage,
   "/om/gallery": OperationsMaintenanceGalleryPage,
+  "/services": ServicesPage,
   "/clients": ClientsPage,
   "/testimonials": TestimonialsPage,
   "/innovation": InnovationPage,
@@ -51,9 +54,10 @@ const routePreloaders = {
   "/about": loadAboutUsPage,
   "/contact": loadContactUsPage,
   "/projects": loadProjectsPage,
-  "/services": loadServicesPage,
+  "/projects/case-study": loadProjectCaseStudyPage,
   "/om": loadOperationsMaintenancePage,
   "/om/gallery": loadOperationsMaintenanceGalleryPage,
+  "/services": loadServicesPage,
   "/clients": loadClientsPage,
   "/testimonials": loadTestimonialsPage,
   "/innovation": loadInnovationPage,
