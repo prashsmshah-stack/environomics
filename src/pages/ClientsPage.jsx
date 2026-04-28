@@ -8,6 +8,17 @@ import {
   normalizeSingleLineText,
 } from "../lib/contentLayout";
 
+const supplementalClientLogoModules = import.meta.glob("../../imgs/*.{jpeg,jpg,png,webp}", {
+  eager: true,
+  import: "default",
+});
+
+const supplementalClientLogoFilenames = [
+  "Dangee Dums logo.jpeg",
+  "Shree Bhagwat Vidyapith Trust Logo.jpeg",
+  "The Pioneer Magnesia Works logo.jpeg",
+];
+
 const sectorOrder = [
   "Automotive",
   "Pharma",
@@ -57,6 +68,38 @@ const fallbackClients = [
   { n: "HYS Lifecare", s: "Healthcare", y: "2019", c: "90 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/hys.jpg" },
   { n: "Bharat Beams", s: "Manufacturing", y: "2018", c: "100 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/bharat-beams-private-limited-120x120-1.jpg" },
 ];
+
+function getAssetFilename(path = "") {
+  return path.split("/").pop() ?? "";
+}
+
+function formatClientNameFromLogoFilename(filename = "") {
+  return String(filename ?? "")
+    .replace(/\.[^.]+$/, "")
+    .replace(/\blogo\b/gi, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getSupplementalClients() {
+  const allowedFiles = new Set(supplementalClientLogoFilenames);
+
+  return Object.entries(supplementalClientLogoModules)
+    .map(([path, src]) => {
+      const filename = getAssetFilename(path);
+      return { filename, src };
+    })
+    .filter((item) => allowedFiles.has(item.filename))
+    .sort((left, right) => left.filename.localeCompare(right.filename))
+    .map((item, index) => ({
+      id: `supplemental-client-${index + 1}`,
+      n: formatClientNameFromLogoFilename(item.filename),
+      s: "Industrial",
+      y: "",
+      c: "",
+      l: item.src,
+    }));
+}
 
 function logoFallback(label) {
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
@@ -109,28 +152,42 @@ export default function ClientsPage() {
   `;
 
   const { content } = usePublicContent();
+  const supplementalClients = useMemo(() => getSupplementalClients(), []);
   const clients = useMemo(() => {
     const backendClients =
       Array.isArray(content?.clients) && content.clients.length ? content.clients : null;
 
-    if (!backendClients) {
-      return fallbackClients;
-    }
+    const baseClients = !backendClients
+      ? fallbackClients
+      : backendClients.map((client, index) => {
+          const name = String(client.name ?? "").trim();
+          const companyLogo = resolveMediaUrl(client.companyLogo ?? "");
 
-    return backendClients.map((client, index) => {
-      const name = String(client.name ?? "").trim();
-      const companyLogo = resolveMediaUrl(client.companyLogo ?? "");
+          return {
+            id: client.id ?? `client-${index}`,
+            n: normalizeSingleLineText(name, `Client ${index + 1}`),
+            s: normalizeSingleLineText(client.category, "Industrial"),
+            y: normalizeSingleLineText(client.year),
+            c: normalizeSingleLineText(client.capacity),
+            l: companyLogo,
+          };
+        });
 
-      return {
-        id: client.id ?? `client-${index}`,
-        n: normalizeSingleLineText(name, `Client ${index + 1}`),
-        s: normalizeSingleLineText(client.category, "Industrial"),
-        y: normalizeSingleLineText(client.year),
-        c: normalizeSingleLineText(client.capacity),
-        l: companyLogo,
-      };
+    const existingNames = new Set(baseClients.map((client) => String(client.n ?? "").trim().toLowerCase()));
+    const mergedClients = [...baseClients];
+
+    supplementalClients.forEach((client) => {
+      const lookupKey = String(client.n ?? "").trim().toLowerCase();
+      if (!lookupKey || existingNames.has(lookupKey)) {
+        return;
+      }
+
+      existingNames.add(lookupKey);
+      mergedClients.push(client);
     });
-  }, [content]);
+
+    return mergedClients;
+  }, [content, supplementalClients]);
 
   return (
     <div className="bg-white font-body text-on-surface selection:bg-primary/20">
@@ -149,7 +206,7 @@ export default function ClientsPage() {
             />
 
             <div className="grid grid-cols-2 items-center gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-              {clients.slice(0, 30).map((client, index) => (
+              {clients.map((client, index) => (
                 <div
                   key={client.id ?? client.n}
                   className="group flex h-[100px] items-center justify-center opacity-0 animate-fade-in-up"

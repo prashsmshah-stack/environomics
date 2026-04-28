@@ -2,6 +2,29 @@ import { useMemo } from "react";
 import { usePublicContent } from "../context/PublicContentContext";
 import { getProjectBySlug, handleProjectMediaError } from "../lib/projectPortfolio";
 
+const projectGalleryAssetModules = import.meta.glob("../../imgs/*.{jpeg,jpg,png,webp}", {
+  eager: true,
+  import: "default",
+});
+
+const projectGalleryPrefixes = {
+  "grg-cotspin": ["GRG IMAGE"],
+  "honda-india": ["HONDA IMAGE"],
+  "otsuka-pharmaceuticals": ["OTSUKA IMAGE"],
+  "welspun-group": ["WELSPUN IMAGE"],
+  "siemens-energy": ["SIEMENS IMAGE"],
+  "baxter-pharma": ["BAXTER IMAGE", "BAXTER IMAGES"],
+  "colgate-palmolive": ["COLGATE IMAGE", "COLGATE IMAGES"],
+  "amol-minechem": ["AMOL MINECHEM IMAGE"],
+  "raviraj-foils": ["RAVIRAJ FOILS IMAGE"],
+  "akash-fashion": ["AKASH FASHION IMAGE"],
+  "monginis-foods": ["MONGINIES IMAGE", "MONGINIS IMAGE"],
+  "rohan-dyes-rdl": ["ROHAN DYES IMAGE"],
+  "fuji-silvertech": ["FUJI SILVERTECH IMAGE"],
+  "somany-evergreen": ["SOMAY IMAGE", "SOMANY IMAGE"],
+  "busch-vacuum": ["BUSCH VACUUM IMAGE", "BUSH VACUUM IMAGE"],
+};
+
 const pageStyles = `
   .case-study-shell {
     background:
@@ -30,6 +53,58 @@ function DetailItem({ label, value }) {
   );
 }
 
+function getAssetFilename(path = "") {
+  return path.split("/").pop() ?? "";
+}
+
+function normalizeGalleryAssetLabel(value = "") {
+  return String(value ?? "")
+    .replace(/\.[^.]+$/, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toUpperCase();
+}
+
+function getGalleryImageOrder(value = "") {
+  const matchedNumber = normalizeGalleryAssetLabel(value).match(/(\d+)(?!.*\d)/);
+  return matchedNumber ? Number.parseInt(matchedNumber[1], 10) : Number.MAX_SAFE_INTEGER;
+}
+
+function getProjectGalleryImages(project) {
+  const slug = project?.slug ?? "";
+  const prefixes = projectGalleryPrefixes[slug] ?? [];
+
+  if (!prefixes.length) {
+    return [];
+  }
+
+  return Object.entries(projectGalleryAssetModules)
+    .map(([path, src]) => {
+      const filename = getAssetFilename(path);
+      const normalizedName = normalizeGalleryAssetLabel(filename);
+
+      return {
+        src,
+        filename,
+        normalizedName,
+      };
+    })
+    .filter((item) => prefixes.some((prefix) => item.normalizedName.startsWith(prefix)))
+    .sort((left, right) => {
+      const orderDifference = getGalleryImageOrder(left.filename) - getGalleryImageOrder(right.filename);
+      if (orderDifference !== 0) {
+        return orderDifference;
+      }
+
+      return left.filename.localeCompare(right.filename);
+    })
+    .map((item, index) => ({
+      ...item,
+      id: `${slug}-gallery-${index + 1}`,
+      alt: `${project.name} site image ${index + 1}`,
+    }));
+}
+
 export default function ProjectCaseStudyPage() {
   const { content, status } = usePublicContent();
   const requestedSlug = getRequestedProjectSlug();
@@ -38,6 +113,31 @@ export default function ProjectCaseStudyPage() {
     () => getProjectBySlug(content, requestedSlug) ?? fallbackProject,
     [content, fallbackProject, requestedSlug]
   );
+  const projectGallery = useMemo(() => getProjectGalleryImages(project), [project]);
+  const caseStudyImages = useMemo(() => {
+    if (!project) {
+      return [];
+    }
+
+    const primaryImage = {
+      id: `${project.slug ?? "project"}-cover`,
+      src: project.image,
+      alt: `${project.name} project`,
+      isPrimary: true,
+    };
+
+    const seenSources = new Set([project.image]);
+    const galleryImages = projectGallery.filter((image) => {
+      if (seenSources.has(image.src)) {
+        return false;
+      }
+
+      seenSources.add(image.src);
+      return true;
+    });
+
+    return [primaryImage, ...galleryImages];
+  }, [project, projectGallery]);
   const isLoading = !fallbackProject && (status === "idle" || status === "loading");
 
   return (
@@ -104,14 +204,41 @@ export default function ProjectCaseStudyPage() {
 
               <div className="px-6 py-6 sm:px-8 lg:px-10 lg:py-10">
                 <div className="overflow-hidden rounded-[28px] border border-slate-200 bg-slate-50">
-                  <img
-                    src={project.image}
-                    alt={`${project.name} project`}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                    onError={(event) => handleProjectMediaError(event, `${project.name} Project`)}
-                  />
+                  <div className="px-4 py-4 sm:px-5 sm:py-5">
+                    <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                      <p className="helixa-bold text-xs uppercase tracking-[0.18em] text-slate-500">
+                        Project site images
+                      </p>
+                      <p className="helixa-bold rounded-full bg-white px-4 py-2 text-xs uppercase tracking-[0.08em] text-primary shadow-sm">
+                        {caseStudyImages.length} total images
+                      </p>
+                    </div>
+
+                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                      {caseStudyImages.map((image, index) => (
+                        <figure
+                          key={image.id}
+                          className="overflow-hidden rounded-[22px] border border-slate-200 bg-white shadow-sm"
+                        >
+                          <img
+                            src={image.src}
+                            alt={image.alt}
+                            className="aspect-[4/3] w-full object-cover"
+                            loading={index <= 1 ? "eager" : "lazy"}
+                            decoding="async"
+                            onError={(event) =>
+                              handleProjectMediaError(
+                                event,
+                                image.isPrimary
+                                  ? `${project.name} Project`
+                                  : `${project.name} Site Image ${index}`
+                              )
+                            }
+                          />
+                        </figure>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
