@@ -35,9 +35,9 @@ export const fallbackProjects = [
     image: "/imgs/projects/grg-cotspin.jpg",
     brand: {
       kind: "image",
-      src: "https://www.environomics.net.in/wp-content/uploads/2025/02/2023_GRG_cotspin.jpeg",
+      src: getLocalCompanyLogo("GRG COTSPIN"),
       alt: "GRG Cotspin Logo",
-      style: { borderRadius: "4px", objectFit: "cover" },
+      style: { borderRadius: "4px" },
     },
   },
   {
@@ -48,7 +48,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/honda-india.jpg",
     brand: {
       kind: "image",
-      src: "https://www.environomics.net.in/wp-content/uploads/2025/02/2023_honda-Photoroom.webp",
+      src: getLocalCompanyLogo("HONDA INDIA"),
       alt: "Honda India Logo",
     },
   },
@@ -60,7 +60,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/otsuka-pharmaceuticals.jpg",
     brand: {
       kind: "image",
-      src: "https://www.environomics.net.in/wp-content/uploads/2024/02/otsuka.png",
+      src: getLocalCompanyLogo("OTSUKA PHARMACEUTICALS"),
       alt: "Otsuka Pharmaceuticals Logo",
     },
   },
@@ -72,7 +72,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/welspun-group.jpg",
     brand: {
       kind: "image",
-      src: "https://www.environomics.net.in/wp-content/uploads/2025/02/2023_welspun-Photoroom.webp",
+      src: getLocalCompanyLogo("WELSPUN GROUP"),
       alt: "Welspun Group Logo",
     },
   },
@@ -84,7 +84,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/siemens-energy.jpg",
     brand: {
       kind: "image",
-      src: "https://www.environomics.net.in/wp-content/uploads/2024/02/siemens.jpg",
+      src: getLocalCompanyLogo("SIEMENS ENERGY"),
       alt: "Siemens Energy Logo",
     },
   },
@@ -96,7 +96,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/baxter-pharma.jpg",
     brand: {
       kind: "image",
-      src: "/imgs/company-logos/baxter-pharma.png",
+      src: getLocalCompanyLogo("BAXTER PHARMA"),
       alt: "Baxter Pharma Logo",
     },
   },
@@ -108,7 +108,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/colgate-palmolive.jpg",
     brand: {
       kind: "image",
-      src: "/imgs/company-logos/colgate-palmolive.png",
+      src: getLocalCompanyLogo("COLGATE-PALMOLIVE"),
       alt: "Colgate-Palmolive Logo",
     },
   },
@@ -120,7 +120,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/amol-minechem.jpg",
     brand: {
       kind: "image",
-      src: "/imgs/company-logos/amol-minechem.jpg",
+      src: getLocalCompanyLogo("AMOL MINECHEM"),
       alt: "Amol Minechem Logo",
     },
   },
@@ -132,7 +132,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/raviraj-foils.png",
     brand: {
       kind: "image",
-      src: "https://www.ravirajfoils.com/images/logo.png",
+      src: getLocalCompanyLogo("RAVIRAJ FOILS"),
       alt: "Raviraj Foils Logo",
     },
   },
@@ -144,7 +144,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/akash-fashion.jpg",
     brand: {
       kind: "image",
-      src: "https://www.environomics.net.in/wp-content/uploads/2024/01/akashfashion.png",
+      src: getLocalCompanyLogo("AKASH FASHION"),
       alt: "Akash Fashion Logo",
     },
   },
@@ -156,7 +156,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/monginis-foods.jpg",
     brand: {
       kind: "image",
-      src: "https://www.environomics.net.in/wp-content/uploads/2025/02/2017_monginis-Photoroom.webp",
+      src: getLocalCompanyLogo("MONGINIS FOODS"),
       alt: "Monginis Foods Logo",
     },
   },
@@ -168,7 +168,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/rohan-dyes-rdl.jpg",
     brand: {
       kind: "image",
-      src: "https://www.environomics.net.in/wp-content/uploads/2024/02/rohan-dyes-rdil-logonew.png",
+      src: getLocalCompanyLogo("ROHAN DYES (RDL)"),
       alt: "Rohan Dyes Logo",
     },
   },
@@ -180,7 +180,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/fuji-silvertech.jpg",
     brand: {
       kind: "image",
-      src: "/imgs/company-logos/fuji-silvertech.png",
+      src: getLocalCompanyLogo("FUJI SILVERTECH"),
       alt: "Fuji SilverTech Logo",
     },
   },
@@ -192,7 +192,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/somany-evergreen.jpg",
     brand: {
       kind: "image",
-      src: "https://www.environomics.net.in/wp-content/uploads/2024/02/Somany-Evergreen.png",
+      src: getLocalCompanyLogo("SOMANY EVERGREEN"),
       alt: "Somany Evergreen Logo",
     },
   },
@@ -204,7 +204,7 @@ export const fallbackProjects = [
     image: "/imgs/projects/busch-vacuum.jpg",
     brand: {
       kind: "image",
-      src: "/imgs/company-logos/busch-vacuum.png",
+      src: getLocalCompanyLogo("BUSCH VACUUM"),
       alt: "Busch Vacuum Logo",
     },
   },
@@ -314,7 +314,6 @@ export function getPublishedProjects(content) {
     const presentation = presentationByName.get(name);
     const descriptionSource =
       project.description ?? project.meta ?? presentation?.description ?? presentation?.meta ?? "";
-    const companyLogo = resolveMediaUrl(project.companyLogo ?? "");
     const normalizedName = normalizeSingleLineText(name || presentation?.name, `Project ${index + 1}`);
     const normalizedDescription = normalizeSingleLineText(
       descriptionSource,
@@ -341,7 +340,6 @@ export function getPublishedProjects(content) {
         kind: "image",
         src:
           localCompanyLogo ||
-          companyLogo ||
           presentation?.brand?.src ||
           fallbackProjectMedia(name || "Project", "logo"),
         alt: presentation?.brand?.alt ?? `${name || "Project"} Logo`,

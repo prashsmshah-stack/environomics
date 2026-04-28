@@ -3,43 +3,42 @@ import PageIntro from "../components/PageIntro";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import { usePublicContent } from "../context/PublicContentContext";
-import { resolveMediaUrl } from "../lib/mediaUrl";
 import { getLocalCompanyLogo } from "../lib/companyLogoRegistry";
 import {
   normalizeSingleLineText,
 } from "../lib/contentLayout";
 
 const fallbackClients = [
-  { n: "GRG Cotspin", s: "Textiles", y: "2023", c: "4,200 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2023_GRG_cotspin.jpeg" },
-  { n: "Honda India", s: "Automotive", y: "2023", c: "2,500 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2023_honda-Photoroom.webp" },
-  { n: "Welspun Group", s: "Textiles", y: "2024", c: "2,000 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2023_welspun-Photoroom.webp" },
-  { n: "Otsuka Pharmaceuticals", s: "Pharma", y: "2018", c: "2,024 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/02/otsuka.png" },
-  { n: "Baxter Pharmaceutical", s: "Pharma", y: "2024", c: "1,300 kWp", l: "/imgs/company-logos/baxter-pharma.png" },
-  { n: "Siemens Energy", s: "Engineering", y: "2023", c: "1,300 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/02/siemens.jpg" },
-  { n: "Jindal", s: "Steel / Infra", y: "2017", c: "1,000 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/OIP-53.jpg" },
-  { n: "Raviraj Foils", s: "Manufacturing", y: "2022-23", c: "1,899 kWp", l: "https://www.ravirajfoils.com/images/logo.png" },
-  { n: "Amol Minechem", s: "Chemicals", y: "2022-23", c: "1,899 kWp", l: "/imgs/company-logos/amol-minechem.jpg" },
-  { n: "Akash Fashion", s: "Textiles", y: "2021", c: "999 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/01/akashfashion.png" },
-  { n: "Somany Evergreen", s: "Tiles / MFG", y: "2022", c: "900 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/02/Somany-Evergreen.png" },
-  { n: "Monginis Foods", s: "Food & Bev", y: "2018", c: "780 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2017_monginis-Photoroom.webp" },
-  { n: "Fuji SilverTech", s: "Manufacturing", y: "2025", c: "528.5 kWp", l: "/imgs/company-logos/fuji-silvertech.png" },
-  { n: "Colgate-Palmolive", s: "FMCG", y: "2025", c: "250 kWp", l: "/imgs/company-logos/colgate-palmolive.png" },
-  { n: "Rohan Dyes (RDL)", s: "Chemicals", y: "2020", c: "325 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/02/rohan-dyes-rdil-logonew.png" },
-  { n: "Balkrishna", s: "Manufacturing", y: "2019", c: "325 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/logo-3.png" },
-  { n: "Delhi University", s: "Education", y: "2017", c: "120 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/delhi-university-686256-1.jpg" },
-  { n: "DPS Bopal", s: "Education", y: "2018", c: "90 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/delhi-public-school-bopal-logo-1.jpg" },
-  { n: "Busch Vacuum", s: "Engineering", y: "2020", c: "72 kWp + HVAC", l: "/imgs/company-logos/busch-vacuum.png" },
-  { n: "JMC Paper", s: "Paper / MFG", y: "2019", c: "50 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/download-8.jpg" },
-  { n: "Aqseptence", s: "Water Tech", y: "2022-23", c: "320 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/01/aqseptencelogo.png" },
-  { n: "Screenotex", s: "Manufacturing", y: "2021", c: "100 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/01/screen.png" },
-  { n: "CTM Technical Textiles", s: "Textiles", y: "2022", c: "390 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/01/CTM-Technical-Textiles-Ltd.jpg" },
-  { n: "RSL Dye & Chemical", s: "Chemicals", y: "2021", c: "325 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/01/rdl-logo.png" },
-  { n: "Raghuvir Exim", s: "Textiles", y: "2018-19", c: "195 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2019_REL.webp" },
-  { n: "Swiss", s: "Manufacturing", y: "2021", c: "200 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/02/swiss.png" },
-  { n: "Wideangle", s: "Engineering", y: "2017", c: "120 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/02/wideangle.jpg" },
-  { n: "Western Shellcast", s: "Manufacturing", y: "2024", c: "400 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2025/02/2024_western_pal_shellcast.webp" },
-  { n: "HYS Lifecare", s: "Healthcare", y: "2019", c: "90 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/hys.jpg" },
-  { n: "Bharat Beams", s: "Manufacturing", y: "2018", c: "100 kWp", l: "https://www.environomics.net.in/wp-content/uploads/2024/03/bharat-beams-private-limited-120x120-1.jpg" },
+  { n: "GRG Cotspin", s: "Textiles", y: "2023", c: "4,200 kWp" },
+  { n: "Honda India", s: "Automotive", y: "2023", c: "2,500 kWp" },
+  { n: "Welspun Group", s: "Textiles", y: "2024", c: "2,000 kWp" },
+  { n: "Otsuka Pharmaceuticals", s: "Pharma", y: "2018", c: "2,024 kWp" },
+  { n: "Baxter Pharmaceutical", s: "Pharma", y: "2024", c: "1,300 kWp" },
+  { n: "Siemens Energy", s: "Engineering", y: "2023", c: "1,300 kWp" },
+  { n: "Jindal", s: "Steel / Infra", y: "2017", c: "1,000 kWp" },
+  { n: "Raviraj Foils", s: "Manufacturing", y: "2022-23", c: "1,899 kWp" },
+  { n: "Amol Minechem", s: "Chemicals", y: "2022-23", c: "1,899 kWp" },
+  { n: "Akash Fashion", s: "Textiles", y: "2021", c: "999 kWp" },
+  { n: "Somany Evergreen", s: "Tiles / MFG", y: "2022", c: "900 kWp" },
+  { n: "Monginis Foods", s: "Food & Bev", y: "2018", c: "780 kWp" },
+  { n: "Fuji SilverTech", s: "Manufacturing", y: "2025", c: "528.5 kWp" },
+  { n: "Colgate-Palmolive", s: "FMCG", y: "2025", c: "250 kWp" },
+  { n: "Rohan Dyes (RDL)", s: "Chemicals", y: "2020", c: "325 kWp" },
+  { n: "Balkrishna", s: "Manufacturing", y: "2019", c: "325 kWp" },
+  { n: "Delhi University", s: "Education", y: "2017", c: "120 kWp" },
+  { n: "DPS Bopal", s: "Education", y: "2018", c: "90 kWp" },
+  { n: "Busch Vacuum", s: "Engineering", y: "2020", c: "72 kWp + HVAC" },
+  { n: "JMC Paper", s: "Paper / MFG", y: "2019", c: "50 kWp" },
+  { n: "Aqseptence", s: "Water Tech", y: "2022-23", c: "320 kWp" },
+  { n: "Screenotex", s: "Manufacturing", y: "2021", c: "100 kWp" },
+  { n: "CTM Technical Textiles", s: "Textiles", y: "2022", c: "390 kWp" },
+  { n: "RSL Dye & Chemical", s: "Chemicals", y: "2021", c: "325 kWp" },
+  { n: "Raghuvir Exim", s: "Textiles", y: "2018-19", c: "195 kWp" },
+  { n: "Swiss", s: "Manufacturing", y: "2021", c: "200 kWp" },
+  { n: "Wideangle", s: "Engineering", y: "2017", c: "120 kWp" },
+  { n: "Western Shellcast", s: "Manufacturing", y: "2024", c: "400 kWp" },
+  { n: "HYS Lifecare", s: "Healthcare", y: "2019", c: "90 kWp" },
+  { n: "Bharat Beams", s: "Manufacturing", y: "2018", c: "100 kWp" },
 ];
 
 const supplementalClients = [
@@ -118,11 +117,10 @@ export default function ClientsPage() {
     const baseClients = !backendClients
       ? fallbackClients.map((client) => ({
           ...client,
-          l: getLocalCompanyLogo(client.n, client.l),
+          l: getLocalCompanyLogo(client.n),
         }))
       : backendClients.map((client, index) => {
           const name = String(client.name ?? "").trim();
-          const companyLogo = resolveMediaUrl(client.companyLogo ?? "");
           const normalizedName = normalizeSingleLineText(name, `Client ${index + 1}`);
 
           return {
@@ -131,7 +129,7 @@ export default function ClientsPage() {
             s: normalizeSingleLineText(client.category, "Industrial"),
             y: normalizeSingleLineText(client.year),
             c: normalizeSingleLineText(client.capacity),
-            l: getLocalCompanyLogo(normalizedName, companyLogo),
+            l: getLocalCompanyLogo(normalizedName),
           };
         });
 
@@ -152,7 +150,7 @@ export default function ClientsPage() {
     });
 
     return mergedClients;
-  }, [content, supplementalClients]);
+  }, [content]);
 
   return (
     <div className="bg-white font-body text-on-surface selection:bg-primary/20">
