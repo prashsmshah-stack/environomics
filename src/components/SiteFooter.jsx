@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import footerLogo from "../../imgs/Logo White.png";
 import { usePublicContent } from "../context/PublicContentContext";
-import { resolveMediaUrl } from "../lib/api";
+import { resolveMediaUrl } from "../lib/mediaUrl";
 import {
   normalizeDisplayLines,
   normalizeSingleLineText,

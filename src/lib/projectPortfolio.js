@@ -1,4 +1,4 @@
-import { resolveMediaUrl } from "./api";
+import { resolveMediaUrl } from "./mediaUrl";
 import { normalizeSingleLineText } from "./contentLayout";
 import { getLocalCompanyLogo } from "./companyLogoRegistry";
 

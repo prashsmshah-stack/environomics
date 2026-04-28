@@ -5,7 +5,7 @@ import serviceImage1 from "../../imgs/S1.png";
 import serviceImage2 from "../../imgs/S2.png";
 import serviceImage4 from "../../imgs/HVAC IMAGE.jpeg";
 import { usePublicContent } from "../context/PublicContentContext";
-import { resolveMediaUrl } from "../lib/api";
+import { resolveMediaUrl } from "../lib/mediaUrl";
 
 const navItems = [
   { key: "home", label: "Home", href: "/" },

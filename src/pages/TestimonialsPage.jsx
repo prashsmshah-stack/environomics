@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import { usePublicContent } from "../context/PublicContentContext";
-import { resolveMediaUrl } from "../lib/api";
+import { resolveMediaUrl } from "../lib/mediaUrl";
 import { testimonialShowcase } from "../lib/testimonialShowcase";
 import { normalizeSingleLineText } from "../lib/contentLayout";
 

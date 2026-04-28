@@ -14,7 +14,6 @@ const loadClientsPage = () => import("./pages/ClientsPage");
 const loadTestimonialsPage = () => import("./pages/TestimonialsPage");
 const loadInnovationPage = () => import("./pages/InnovationPage");
 const loadServicesPage = () => import("./pages/ServicesPage");
-const loadAdminPanelPage = () => import("./pages/AdminPanelPage");
 const loadPrivacyPolicyPage = () => import("./pages/PrivacyPolicyPage");
 
 const HomePage = lazy(loadHomePage);
@@ -28,7 +27,6 @@ const ClientsPage = lazy(loadClientsPage);
 const TestimonialsPage = lazy(loadTestimonialsPage);
 const InnovationPage = lazy(loadInnovationPage);
 const ServicesPage = lazy(loadServicesPage);
-const AdminPanelPage = lazy(loadAdminPanelPage);
 const PrivacyPolicyPage = lazy(loadPrivacyPolicyPage);
 
 const routeComponents = {
@@ -45,7 +43,6 @@ const routeComponents = {
   "/testimonials": TestimonialsPage,
   "/innovation": InnovationPage,
   "/privacy": PrivacyPolicyPage,
-  "/admin": AdminPanelPage,
 };
 
 const routePreloaders = {
@@ -62,7 +59,6 @@ const routePreloaders = {
   "/testimonials": loadTestimonialsPage,
   "/innovation": loadInnovationPage,
   "/privacy": loadPrivacyPolicyPage,
-  "/admin": loadAdminPanelPage,
 };
 
 function getCleanRoute(pathname = "") {

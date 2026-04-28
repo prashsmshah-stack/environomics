@@ -1,4 +1,4 @@
-import { resolveMediaUrl } from "./lib/api";
+import { resolveMediaUrl } from "./lib/mediaUrl";
 import { getPrimaryContactEmail } from "./lib/siteContent";
 
 const SITE_NAME = "Environomics Projects LLP";
@@ -72,11 +72,6 @@ const pageMetadata = {
     title: "Privacy Policy",
     description:
       "Read the Environomics Projects LLP privacy policy covering website inquiries, contact information, and data handling practices.",
-  },
-  "/admin": {
-    title: "Admin Panel",
-    description:
-      "Secure Environomics content management portal for website updates and lead handling.",
   },
 };
 
@@ -242,10 +237,7 @@ export function applyRouteMetadata(route, content) {
   const imageUrl = schema.defaultImage;
   const siteName = schema.organizationName || SITE_NAME;
   const title = `${metadata.title} | ${siteName}`;
-  const robotsContent =
-    route === "/admin"
-      ? "noindex,nofollow,noarchive"
-      : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
+  const robotsContent = "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1";
 
   document.title = title;
   document.documentElement.lang = "en";
@@ -273,13 +265,6 @@ export function applyRouteMetadata(route, content) {
   canonicalLink.setAttribute("href", canonicalUrl);
 
   let structuredDataNode = document.head.querySelector('script[data-seo="route-schema"]');
-  if (route === "/admin") {
-    if (structuredDataNode) {
-      structuredDataNode.remove();
-    }
-    return;
-  }
-
   if (!structuredDataNode) {
     structuredDataNode = document.createElement("script");
     structuredDataNode.type = "application/ld+json";

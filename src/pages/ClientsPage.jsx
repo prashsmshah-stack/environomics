@@ -3,7 +3,7 @@ import PageIntro from "../components/PageIntro";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import { usePublicContent } from "../context/PublicContentContext";
-import { resolveMediaUrl } from "../lib/api";
+import { resolveMediaUrl } from "../lib/mediaUrl";
 import { getLocalCompanyLogo } from "../lib/companyLogoRegistry";
 import {
   normalizeSingleLineText,

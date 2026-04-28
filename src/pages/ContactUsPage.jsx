@@ -2,7 +2,6 @@ import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 import { useEffect, useMemo, useState } from "react";
 import { usePublicContent } from "../context/PublicContentContext";
-import { getApiUrl } from "../lib/api";
 import {
   normalizeDisplayLines,
   normalizeSingleLineText,
@@ -13,6 +12,7 @@ import {
   CONTACT_EMAILS_DISPLAY,
   CONTACT_PHONE,
   formatContactEmails,
+  getPrimaryContactEmail,
   normalizeContactPhone,
   parseContactEmails,
 } from "../lib/siteContent";
@@ -265,37 +265,25 @@ export default function ContactUsPage() {
     setIsSuccessPopupOpen(false);
 
     try {
-      const response = await fetch(getApiUrl("/leads"), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: inquiryForm.name.trim(),
-          company: inquiryForm.company.trim(),
-          email: inquiryForm.email.trim(),
-          phone: inquiryForm.phone.trim(),
-          requirement: buildRequirementSummary(inquiryForm),
-        }),
-      });
+      const recipient = getPrimaryContactEmail(contact.email);
+      const subject = `Website inquiry from ${inquiryForm.company.trim() || inquiryForm.name.trim()}`;
+      const body = [
+        `Name: ${inquiryForm.name.trim()}`,
+        `Company: ${inquiryForm.company.trim()}`,
+        `Email: ${inquiryForm.email.trim()}`,
+        `Phone: ${inquiryForm.phone.trim()}`,
+        "",
+        buildRequirementSummary(inquiryForm),
+      ].join("\n");
 
-      const payload = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        throw new Error(payload?.message ?? "We could not submit your inquiry right now.");
-      }
-
+      window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       setInquiryForm(initialInquiryForm);
       setSubmitMessage(
-        "Your inquiry has been submitted successfully. Our team will review it and respond with a technical answer soon."
+        "Your email app has been opened with the inquiry details. Please send the email to complete your request."
       );
       setIsSuccessPopupOpen(true);
     } catch (error) {
-      setSubmitError(
-        error.message === "Failed to fetch"
-          ? "Could not reach the inquiry server. Please make sure the backend is running."
-          : error.message
-      );
+      setSubmitError(error.message || "We could not open your email app right now.");
     } finally {
       setIsSubmitting(false);
     }
