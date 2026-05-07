@@ -54,11 +54,19 @@ npm run preview
 
 Recommended Hostinger setup:
 
-1. Create a static or Node.js application and point it at the repository root.
-2. Select Node.js `24.x` or another version compatible with the root `package.json` engines field.
-3. Use build command `npm run build`.
-4. Serve the generated `dist/` directory.
-5. Point your domain to the deployed frontend.
+1. Run `npm ci` or `npm install`.
+2. Run `npm run build`.
+3. Upload the contents of the generated `dist/` folder to Hostinger's site root, usually `public_html/`.
+4. Make sure hidden files are uploaded too, especially `dist/.htaccess`.
+5. Keep the generated `dist/imgs/`, `dist/assets/`, and `dist/downloads/` folders together with `index.html`.
+6. Point your domain to the deployed frontend.
+
+Images are protected in two ways:
+
+- Files referenced from `public/` are copied into `dist/` during `npm run build`.
+- Files imported from the source `imgs/` folder are emitted into `dist/imgs/` with hashed names by Vite.
+
+For Hostinger, deploy the complete `dist/` output rather than individual files. Deleting or skipping `dist/imgs/` will break images.
 
 ## SPA Routing
 

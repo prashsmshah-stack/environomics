@@ -1,0 +1,76 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "Home",
+    "description": "Homepage hero, about, culture, video, and services content"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pageName": {
+      "type": "string",
+      "required": true,
+      "default": "Home"
+    },
+    "heroBadge": {
+      "type": "string",
+      "required": true
+    },
+    "heroTitle": {
+      "type": "string",
+      "required": true
+    },
+    "heroSubtitle": {
+      "type": "string",
+      "required": true
+    },
+    "heroLead": {
+      "type": "text",
+      "required": true
+    },
+    "heroImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "aboutHeading": {
+      "type": "string",
+      "required": true
+    },
+    "aboutBody": {
+      "type": "text",
+      "required": true
+    },
+    "aboutImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "videos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.video"
+    },
+    "services": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.service-card"
+    },
+    "cultureTopics": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.culture-topic"
+    }
+  }
+}

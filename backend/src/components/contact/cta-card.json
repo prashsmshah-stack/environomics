@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_contact_cta_cards",
+  "info": {
+    "displayName": "CTA Card",
+    "description": "Contact page top CTA card"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "action": {
+      "type": "string",
+      "required": true
+    },
+    "isVisible": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    }
+  }
+}

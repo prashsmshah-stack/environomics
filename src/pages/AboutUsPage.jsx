@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import aboutEnvironomicsImage from "../../imgs/700x560.jpg.jpeg";
+import paragShahImage from "../../imgs/parah shah.jpeg";
+import sampathKumarImage from "../../imgs/sampath kumar.jpeg";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
+import { getLocalCompanyLogo } from "../lib/companyLogoRegistry";
 
 const processSteps = [
   {
@@ -39,10 +42,13 @@ const clientLogos = [
   "Siemens Energy",
   "Colgate-Palmolive",
   "Baxter Pharmaceutical",
-  "Welspun Group",
   "Otsuka Pharmaceuticals",
   "Jindal Group",
 ];
+
+function isWelspunClient(client) {
+  return /welspun/i.test(client);
+}
 
 const domainExpertise = [
   "Solar Rooftop Systems, Commercial & Industrial (30 kWp to 5 MWp)",
@@ -72,16 +78,14 @@ const leaders = [
     role: "Managing Partner",
     description:
       "GU graduate in Business, Mechanical & Electrical Engineering. 30+ years of senior leadership in sales, service, project management, and marketing, including 20 years with a US headquartered multinational. Parag has experience across Solar, HVAC, Utilities, and Electrical EPC projects totalling over Rs. 5,000 crores in client investment through his 30+ year career. His experience across both commercial and technical sides of the business is what keeps Environomics on budget and on schedule.",
-    image:
-      "./imgs/paragshah.jpeg",
+    image: paragShahImage,
   },
   {
     name: "Sampath Kumar",
     role: "Head of Engineering",
     description:
       "M.Tech from BITS Pilani and Senior Scientist at SPRERI. 15+ years of hands-on engineering experience, grounded in academic research and field execution. Sampath leads every technical aspect of Environomics' solar EPC projects - from system design and structural analysis to grid integration and quality assurance. It is his engineering discipline that turns client investment into bankable, reliable energy assets.",
-    image:
-      "./imgs/founder2.jpeg",
+    image: sampathKumarImage,
   },
 ];
 
@@ -266,13 +270,28 @@ export default function AboutUsPage() {
             <div className="marquee-container relative flex overflow-hidden">
               <div className="flex animate-marquee items-center whitespace-nowrap py-4">
                 {[...clientLogos, ...clientLogos].map((client, index) => (
-                  <span
-                    key={`${client}-${index}`}
-                    className="optika-bold mx-10 cursor-default text-2xl text-white transition-colors hover:text-white sm:mx-12 sm:text-3xl md:mx-16 md:text-4xl"
-                    style={{ textShadow: "0 2px 10px rgba(0,0,0,0.1)" }}
-                  >
-                    {client}
-                  </span>
+                  isWelspunClient(client) ? (
+                    <span
+                      key={`${client}-${index}`}
+                      className="mx-10 inline-flex h-16 w-44 cursor-default items-center justify-center rounded-xl bg-white px-5 shadow-sm sm:mx-12 md:mx-16"
+                    >
+                      <img
+                        src={getLocalCompanyLogo(client)}
+                        alt={`${client} Logo`}
+                        className="max-h-10 max-w-full object-contain"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </span>
+                  ) : (
+                    <span
+                      key={`${client}-${index}`}
+                      className="optika-bold mx-10 cursor-default text-2xl text-white transition-colors hover:text-white sm:mx-12 sm:text-3xl md:mx-16 md:text-4xl"
+                      style={{ textShadow: "0 2px 10px rgba(0,0,0,0.1)" }}
+                    >
+                      {client}
+                    </span>
+                  )
                 ))}
               </div>
             </div>

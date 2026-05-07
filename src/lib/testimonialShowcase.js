@@ -134,16 +134,6 @@ export const testimonialShowcase = [
     image: "/imgs/testimonials/testimonial-13.png",
   },
   {
-    id: "loyal-equipments-2024",
-    title: "Loyal Equipments Ltd",
-    tag: "Industrial Solar",
-    subtitle: "Client Reference",
-    capacity: "250 kWp",
-    installed: "2024",
-    description: standardDescription,
-    image: sharedReferenceImage,
-  },
-  {
     id: "fuji-silvertech-2024",
     title: "Fuji Silvertech",
     tag: "Manufacturing",

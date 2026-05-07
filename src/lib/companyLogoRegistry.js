@@ -12,7 +12,7 @@ import delhiUniversityLogo from "../../imgs/delhi-university-logo-file_7c6be9bd0
 import dpsBopalLogo from "../../imgs/dps-bopal-logo-file_0a08270638a7.png";
 import fujiSilvertechLogo from "../../imgs/fuji-silvertech.png";
 import grgCotspinLogo from "../../imgs/grg-cotspin-logo-file_043e1bdf2bc6.png";
-import hondaIndiaLogo from "../../imgs/honda-india-logo-file_e22728b55c7f.jpg";
+import hondaIndiaLogo from "../../imgs/honda logo.jpeg";
 import hysLifecareLogo from "../../imgs/hys-lifecare-logo-file_25823f7f8690.jpg";
 import jindalLogo from "../../imgs/jindal-logo-file_bcdd5088a36a.png";
 import jmcPaperLogo from "../../imgs/jmc-paper-logo-file_9a5baf8a06b3.png";
@@ -28,7 +28,7 @@ import siemensEnergyLogo from "../../imgs/siemens-energy-logo-file_168dd66dfbe0.
 import somanyEvergreenLogo from "../../imgs/somany-evergreen-logo-file_6b618d4ad7ec.png";
 import swissLogo from "../../imgs/swiss-logo-file_8766853106b7.png";
 import pioneerMagnesiaWorksLogo from "../../imgs/The Pioneer Magnesia Works logo.jpeg";
-import welspunGroupLogo from "../../imgs/welspun-group-logo-file_691e4428648d.png";
+import welspunGroupLogo from "../../imgs/welspun logo.jpeg";
 import westernShellcastLogo from "../../imgs/2024_western_pal_shellcast.png";
 import wideangleLogo from "../../imgs/wideangle-logo-file_030cc7809828.png";
 

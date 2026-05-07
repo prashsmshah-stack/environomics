@@ -24,7 +24,7 @@ const pageMetadata = {
       "Learn about Environomics Projects LLP, our EPC process, engineering approach, leadership, and experience delivering industrial infrastructure projects across India.",
   },
   "/projects": {
-    title: "Industrial EPC Projects Portfolio",
+    title: "Our Industrial EPC Projects Portfolio",
     description:
       "Explore Environomics project work across rooftop solar, ground mount systems, industrial HVAC, and utility infrastructure for leading commercial and industrial clients.",
   },
@@ -43,8 +43,13 @@ const pageMetadata = {
     description:
       "View full Environomics solar operations and maintenance images in a separate tab with room for supporting captions and project notes below each image.",
   },
+  "/culture": {
+    title: "Our Culture",
+    description:
+      "Explore Environomics culture moments across CSR initiatives, trade shows, celebrations, and training events.",
+  },
   "/clients": {
-    title: "Clients and Installation Portfolio",
+    title: "Our Clients and Installation Portfolio",
     description:
       "See the clients who trust Environomics for solar EPC, industrial utilities, HVAC, and long-term infrastructure execution across multiple sectors in India.",
   },
@@ -81,6 +86,7 @@ const routeToPageKey = {
   "/about": "about",
   "/projects": "projects",
   "/projects/case-study": "projects",
+  "/culture": "culture",
   "/clients": "clients",
   "/services": "services",
   "/testimonials": "testimonials",

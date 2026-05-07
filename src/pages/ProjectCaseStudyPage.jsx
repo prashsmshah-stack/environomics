@@ -1,99 +1,5 @@
-import { useMemo } from "react";
-import { usePublicContent } from "../context/PublicContentContext";
-import { getProjectBySlug, handleProjectMediaError } from "../lib/projectPortfolio";
-
-const projectGalleryAssetModules = {
-  ...import.meta.glob("../../imgs/AKASH FASHION IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/AMOL MINECHEM IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/BAXTER IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/BAXTER IMAGES *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/BUSCH VACUUM IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/BUSH VACUUM IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/COLGATE IMAGES *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/FUJI SILVERTECH IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/GRG IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/HONDA IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/MONGINIES IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/OTSUKA IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/RAVIRAJ FOILS IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/ROHAN DYES IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/ROHAN DYES  IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/SIEMENS IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/SOMAY IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-  ...import.meta.glob("../../imgs/WELSPUN IMAGE *.jpeg", {
-    eager: true,
-    import: "default",
-  }),
-};
-
-const projectGalleryPrefixes = {
-  "grg-cotspin": ["GRG IMAGE"],
-  "honda-india": ["HONDA IMAGE"],
-  "otsuka-pharmaceuticals": ["OTSUKA IMAGE"],
-  "welspun-group": ["WELSPUN IMAGE"],
-  "siemens-energy": ["SIEMENS IMAGE"],
-  "baxter-pharma": ["BAXTER IMAGE", "BAXTER IMAGES"],
-  "colgate-palmolive": ["COLGATE IMAGE", "COLGATE IMAGES"],
-  "amol-minechem": ["AMOL MINECHEM IMAGE"],
-  "raviraj-foils": ["RAVIRAJ FOILS IMAGE"],
-  "akash-fashion": ["AKASH FASHION IMAGE"],
-  "monginis-foods": ["MONGINIES IMAGE", "MONGINIS IMAGE"],
-  "rohan-dyes-rdl": ["ROHAN DYES IMAGE"],
-  "fuji-silvertech": ["FUJI SILVERTECH IMAGE"],
-  "somany-evergreen": ["SOMAY IMAGE", "SOMANY IMAGE"],
-  "busch-vacuum": ["BUSCH VACUUM IMAGE", "BUSH VACUUM IMAGE"],
-};
+import { useEffect, useMemo, useState } from "react";
+import { fetchProjectBySlug, handleProjectMediaError } from "../lib/projectPortfolio";
 
 const pageStyles = `
   .case-study-shell {
@@ -123,67 +29,38 @@ function DetailItem({ label, value }) {
   );
 }
 
-function getAssetFilename(path = "") {
-  return path.split("/").pop() ?? "";
-}
-
-function normalizeGalleryAssetLabel(value = "") {
-  return String(value ?? "")
-    .replace(/\.[^.]+$/, "")
-    .replace(/\s+/g, " ")
-    .trim()
-    .toUpperCase();
-}
-
-function getGalleryImageOrder(value = "") {
-  const matchedNumber = normalizeGalleryAssetLabel(value).match(/(\d+)(?!.*\d)/);
-  return matchedNumber ? Number.parseInt(matchedNumber[1], 10) : Number.MAX_SAFE_INTEGER;
-}
-
-function getProjectGalleryImages(project) {
-  const slug = project?.slug ?? "";
-  const prefixes = projectGalleryPrefixes[slug] ?? [];
-
-  if (!prefixes.length) {
-    return [];
-  }
-
-  return Object.entries(projectGalleryAssetModules)
-    .map(([path, src]) => {
-      const filename = getAssetFilename(path);
-      const normalizedName = normalizeGalleryAssetLabel(filename);
-
-      return {
-        src,
-        filename,
-        normalizedName,
-      };
-    })
-    .filter((item) => prefixes.some((prefix) => item.normalizedName.startsWith(prefix)))
-    .sort((left, right) => {
-      const orderDifference = getGalleryImageOrder(left.filename) - getGalleryImageOrder(right.filename);
-      if (orderDifference !== 0) {
-        return orderDifference;
-      }
-
-      return left.filename.localeCompare(right.filename);
-    })
-    .map((item, index) => ({
-      ...item,
-      id: `${slug}-gallery-${index + 1}`,
-      alt: `${project.name} site image ${index + 1}`,
-    }));
-}
-
 export default function ProjectCaseStudyPage() {
-  const { content, status } = usePublicContent();
   const requestedSlug = getRequestedProjectSlug();
-  const fallbackProject = useMemo(() => getProjectBySlug(null, requestedSlug), [requestedSlug]);
-  const project = useMemo(
-    () => getProjectBySlug(content, requestedSlug) ?? fallbackProject,
-    [content, fallbackProject, requestedSlug]
-  );
-  const projectGallery = useMemo(() => getProjectGalleryImages(project), [project]);
+  const [project, setProject] = useState(null);
+  const [status, setStatus] = useState("loading");
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadProject() {
+      try {
+        setStatus("loading");
+        const nextProject = await fetchProjectBySlug(requestedSlug);
+
+        if (isMounted) {
+          setProject(nextProject);
+          setStatus("success");
+        }
+      } catch {
+        if (isMounted) {
+          setProject(null);
+          setStatus("error");
+        }
+      }
+    }
+
+    loadProject();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [requestedSlug]);
+
   const caseStudyImages = useMemo(() => {
     if (!project) {
       return [];
@@ -197,7 +74,20 @@ export default function ProjectCaseStudyPage() {
     };
 
     const seenSources = new Set([project.image]);
-    const galleryImages = projectGallery.filter((image) => {
+    const listingImage =
+      project.listingImage && !seenSources.has(project.listingImage)
+        ? {
+            id: `${project.slug ?? "project"}-listing-cover`,
+            src: project.listingImage,
+            alt: `${project.name} cover image`,
+          }
+        : null;
+
+    if (listingImage) {
+      seenSources.add(listingImage.src);
+    }
+
+    const galleryImages = (project.galleryImages ?? []).filter((image) => {
       if (seenSources.has(image.src)) {
         return false;
       }
@@ -206,9 +96,9 @@ export default function ProjectCaseStudyPage() {
       return true;
     });
 
-    return [primaryImage, ...galleryImages];
-  }, [project, projectGallery]);
-  const isLoading = !fallbackProject && (status === "idle" || status === "loading");
+    return [primaryImage, ...(listingImage ? [listingImage] : []), ...galleryImages];
+  }, [project]);
+  const isLoading = status === "loading";
 
   return (
     <div className="case-study-shell min-h-screen font-body text-on-surface selection:bg-primary/20">

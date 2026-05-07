@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_contact_form_fields",
+  "info": {
+    "displayName": "Form Field",
+    "description": "Contact inquiry form field"
+  },
+  "options": {},
+  "attributes": {
+    "fieldKey": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "placeholder": {
+      "type": "string",
+      "required": false
+    },
+    "inputType": {
+      "type": "enumeration",
+      "enum": [
+        "text",
+        "email",
+        "tel"
+      ],
+      "required": true,
+      "default": "text"
+    },
+    "required": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "isVisible": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    }
+  }
+}

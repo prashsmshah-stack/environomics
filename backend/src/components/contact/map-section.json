@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_contact_map_sections",
+  "info": {
+    "displayName": "Map Section",
+    "description": "Map callout content"
+  },
+  "options": {},
+  "attributes": {
+    "mapsTitle": {
+      "type": "string",
+      "required": false
+    },
+    "mapsDescription": {
+      "type": "text",
+      "required": false
+    },
+    "mapsButtonLabel": {
+      "type": "string",
+      "required": false
+    }
+  }
+}

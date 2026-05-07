@@ -1,0 +1,83 @@
+{
+  "kind": "collectionType",
+  "collectionName": "leads",
+  "info": {
+    "singularName": "lead",
+    "pluralName": "leads",
+    "displayName": "Leads",
+    "description": "Website inquiry submissions"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "company": {
+      "type": "string",
+      "required": true
+    },
+    "designation": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "service": {
+      "type": "string"
+    },
+    "projectSize": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "requirement": {
+      "type": "text",
+      "required": true
+    },
+    "source": {
+      "type": "string"
+    },
+    "sourcePage": {
+      "type": "string",
+      "required": true,
+      "default": "Contact Us"
+    },
+    "pagePath": {
+      "type": "string"
+    },
+    "formName": {
+      "type": "string",
+      "required": true,
+      "default": "Inquiry Form"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "New",
+        "Contacted",
+        "Qualified",
+        "Closed"
+      ],
+      "required": true,
+      "default": "New"
+    },
+    "submittedAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "userAgent": {
+      "type": "text",
+      "private": true
+    }
+  }
+}

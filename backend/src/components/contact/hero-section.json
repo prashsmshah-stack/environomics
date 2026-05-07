@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_contact_hero_sections",
+  "info": {
+    "displayName": "Hero Section",
+    "description": "Contact hero content"
+  },
+  "options": {},
+  "attributes": {
+    "heroTitle": {
+      "type": "string",
+      "required": false
+    },
+    "heroIntro": {
+      "type": "text",
+      "required": false
+    },
+    "heroNote": {
+      "type": "text",
+      "required": false
+    }
+  }
+}

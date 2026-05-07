@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_footer_contact_sections",
+  "info": {
+    "displayName": "Contact Section",
+    "description": "Footer contact details"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": false
+    },
+    "address": {
+      "type": "text",
+      "required": false
+    },
+    "phone": {
+      "type": "string",
+      "required": false
+    },
+    "email": {
+      "type": "text",
+      "required": false
+    }
+  }
+}

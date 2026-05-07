@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_home_videos",
+  "info": {
+    "displayName": "Video",
+    "description": "Homepage YouTube video"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "youtubeUrl": {
+      "type": "string",
+      "required": true
+    },
+    "isVisible": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "thumbnailImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}

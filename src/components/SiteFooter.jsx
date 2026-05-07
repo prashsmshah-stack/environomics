@@ -1,12 +1,10 @@
-import { useMemo } from "react";
-import footerLogo from "../../imgs/Logo White.png";
-import { usePublicContent } from "../context/PublicContentContext";
-import { resolveMediaUrl } from "../lib/mediaUrl";
+import { useEffect, useMemo, useState } from "react";
 import {
   normalizeDisplayLines,
   normalizeSingleLineText,
   singleLineClampStyle,
 } from "../lib/contentLayout";
+import { fetchStrapiJson, resolveStrapiMediaUrl } from "../lib/strapiApi";
 import {
   CONTACT_EMAILS_DISPLAY,
   CONTACT_PHONE,
@@ -67,6 +65,32 @@ const fallbackContact = {
 
 const fallbackSettings = {
   footerYear: "2026",
+};
+
+const fallbackFooter = {
+  isFallback: true,
+  logo: {
+    url: "",
+    alternativeText: "Environomics Logo",
+  },
+  logoAlt: "Environomics Logo",
+  description:
+    "Pioneering the industrial transition to sustainable infrastructure through high-precision engineering and EPC excellence.",
+  socialLinks: fallbackContact.socials,
+  servicesHeading: "Services",
+  serviceLinks: footerServices,
+  quickLinksHeading: "Quick Links",
+  quickLinks: footerLinks,
+  contactHeading: "CONTACT DETAILS",
+  address: fallbackContact.address,
+  phone: fallbackContact.phone,
+  email: fallbackContact.email,
+  copyrightText: `\u00a9 ${fallbackSettings.footerYear} Environomics. All rights reserved.`,
+  bottomWords: [
+    { id: "engineering", text: "Engineering" },
+    { id: "procurement", text: "Procurement" },
+    { id: "construction", text: "Construction" },
+  ],
 };
 
 function fallbackLogo(label) {
@@ -132,9 +156,9 @@ function WhatsAppIcon({ className = "" }) {
   );
 }
 
-function getAddressLines(address) {
+function getAddressLines(address, fallback = fallbackContact.address) {
   return normalizeDisplayLines(address, {
-    fallback: fallbackContact.address,
+    fallback,
     maxLines: 4,
     maxLineLength: 30,
   });
@@ -153,10 +177,10 @@ function SocialLinkIcon({ social }) {
     return <WhatsAppIcon className="h-5 w-5" />;
   }
 
-  if (social.logo) {
+  if (social.logoUrl) {
     return (
       <img
-        src={resolveMediaUrl(social.logo) || fallbackLogo(social.platform || "Social")}
+        src={social.logoUrl || fallbackLogo(social.platform || "Social")}
         alt={social.platform || "Social media"}
         className="h-5 w-5 object-contain"
         onError={(event) => handleImageError(event, social.platform || "Social media")}
@@ -167,34 +191,117 @@ function SocialLinkIcon({ social }) {
   return <Icon name="public" className="text-xl" />;
 }
 
-export default function SiteFooter() {
-  const { content } = usePublicContent();
-  const contact = useMemo(() => {
-    const backendContact = content?.contact ?? {};
+function normalizeFooterLink(link, index, fallbackPrefix = "link") {
+  return {
+    id: link?.id ?? `${fallbackPrefix}-${index + 1}`,
+    label: normalizeSingleLineText(link?.label),
+    href: normalizeSingleLineText(link?.href, "#"),
+    isExternal: Boolean(link?.isExternal),
+  };
+}
 
+function normalizeFooterSocialLink(social, index) {
+  return {
+    id: social?.id ?? social?.url ?? `social-${index + 1}`,
+    platform: normalizeSingleLineText(social?.platform, "Social"),
+    handle: normalizeSingleLineText(social?.handle),
+    url: normalizeSingleLineText(social?.url, "#"),
+    logoUrl: resolveStrapiMediaUrl(social?.logo?.url || social?.logo),
+  };
+}
+
+function normalizeFooter(payload) {
+  const data = payload?.data;
+
+  if (!data) {
+    return fallbackFooter;
+  }
+
+  const socialLinks = Array.isArray(data.socialLinks)
+    ? data.socialLinks.map(normalizeFooterSocialLink).filter((item) => item.url && item.url !== "#")
+    : [];
+  const serviceLinks = Array.isArray(data.serviceLinks)
+    ? data.serviceLinks.map((item, index) => normalizeFooterLink(item, index, "service")).filter((item) => item.label)
+    : [];
+  const quickLinks = Array.isArray(data.quickLinks)
+    ? data.quickLinks.map((item, index) => normalizeFooterLink(item, index, "quick")).filter((item) => item.label)
+    : [];
+  const bottomWords = Array.isArray(data.bottomWords)
+    ? data.bottomWords
+        .map((item, index) => ({
+          id: item?.id ?? `bottom-word-${index + 1}`,
+          text: normalizeSingleLineText(item?.text),
+        }))
+        .filter((item) => item.text)
+    : [];
+
+  return {
+    ...fallbackFooter,
+    ...data,
+    isFallback: false,
+    logo: {
+      url: resolveStrapiMediaUrl(data.logo?.url),
+      alternativeText: normalizeSingleLineText(data.logo?.alternativeText, data.logoAlt || fallbackFooter.logoAlt),
+    },
+    logoAlt: normalizeSingleLineText(data.logoAlt, fallbackFooter.logoAlt),
+    description: String(data.description ?? "").trim(),
+    socialLinks: Array.isArray(data.socialLinks) ? socialLinks : [],
+    servicesHeading: normalizeSingleLineText(data.servicesHeading),
+    serviceLinks: Array.isArray(data.serviceLinks) ? serviceLinks : [],
+    quickLinksHeading: normalizeSingleLineText(data.quickLinksHeading),
+    quickLinks: Array.isArray(data.quickLinks) ? quickLinks : [],
+    contactHeading: normalizeSingleLineText(data.contactHeading),
+    address: String(data.address ?? "").trim(),
+    phone: normalizeContactPhone(data.phone, ""),
+    email: parseContactEmails(data.email, []).join(", "),
+    copyrightText: normalizeSingleLineText(data.copyrightText),
+    bottomWords: Array.isArray(data.bottomWords) ? bottomWords : [],
+  };
+}
+
+export default function SiteFooter() {
+  const [footer, setFooter] = useState(fallbackFooter);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadFooter() {
+      try {
+        const payload = await fetchStrapiJson("/api/public/footer");
+
+        if (isMounted) {
+          setFooter(normalizeFooter(payload));
+        }
+      } catch {
+        if (isMounted) {
+          setFooter(fallbackFooter);
+        }
+      }
+    }
+
+    loadFooter();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const contact = useMemo(() => {
     return {
       ...fallbackContact,
-      ...backendContact,
-      phone: normalizeContactPhone(backendContact.phone, fallbackContact.phone),
-      email: formatContactEmails(backendContact.email),
-      address: String(backendContact.address ?? "").trim() || fallbackContact.address,
-      linkedin: normalizeSingleLineText(
-        backendContact.linkedin,
-        fallbackContact.linkedin
-      ),
-      socials:
-        Array.isArray(backendContact.socials)
-          ? backendContact.socials
-          : fallbackContact.socials,
+      phone: footer.phone || (footer.isFallback ? fallbackContact.phone : ""),
+      email: footer.email || (footer.isFallback ? formatContactEmails(fallbackContact.email) : ""),
+      address: String(footer.address ?? "").trim() || (footer.isFallback ? fallbackContact.address : ""),
+      socials: Array.isArray(footer.socialLinks)
+        ? footer.socialLinks
+        : footer.isFallback
+          ? fallbackContact.socials
+          : [],
     };
-  }, [content]);
-  const contactEmails = useMemo(() => parseContactEmails(contact.email), [contact.email]);
-  const settings = useMemo(
-    () => ({
-      ...fallbackSettings,
-      ...(content?.settings ?? {}),
-    }),
-    [content]
+  }, [footer]);
+  const contactEmails = useMemo(
+    () => parseContactEmails(contact.email, footer.isFallback ? undefined : []),
+    [contact.email, footer.isFallback]
   );
   const socialLinks = useMemo(() => {
     const seenUrls = new Set();
@@ -210,135 +317,163 @@ export default function SiteFooter() {
       items.push(item);
     };
 
-    if (contact.linkedin) {
-      pushItem({
-        id: "footer-linkedin",
-        platform: "LinkedIn",
-        url: contact.linkedin,
-        logo: "",
-      });
-    }
-
     for (const social of contact.socials ?? []) {
       pushItem(social);
     }
 
     return items;
   }, [contact]);
-  const addressLines = useMemo(() => getAddressLines(contact.address), [contact.address]);
+  const addressLines = useMemo(
+    () => getAddressLines(contact.address, footer.isFallback ? fallbackContact.address : ""),
+    [contact.address, footer.isFallback]
+  );
+  const shouldRenderLogo = Boolean(footer.logo.url || footer.isFallback);
+  const shouldRenderServices = Boolean(footer.servicesHeading || footer.serviceLinks.length);
+  const shouldRenderQuickLinks = Boolean(footer.quickLinksHeading || footer.quickLinks.length);
+  const shouldRenderContact = Boolean(footer.contactHeading || addressLines.length || contact.phone || contactEmails.length);
+  const shouldRenderBottom = Boolean(footer.copyrightText || footer.bottomWords.length);
 
   return (
     <footer className="relative overflow-hidden bg-[#2AAF6F] pb-10 pt-16 text-white sm:pb-12 sm:pt-20 lg:pt-24">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-4">
           <div>
-            <div className="mb-8 flex items-center gap-3 sm:mb-10">
-              <img
-                src={footerLogo}
-                alt="Environomics Logo"
-                className="h-14 w-auto object-contain sm:h-16"
-                onError={(event) => handleImageError(event, "Environomics Logo")}
-              />
-            </div>
-            <p className="helixa-regular mb-8 text-sm leading-relaxed text-white/90">
-              Pioneering the industrial transition to sustainable infrastructure through
-              high-precision engineering and EPC excellence.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.id ?? social.url}
-                  href={social.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`Visit Environomics on ${social.platform || "social media"}`}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-all hover:bg-white hover:text-growth-green"
-                >
-                  <SocialLinkIcon social={social} />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="optika-bold mb-6 text-lg text-white sm:mb-8">Services</h4>
-            <ul className="helixa-regular space-y-4 text-sm text-white/80">
-              {footerServices.map((item) => (
-                <li key={item.label}>
-                  <a href={item.href} className="transition-colors hover:text-white">
-                    {item.label}
+            {shouldRenderLogo ? (
+              <div className="mb-8 flex items-center gap-3 sm:mb-10">
+                <img
+                  src={footer.logo.url || fallbackLogo(footer.logoAlt)}
+                  alt={footer.logoAlt}
+                  className="h-14 w-auto object-contain sm:h-16"
+                  onError={(event) => handleImageError(event, footer.logoAlt)}
+                />
+              </div>
+            ) : null}
+            {footer.description ? (
+              <p className="helixa-regular mb-8 text-sm leading-relaxed text-white/90">
+                {footer.description}
+              </p>
+            ) : null}
+            {socialLinks.length ? (
+              <div className="flex flex-wrap gap-4">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.id ?? social.url}
+                    href={social.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Visit Environomics on ${social.platform || "social media"}`}
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-all hover:bg-white hover:text-growth-green"
+                  >
+                    <SocialLinkIcon social={social} />
                   </a>
-                </li>
-              ))}
-            </ul>
+                ))}
+              </div>
+            ) : null}
           </div>
 
-          <div>
-            <h4 className="optika-bold mb-6 text-lg text-white sm:mb-8">Quick Links</h4>
-            <ul className="helixa-regular space-y-4 text-sm text-white/80">
-              {footerLinks.map((item) => (
-                <li key={item.label}>
-                  <a href={item.href} className="transition-colors hover:text-white">
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="text-[#F8FAFB]">
-            <h4 className="optika-bold mb-6 flex items-center gap-2 text-lg sm:mb-8">
-              <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#2AAF6F]" />
-              CONTACT DETAILS
-            </h4>
-            <ul className="helixa-regular space-y-4 text-sm">
-              <li className="flex min-w-0 items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5">
-                  <Icon name="location_on" className="!text-xl text-white" />
-                </div>
-                <span className="min-w-0 pt-0.5">
-                  {(addressLines.length ? addressLines : [fallbackContact.address]).map((line) => (
-                    <span key={line} className="block">
-                      {line}
-                    </span>
-                  ))}
-                </span>
-              </li>
-              <li className="flex min-w-0 items-center gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5">
-                  <Icon name="call" className="!text-xl text-white" />
-                </div>
-                <span style={singleLineClampStyle} title={contact.phone}>{contact.phone}</span>
-              </li>
-              <li className="flex min-w-0 items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5">
-                  <Icon name="mail" className="!text-xl text-white" />
-                </div>
-                <div className="min-w-0 pt-0.5">
-                  {contactEmails.map((email) => (
-                    <a
-                      key={email}
-                      href={`mailto:${email}`}
-                      className="block break-all transition-colors hover:text-white/80"
-                      title={email}
-                    >
-                      {email}
+          {shouldRenderServices ? (
+            <div>
+              {footer.servicesHeading ? (
+                <h4 className="optika-bold mb-6 text-lg text-white sm:mb-8">{footer.servicesHeading}</h4>
+              ) : null}
+              <ul className="helixa-regular space-y-4 text-sm text-white/80">
+                {footer.serviceLinks.map((item) => (
+                  <li key={item.label}>
+                    <a href={item.href} target={item.isExternal ? "_blank" : undefined} rel={item.isExternal ? "noreferrer" : undefined} className="transition-colors hover:text-white">
+                      {item.label}
                     </a>
-                  ))}
-                </div>
-              </li>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {shouldRenderQuickLinks ? (
+            <div>
+              {footer.quickLinksHeading ? (
+                <h4 className="optika-bold mb-6 text-lg text-white sm:mb-8">{footer.quickLinksHeading}</h4>
+              ) : null}
+              <ul className="helixa-regular space-y-4 text-sm text-white/80">
+                {footer.quickLinks.map((item) => (
+                  <li key={item.label}>
+                    <a href={item.href} target={item.isExternal ? "_blank" : undefined} rel={item.isExternal ? "noreferrer" : undefined} className="transition-colors hover:text-white">
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {shouldRenderContact ? (
+            <div className="text-[#F8FAFB]">
+              {footer.contactHeading ? (
+                <h4 className="optika-bold mb-6 flex items-center gap-2 text-lg sm:mb-8">
+                  <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#2AAF6F]" />
+                  {footer.contactHeading}
+                </h4>
+              ) : null}
+            <ul className="helixa-regular space-y-4 text-sm">
+              {addressLines.length ? (
+                <li className="flex min-w-0 items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                    <Icon name="location_on" className="!text-xl text-white" />
+                  </div>
+                  <span className="min-w-0 pt-0.5">
+                    {addressLines.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </span>
+                </li>
+              ) : null}
+              {contact.phone ? (
+                <li className="flex min-w-0 items-center gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                    <Icon name="call" className="!text-xl text-white" />
+                  </div>
+                  <span style={singleLineClampStyle} title={contact.phone}>{contact.phone}</span>
+                </li>
+              ) : null}
+              {contactEmails.length ? (
+                <li className="flex min-w-0 items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5">
+                    <Icon name="mail" className="!text-xl text-white" />
+                  </div>
+                  <div className="min-w-0 pt-0.5">
+                    {contactEmails.map((email) => (
+                      <a
+                        key={email}
+                        href={`mailto:${email}`}
+                        className="block break-all transition-colors hover:text-white/80"
+                        title={email}
+                      >
+                        {email}
+                      </a>
+                    ))}
+                  </div>
+                </li>
+              ) : null}
             </ul>
-          </div>
+            </div>
+          ) : null}
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-center sm:gap-6 sm:pt-10 md:flex-row md:text-left">
-          <p className="helixa-regular text-sm text-white/60">© {settings.footerYear} Environomics. All rights reserved.</p>
-          <div className="helixa-bold flex flex-wrap justify-center gap-4 text-[11px] uppercase tracking-[0.25em] text-white/40 sm:gap-8 md:justify-end lg:gap-12">
-            <span>Engineering</span>
-            <span>Procurement</span>
-            <span>Construction</span>
+        {shouldRenderBottom ? (
+          <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-center sm:gap-6 sm:pt-10 md:flex-row md:text-left">
+            {footer.copyrightText ? (
+              <p className="helixa-regular text-sm text-white/60">{footer.copyrightText}</p>
+            ) : null}
+            {footer.bottomWords.length ? (
+              <div className="helixa-bold flex flex-wrap justify-center gap-4 text-[11px] uppercase tracking-[0.25em] text-white/40 sm:gap-8 md:justify-end lg:gap-12">
+                {footer.bottomWords.map((item) => (
+                  <span key={item.id ?? item.text}>{item.text}</span>
+                ))}
+              </div>
+            ) : null}
           </div>
-        </div>
+        ) : null}
       </div>
     </footer>
   );

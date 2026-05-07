@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
-import { usePublicContent } from "../context/PublicContentContext";
 import {
+  fetchProjects,
   getProjectCaseStudyHref,
-  getPublishedProjects,
   handleProjectMediaError,
   sortIndustries,
 } from "../lib/projectPortfolio";
@@ -91,6 +90,8 @@ const pageStyles = `
   }
 `;
 
+const PROJECT_REFRESH_INTERVAL_MS = 30000;
+
 function BrandLogo({ brand, name }) {
   return (
     <img
@@ -106,11 +107,13 @@ function BrandLogo({ brand, name }) {
 }
 
 function ProjectImage({ project }) {
+  const image = project.listingImage ?? project.image;
+
   return (
     <div className="tl-img-wrap">
       <img
         className="tl-img"
-        src={project.image}
+        src={image}
         alt={`${project.name} project`}
         loading="lazy"
         decoding="async"
@@ -121,12 +124,13 @@ function ProjectImage({ project }) {
 }
 
 export default function ProjectsPage() {
-  const { content } = usePublicContent();
   const filterRef = useRef(null);
+  const isPageMountedRef = useRef(false);
+  const latestProjectRequestRef = useRef(0);
   const [isIndustryMenuOpen, setIsIndustryMenuOpen] = useState(false);
   const [selectedIndustries, setSelectedIndustries] = useState([]);
-
-  const projects = useMemo(() => getPublishedProjects(content), [content]);
+  const [projects, setProjects] = useState([]);
+  const [status, setStatus] = useState("loading");
 
   const industries = useMemo(
     () =>
@@ -149,6 +153,64 @@ export default function ProjectsPage() {
 
     return projects.filter((project) => selectedIndustries.includes(project.industry));
   }, [projects, selectedIndustries]);
+
+  const loadProjects = useCallback(async ({ preserveExisting = false } = {}) => {
+    const requestId = latestProjectRequestRef.current + 1;
+    latestProjectRequestRef.current = requestId;
+
+    if (!preserveExisting) {
+      setStatus("loading");
+    }
+
+    try {
+      const nextProjects = await fetchProjects();
+
+      if (isPageMountedRef.current && latestProjectRequestRef.current === requestId) {
+        setProjects(nextProjects);
+        setStatus("success");
+      }
+    } catch {
+      if (isPageMountedRef.current && latestProjectRequestRef.current === requestId) {
+        if (!preserveExisting) {
+          setProjects([]);
+        }
+        setStatus("error");
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    isPageMountedRef.current = true;
+
+    loadProjects();
+
+    return () => {
+      isPageMountedRef.current = false;
+      latestProjectRequestRef.current += 1;
+    };
+  }, [loadProjects]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") {
+      return undefined;
+    }
+
+    function refreshVisibleProjects() {
+      if (document.visibilityState === "visible") {
+        loadProjects({ preserveExisting: true });
+      }
+    }
+
+    const refreshTimer = window.setInterval(refreshVisibleProjects, PROJECT_REFRESH_INTERVAL_MS);
+    window.addEventListener("focus", refreshVisibleProjects);
+    document.addEventListener("visibilitychange", refreshVisibleProjects);
+
+    return () => {
+      window.clearInterval(refreshTimer);
+      window.removeEventListener("focus", refreshVisibleProjects);
+      document.removeEventListener("visibilitychange", refreshVisibleProjects);
+    };
+  }, [loadProjects]);
 
   useEffect(() => {
     setSelectedIndustries((current) => {
@@ -195,7 +257,7 @@ export default function ProjectsPage() {
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div className="max-w-5xl">
                   <h1 className="optika-bold text-4xl leading-[1.02] text-primary sm:text-5xl md:text-6xl xl:text-7xl">
-                    Global Portfolio
+                    Our Global Portfolio
                   </h1>
 
                   <h2 className="optika-bold mt-4 text-xl leading-tight text-on-surface sm:text-2xl md:text-[2.2rem]">
@@ -307,12 +369,16 @@ export default function ProjectsPage() {
                   className="glass-lift-card group flex h-full flex-col rounded-[26px] p-6 opacity-0 shadow-[0_16px_45px_rgba(15,23,42,0.06)] animate-fade-in-up"
                   style={{ animationDelay: `${0.04 * (index + 1)}s` }}
                 >
-                  <div className="mb-5 overflow-hidden rounded-[18px]">
-                    <ProjectImage project={project} />
-                  </div>
+                  {project.hideListingCover ? null : (
+                    <div className="mb-5 overflow-hidden rounded-[18px]">
+                      <ProjectImage project={project} />
+                    </div>
+                  )}
 
                   <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                    <BrandLogo brand={project.brand} name={project.name} />
+                    {project.hideListingLogo ? null : (
+                      <BrandLogo brand={project.brand} name={project.name} />
+                    )}
 
                     <div className="flex flex-wrap items-center gap-2">
                       <span className="helixa-bold rounded-full bg-primary/10 px-3 py-1 text-xs uppercase tracking-[0.08em] text-primary">
@@ -334,10 +400,10 @@ export default function ProjectsPage() {
 
                   <a
                     href={getProjectCaseStudyHref(project)}
-                    aria-label={`Read the full case study for ${project.name}`}
+                    aria-label={`View more about ${project.name}`}
                     className="helixa-bold mt-auto inline-flex items-center justify-between gap-3 rounded-xl bg-primary/10 px-4 py-3 text-sm text-primary transition hover:bg-primary hover:text-white"
                   >
-                    <span>Read full case study</span>
+                    <span>View More</span>
                     <span className="material-symbols-outlined text-lg">arrow_forward</span>
                   </a>
                 </article>
@@ -363,11 +429,14 @@ export default function ProjectsPage() {
           ) : (
             <div className="mx-auto max-w-3xl rounded-[28px] border border-slate-200 bg-slate-50 px-6 py-12 text-center shadow-sm">
               <h3 className="optika-bold text-2xl text-on-surface sm:text-3xl">
-                Projects will appear here once they are published.
+                {status === "loading"
+                  ? "Loading projects..."
+                  : "Projects will appear here once they are added in the admin panel."}
               </h3>
               <p className="helixa-regular mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
-                Save a project as <strong>Published</strong> from the admin panel to display it on
-                the main website.
+                {status === "error"
+                  ? "The project backend could not be reached right now."
+                  : "Add project details, cover photos, logos, and gallery images from Strapi to display them on the main website."}
               </p>
             </div>
           )}

@@ -167,6 +167,11 @@ const operationsMaintenancePageStyles = `
     gap: 12px;
     align-items: center;
   }
+  .services-shell .om-health-check-cta-row {
+    display: flex;
+    justify-content: center;
+    margin: 26px 0 34px;
+  }
   .services-shell .panel-cta.om-gallery-cta {
     display: inline-flex;
     align-items: center;
@@ -279,6 +284,9 @@ const operationsMaintenancePageStyles = `
       flex-wrap: wrap;
       gap: 10px;
     }
+    .services-shell .om-health-check-cta-row {
+      margin: 24px 0 30px;
+    }
     .services-shell .om-hero-copy,
     .services-shell .card p,
     .services-shell .faq-a p,
@@ -375,7 +383,6 @@ function enhanceOperationsMaintenancePanelHtml(panelHtml) {
   ctaRow.className = "om-cta-row";
 
   cta.parentNode.insertBefore(ctaRow, cta);
-  ctaRow.appendChild(cta);
 
   const galleryButton = doc.createElement("a");
   galleryButton.className = "panel-cta om-gallery-cta";
@@ -384,6 +391,20 @@ function enhanceOperationsMaintenancePanelHtml(panelHtml) {
   galleryButton.innerHTML =
     'View Solar O&amp;M Images <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"></rect><circle cx="8.5" cy="10" r="1.6"></circle><path d="M6 16l4.2-4.2a1.6 1.6 0 0 1 2.26 0L15 14.3l1.24-1.24a1.6 1.6 0 0 1 2.26 0L21 15.6"></path></svg>';
   ctaRow.appendChild(galleryButton);
+
+  const financialTitle = Array.from(container.querySelectorAll(".sub-title")).find((title) =>
+    /the financial case for professional o&m/i.test(title.textContent ?? "")
+  );
+  const financialSection = financialTitle?.nextElementSibling;
+  const ctaWrapper = doc.createElement("div");
+  ctaWrapper.className = "om-health-check-cta-row";
+  ctaWrapper.appendChild(cta);
+
+  if (financialSection?.parentNode) {
+    financialSection.parentNode.insertBefore(ctaWrapper, financialSection.nextSibling);
+  } else {
+    ctaRow.appendChild(ctaWrapper);
+  }
 
   return container.innerHTML;
 }

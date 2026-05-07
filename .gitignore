@@ -25,3 +25,9 @@ coverage/
 .cache/
 .parcel-cache/
 .vite/
+
+# Strapi local/runtime output
+backend/.tmp/
+backend/.strapi/
+backend/.strapi-updater.json
+backend/build/
