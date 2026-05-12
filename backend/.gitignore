@@ -1,0 +1,7 @@
+.env
+.next
+node_modules
+payload.db
+payload.db-*
+media
+.seed-generated

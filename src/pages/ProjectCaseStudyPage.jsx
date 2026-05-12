@@ -1,5 +1,100 @@
-import { useEffect, useMemo, useState } from "react";
-import { fetchProjectBySlug, handleProjectMediaError } from "../lib/projectPortfolio";
+import { useMemo } from "react";
+import { usePublicContent } from "../context/PublicContentContext";
+import { getProjectBySlug, handleProjectMediaError } from "../lib/projectPortfolio";
+
+const projectGalleryAssetModules = {
+  ...import.meta.glob("../../imgs/AKASH FASHION IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/AMOL MINECHEM IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/BAXTER IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/BAXTER IMAGES *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/BUSCH VACUUM IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/BUSH VACUUM IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/COLGATE IMAGES *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/FUJI SILVERTECH IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/GRG IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/HONDA IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/MONGINIES IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/RAVIRAJ FOILS IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/ROHAN DYES IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/ROHAN DYES  IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/SIEMENS IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/SOMAY IMAGE *.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+  ...import.meta.glob("../../imgs/welspun gallary*.jpeg", {
+    eager: true,
+    import: "default",
+  }),
+};
+
+const projectGalleryPrefixes = {
+  "grg-cotspin": ["GRG IMAGE"],
+  "honda-india": ["HONDA IMAGE"],
+  "welspun-group": ["WELSPUN GALLARY"],
+  "siemens-energy": ["SIEMENS IMAGE"],
+  "baxter-pharma": ["BAXTER IMAGE", "BAXTER IMAGES"],
+  "colgate-palmolive": ["COLGATE IMAGE", "COLGATE IMAGES"],
+  "amol-minechem": ["AMOL MINECHEM IMAGE"],
+  "raviraj-foils": ["RAVIRAJ FOILS IMAGE"],
+  "akash-fashion": ["AKASH FASHION IMAGE"],
+  "monginis-foods": ["MONGINIES IMAGE", "MONGINIS IMAGE"],
+  "rohan-dyes-rdl": ["ROHAN DYES IMAGE"],
+  "fuji-silvertech": ["FUJI SILVERTECH IMAGE"],
+  "somany-evergreen": ["SOMAY IMAGE", "SOMANY IMAGE"],
+  "busch-vacuum": ["BUSCH VACUUM IMAGE", "BUSH VACUUM IMAGE"],
+};
+
+const projectGalleryExcludedOrders = {
+  "baxter-pharma": new Set([2, 3, 4]),
+  "raviraj-foils": new Set([4]),
+  "monginis-foods": new Set([2]),
+};
 
 const pageStyles = `
   .case-study-shell {
@@ -29,38 +124,70 @@ function DetailItem({ label, value }) {
   );
 }
 
-export default function ProjectCaseStudyPage() {
-  const requestedSlug = getRequestedProjectSlug();
-  const [project, setProject] = useState(null);
-  const [status, setStatus] = useState("loading");
+function getAssetFilename(path = "") {
+  return path.split("/").pop() ?? "";
+}
 
-  useEffect(() => {
-    let isMounted = true;
+function normalizeGalleryAssetLabel(value = "") {
+  return String(value ?? "")
+    .replace(/\.[^.]+$/, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toUpperCase();
+}
 
-    async function loadProject() {
-      try {
-        setStatus("loading");
-        const nextProject = await fetchProjectBySlug(requestedSlug);
+function getGalleryImageOrder(value = "") {
+  const matchedNumber = normalizeGalleryAssetLabel(value).match(/(\d+)(?!.*\d)/);
+  return matchedNumber ? Number.parseInt(matchedNumber[1], 10) : Number.MAX_SAFE_INTEGER;
+}
 
-        if (isMounted) {
-          setProject(nextProject);
-          setStatus("success");
-        }
-      } catch {
-        if (isMounted) {
-          setProject(null);
-          setStatus("error");
-        }
+function getProjectGalleryImages(project) {
+  const slug = project?.slug ?? "";
+  const prefixes = projectGalleryPrefixes[slug] ?? [];
+  const excludedOrders = projectGalleryExcludedOrders[slug];
+
+  if (!prefixes.length) {
+    return [];
+  }
+
+  return Object.entries(projectGalleryAssetModules)
+    .map(([path, src]) => {
+      const filename = getAssetFilename(path);
+      const normalizedName = normalizeGalleryAssetLabel(filename);
+
+      return {
+        src,
+        filename,
+        normalizedName,
+        order: getGalleryImageOrder(filename),
+      };
+    })
+    .filter((item) => prefixes.some((prefix) => item.normalizedName.startsWith(prefix)))
+    .filter((item) => !excludedOrders?.has(item.order))
+    .sort((left, right) => {
+      const orderDifference = left.order - right.order;
+      if (orderDifference !== 0) {
+        return orderDifference;
       }
-    }
 
-    loadProject();
+      return left.filename.localeCompare(right.filename);
+    })
+    .map((item, index) => ({
+      ...item,
+      id: `${slug}-gallery-${index + 1}`,
+      alt: `${project.name} site image ${index + 1}`,
+    }));
+}
 
-    return () => {
-      isMounted = false;
-    };
-  }, [requestedSlug]);
-
+export default function ProjectCaseStudyPage() {
+  const { content, status } = usePublicContent();
+  const requestedSlug = getRequestedProjectSlug();
+  const fallbackProject = useMemo(() => getProjectBySlug(null, requestedSlug), [requestedSlug]);
+  const project = useMemo(
+    () => getProjectBySlug(content, requestedSlug) ?? fallbackProject,
+    [content, fallbackProject, requestedSlug]
+  );
+  const projectGallery = useMemo(() => getProjectGalleryImages(project), [project]);
   const caseStudyImages = useMemo(() => {
     if (!project) {
       return [];
@@ -87,7 +214,7 @@ export default function ProjectCaseStudyPage() {
       seenSources.add(listingImage.src);
     }
 
-    const galleryImages = (project.galleryImages ?? []).filter((image) => {
+    const galleryImages = projectGallery.filter((image) => {
       if (seenSources.has(image.src)) {
         return false;
       }
@@ -97,8 +224,8 @@ export default function ProjectCaseStudyPage() {
     });
 
     return [primaryImage, ...(listingImage ? [listingImage] : []), ...galleryImages];
-  }, [project]);
-  const isLoading = status === "loading";
+  }, [project, projectGallery]);
+  const isLoading = !fallbackProject && (status === "idle" || status === "loading");
 
   return (
     <div className="case-study-shell min-h-screen font-body text-on-surface selection:bg-primary/20">

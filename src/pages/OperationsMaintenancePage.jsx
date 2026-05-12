@@ -8,6 +8,7 @@ import {
   parseServicesSource,
 } from "../lib/servicesContent";
 import { OPERATIONS_MAINTENANCE_GALLERY_PATH } from "../lib/operationsMaintenanceGallery";
+import { usePublicContent } from "../context/PublicContentContext";
 
 const operationsMaintenanceServiceIcons = {
   "Scheduled Preventive Maintenance": `
@@ -350,7 +351,7 @@ function replaceOperationsMaintenanceServiceIcons(container) {
   });
 }
 
-function enhanceOperationsMaintenancePanelHtml(panelHtml) {
+function enhanceOperationsMaintenancePanelHtml(panelHtml, galleryCtaLabel = "View Solar O&M Images") {
   if (typeof DOMParser === "undefined" || !panelHtml) {
     return panelHtml;
   }
@@ -389,7 +390,7 @@ function enhanceOperationsMaintenancePanelHtml(panelHtml) {
   galleryButton.href = OPERATIONS_MAINTENANCE_GALLERY_PATH;
   galleryButton.setAttribute("aria-label", "View the Solar O and M image gallery");
   galleryButton.innerHTML =
-    'View Solar O&amp;M Images <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"></rect><circle cx="8.5" cy="10" r="1.6"></circle><path d="M6 16l4.2-4.2a1.6 1.6 0 0 1 2.26 0L15 14.3l1.24-1.24a1.6 1.6 0 0 1 2.26 0L21 15.6"></path></svg>';
+    `${galleryCtaLabel} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"></rect><circle cx="8.5" cy="10" r="1.6"></circle><path d="M6 16l4.2-4.2a1.6 1.6 0 0 1 2.26 0L15 14.3l1.24-1.24a1.6 1.6 0 0 1 2.26 0L21 15.6"></path></svg>`;
   ctaRow.appendChild(galleryButton);
 
   const financialTitle = Array.from(container.querySelectorAll(".sub-title")).find((title) =>
@@ -410,14 +411,16 @@ function enhanceOperationsMaintenancePanelHtml(panelHtml) {
 }
 
 export default function OperationsMaintenancePage() {
+  const { content } = usePublicContent();
+  const galleryCtaLabel = content?.operationsMaintenance?.galleryCtaLabel || "View Solar O&M Images";
   const parsedContent = useMemo(() => parseServicesSource(servicesSource), []);
   const panels = useMemo(
     () =>
       getServicePanels(parsedContent, [operationsMaintenancePanelKey]).map((panel) => ({
         ...panel,
-        html: enhanceOperationsMaintenancePanelHtml(panel.html),
+        html: enhanceOperationsMaintenancePanelHtml(panel.html, galleryCtaLabel),
       })),
-    [parsedContent]
+    [parsedContent, galleryCtaLabel]
   );
   const panelsRef = useRef(null);
 

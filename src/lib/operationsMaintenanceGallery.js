@@ -71,3 +71,20 @@ export const operationsMaintenanceGalleryItems = operationsMaintenanceGalleryMet
     description,
   })
 );
+
+export function getManagedOperationsMaintenanceGalleryItems(content) {
+  const backendItems = content?.operationsMaintenance?.galleryItems;
+
+  if (!Array.isArray(backendItems) || !backendItems.length) {
+    return operationsMaintenanceGalleryItems;
+  }
+
+  return backendItems
+    .map((item, index) => ({
+      src: item.image?.url || item.image || "",
+      alt: item.alt || `${item.title} - Solar O&M image ${index + 1}`,
+      title: item.title || `Solar O&M Image ${index + 1}`,
+      description: item.description || "",
+    }))
+    .filter((item) => item.src);
+}

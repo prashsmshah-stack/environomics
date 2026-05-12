@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
-import { operationsMaintenanceGalleryItems } from "../lib/operationsMaintenanceGallery";
+import { usePublicContent } from "../context/PublicContentContext";
+import { getManagedOperationsMaintenanceGalleryItems } from "../lib/operationsMaintenanceGallery";
+import { resolveMediaUrl } from "../lib/mediaUrl";
 
 export default function OperationsMaintenanceGalleryPage() {
+  const { content } = usePublicContent();
+  const operationsMaintenanceGalleryItems = getManagedOperationsMaintenanceGalleryItems(content).map((item) => ({
+    ...item,
+    src: resolveMediaUrl(item.src) || item.src,
+  }));
   const [activeImageIndex, setActiveImageIndex] = useState(null);
   const activeItem =
     activeImageIndex === null ? null : operationsMaintenanceGalleryItems[activeImageIndex];

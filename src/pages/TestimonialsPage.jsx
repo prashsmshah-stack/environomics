@@ -1,8 +1,40 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
+import { usePublicContent } from "../context/PublicContentContext";
+import { resolveMediaUrl } from "../lib/mediaUrl";
 import { testimonialShowcase } from "../lib/testimonialShowcase";
-import { fetchStrapiJson, resolveStrapiMediaUrl } from "../lib/strapiApi";
+import { normalizeSingleLineText } from "../lib/contentLayout";
+
+const testimonialPdfPages = [2, 5, 7, 10, 13, 14, 18, 21, 23, 27, 28, 29, 27, 32, 35];
+
+const testimonialPdfPageMatches = [
+  { match: "testimonial-1.png", page: 2 },
+  { match: "testimonial-2.png", page: 5 },
+  { match: "testimonial-3.png", page: 7 },
+  { match: "testimonial-4.png", page: 10 },
+  { match: "testimonial-5.png", page: 13 },
+  { match: "testimonial-6.png", page: 14 },
+  { match: "testimonial-8.png", page: 18 },
+  { match: "testimonial-9.png", page: 21 },
+  { match: "testimonial-10.png", page: 23 },
+  { match: "testimonial-11.png", page: 27 },
+  { match: "johnson-screens.png", page: 27 },
+  { match: "testimonial-12.png", page: 28 },
+  { match: "testimonial-13.png", page: 29 },
+  { match: "testimonial-15.png", page: 32 },
+  { match: "testimonial-16.png", page: 35 },
+];
+
+const fallbackTestimonials = testimonialShowcase
+  .filter((_, index) => index !== 6)
+  .slice(0, 15)
+  .map((testimonial, index) => ({
+    ...testimonial,
+    pdfPage: testimonialPdfPages[index] ?? 1,
+  }));
+
+const TESTIMONIALS_PDF_PATH = "/downloads/customer-testimonial-certificates-scan.pdf";
 
 function fallbackImage(label, variant = "photo") {
   const safeLabel = label.replace(/&/g, "&amp;");
@@ -45,81 +77,72 @@ function handleImageError(event, label, variant = "photo") {
   }
 }
 
-function normalizeTestimonial(testimonial, index) {
-  const companyName =
-    String(testimonial?.companyName ?? "").trim() || `Testimonial ${index + 1}`;
-  const coverUrl = resolveStrapiMediaUrl(testimonial?.coverImage?.url);
-  const attachmentUrl = resolveStrapiMediaUrl(testimonial?.attachment?.url);
-  const pageNumber = Number(testimonial?.filePageNumber);
-
-  return {
-    id: testimonial?.id ?? `testimonial-${index}`,
-    title: companyName,
-    tag: String(testimonial?.tag ?? "").trim() || "Client Reference",
-    image: coverUrl || fallbackImage(`${companyName} Testimonial`),
-    fileHref: resolveStrapiMediaUrl(testimonial?.fileHref) ||
-      (attachmentUrl && Number.isFinite(pageNumber) && pageNumber > 0
-        ? `${attachmentUrl}#page=${Math.trunc(pageNumber)}&view=FitH`
-        : attachmentUrl),
-  };
+function normalizeTestimonialKey(value = "") {
+  return String(value ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
-function getFallbackTestimonials() {
-  return testimonialShowcase.map((testimonial, index) => ({
-    id: testimonial.id || `fallback-testimonial-${index + 1}`,
-    title: testimonial.title,
-    tag: testimonial.tag || testimonial.subtitle || "Client Reference",
-    image: testimonial.image || fallbackImage(`${testimonial.title} Testimonial`),
-    fileHref: "/downloads/customer-testimonial-certificates-scan.pdf",
-  }));
+function resolveCertificatePdfPage(imageUrl, fallbackPage = 1) {
+  const normalized = String(imageUrl ?? "").toLowerCase().replace(/\\/g, "/");
+  const matched = testimonialPdfPageMatches.find((item) => normalized.includes(item.match));
+  return matched?.page ?? fallbackPage;
+}
+
+function getCertificatePageHref(pageNumber) {
+  return `${TESTIMONIALS_PDF_PATH}#page=${pageNumber}&view=FitH`;
+}
+
+function resolvePayloadMedia(value) {
+  if (!value) {
+    return "";
+  }
+
+  if (typeof value === "string") {
+    return resolveMediaUrl(value);
+  }
+
+  return resolveMediaUrl(value.url ?? value.sizes?.hero?.url ?? value.sizes?.thumbnail?.url ?? "");
 }
 
 export default function TestimonialsPage() {
-  const [testimonials, setTestimonials] = useState([]);
-  const [status, setStatus] = useState("loading");
+  const { content } = usePublicContent();
+  const testimonials = useMemo(() => {
+    const backendTestimonials =
+      Array.isArray(content?.testimonials) && content.testimonials.length ? content.testimonials : null;
 
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadTestimonials() {
-      try {
-        setStatus("loading");
-        const response = await fetchStrapiJson("/api/public/testimonials");
-        const backendTestimonials = Array.isArray(response?.data)
-          ? response.data.map(normalizeTestimonial)
-          : [];
-        const nextTestimonials = backendTestimonials.length
-          ? backendTestimonials
-          : getFallbackTestimonials();
-
-        if (isMounted) {
-          setTestimonials(nextTestimonials);
-          setStatus("success");
-        }
-      } catch {
-        if (isMounted) {
-          setTestimonials(getFallbackTestimonials());
-          setStatus("success");
-        }
-      }
+    if (!backendTestimonials) {
+      return fallbackTestimonials;
     }
 
-    loadTestimonials();
+    return backendTestimonials
+      .filter((testimonial) => {
+        const status = String(testimonial?.status ?? "").trim().toLowerCase();
+        return !status || status === "published";
+      })
+      .map((testimonial, index) => {
+        const title = normalizeSingleLineText(testimonial?.title, `Testimonial ${index + 1}`);
+        const resolvedImage =
+          resolvePayloadMedia(testimonial?.coverImage ?? testimonial?.image) ||
+          fallbackImage(`${title} Facility`);
 
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  const handleCertificateClick = (event, href) => {
-    if (!href) {
-      event.preventDefault();
-      return;
-    }
-
-    event.preventDefault();
-    window.open(href, "_blank", "noopener,noreferrer");
-  };
+        return {
+          id: testimonial?.id ?? `testimonial-${index}`,
+          title,
+          tag: normalizeSingleLineText(testimonial?.tag, "Client Reference"),
+          subtitle: normalizeSingleLineText(testimonial?.subtitle, "Client Reference"),
+          capacity: normalizeSingleLineText(testimonial?.capacity),
+          installed: normalizeSingleLineText(testimonial?.installed),
+          description: normalizeSingleLineText(testimonial?.description),
+          image: resolvedImage,
+          certificateHref:
+            resolvePayloadMedia(testimonial?.certificateFile) ||
+            getCertificatePageHref(resolveCertificatePdfPage(resolvedImage, index + 1)),
+          pdfPage: resolveCertificatePdfPage(resolvedImage, index + 1),
+        };
+      });
+  }, [content]);
 
   return (
     <div className="scroll-smooth bg-white font-body text-on-surface selection:bg-solar-blue/20">
@@ -145,18 +168,20 @@ export default function TestimonialsPage() {
       <main className="bg-white px-4 pb-16 pt-16 sm:px-6 sm:pb-20 sm:pt-20 lg:px-8 lg:pb-24 lg:pt-24 xl:px-12">
         <div className="mx-auto max-w-[1440px]">
           <section className="rounded-[32px] border border-[#e8edf5] bg-white p-4 shadow-[0_18px_50px_rgba(15,23,42,0.08)] sm:p-6 lg:p-8">
-            {testimonials.length ? (
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {testimonials.map((testimonial, index) => (
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {testimonials.map((testimonial, index) => {
+                const certificateHref =
+                  testimonial.certificateHref ?? getCertificatePageHref(testimonial.pdfPage ?? 1);
+
+                return (
                   <a
                     key={testimonial.id}
-                    href={testimonial.fileHref || "#"}
-                    onClick={(event) => handleCertificateClick(event, testimonial.fileHref)}
+                    href={certificateHref}
                     target="_blank"
                     rel="noreferrer"
                     className="group flex h-full flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white opacity-0 shadow-[0_12px_35px_rgba(15,23,42,0.06)] transition duration-300 animate-fade-in-up hover:-translate-y-1 hover:border-[#a4c9ff] hover:shadow-[0_20px_40px_rgba(0,89,162,0.15)]"
                     style={{ animationDelay: `${0.04 * (index + 1)}s` }}
-                    aria-label={`Open the full testimonial certificate file for ${testimonial.title}`}
+                    aria-label={`Open the full testimonial certificate PDF for ${testimonial.title}`}
                   >
                     <div className="relative flex h-[340px] items-center justify-center overflow-hidden border-b border-slate-100 bg-slate-50 p-4 sm:h-[380px] lg:h-[420px]">
                       <div className="flex h-full w-full items-center justify-center">
@@ -184,17 +209,9 @@ export default function TestimonialsPage() {
                       </div>
                     </div>
                   </a>
-                ))}
-              </div>
-            ) : (
-              <div className="rounded-[28px] border border-slate-200 bg-slate-50 px-6 py-12 text-center shadow-sm">
-                <p className="helixa-regular text-base text-slate-600">
-                  {status === "loading"
-                    ? "Loading testimonials..."
-                    : "Testimonials will appear here once they are added in the admin panel."}
-                </p>
-              </div>
-            )}
+                );
+              })}
+            </div>
           </section>
         </div>
       </main>

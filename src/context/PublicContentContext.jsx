@@ -1,90 +1,124 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { fetchStrapiJson } from "../lib/strapiApi";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { getPayloadApiBase } from "../lib/mediaUrl";
 
 const PublicContentContext = createContext({
   content: null,
-  status: "loading",
+  status: "success",
   error: "",
   refresh: async () => {},
 });
 
 export function PublicContentProvider({ children }) {
-  const [content, setContent] = useState(null);
-  const [status, setStatus] = useState("loading");
-  const [error, setError] = useState("");
+  const [state, setState] = useState({
+    content: null,
+    status: "loading",
+    error: "",
+  });
 
-  const refresh = useCallback(async () => {
-    setStatus((current) => (current === "success" ? current : "loading"));
-    setError("");
+  async function loadContent({ signal } = {}) {
+    const baseUrl = getPayloadApiBase();
 
-    const endpoints = [
-      ["homePage", "/api/public/home-page"],
-      ["footer", "/api/public/footer"],
-      ["contactPage", "/api/public/contact-page"],
-      ["clients", "/api/public/clients"],
-      ["testimonials", "/api/public/testimonials"],
-      ["projects", "/api/public/projects"],
-    ];
+    setState((current) => ({
+      ...current,
+      status: "loading",
+      error: "",
+    }));
 
-    const results = await Promise.allSettled(
-      endpoints.map(async ([key, path]) => {
-        const payload = await fetchStrapiJson(path);
-        return [key, payload?.data ?? null];
-      })
-    );
+    try {
+      const [
+        homeResponse,
+        servicesHeaderResponse,
+        omResponse,
+        contactResponse,
+        footerResponse,
+        projectsResponse,
+        clientsResponse,
+        testimonialsResponse,
+      ] =
+        await Promise.all([
+          fetch(`${baseUrl}/globals/home-page?depth=2`, { signal }),
+          fetch(`${baseUrl}/globals/services-header?depth=2`, { signal }),
+          fetch(`${baseUrl}/globals/operations-maintenance-page?depth=2`, { signal }),
+          fetch(`${baseUrl}/globals/contact-page?depth=2`, { signal }),
+          fetch(`${baseUrl}/globals/footer?depth=2`, { signal }),
+          fetch(`${baseUrl}/projects?depth=2&sort=sortOrder&limit=100`, { signal }),
+          fetch(`${baseUrl}/clients?depth=2&sort=sortOrder&limit=100`, { signal }),
+          fetch(`${baseUrl}/testimonials?depth=2&sort=sortOrder&limit=100`, { signal }),
+        ]);
 
-    const nextContent = {};
-    const errors = [];
+      if (
+        !homeResponse.ok ||
+        !servicesHeaderResponse.ok ||
+        !omResponse.ok ||
+        !contactResponse.ok ||
+        !footerResponse.ok ||
+        !projectsResponse.ok ||
+        !clientsResponse.ok ||
+        !testimonialsResponse.ok
+      ) {
+        throw new Error("Unable to load Payload content");
+      }
 
-    results.forEach((result) => {
-      if (result.status === "fulfilled") {
-        const [key, data] = result.value;
-        nextContent[key] = data;
+      const [home, servicesHeader, operationsMaintenance, contact, footer, projects, clients, testimonials] = await Promise.all([
+        homeResponse.json(),
+        servicesHeaderResponse.json(),
+        omResponse.json(),
+        contactResponse.json(),
+        footerResponse.json(),
+        projectsResponse.json(),
+        clientsResponse.json(),
+        testimonialsResponse.json(),
+      ]);
+
+      setState({
+        content: {
+          home: {
+            ...home,
+            ctaPrimary: home.primaryCtaLabel,
+            ctaSecondary: home.secondaryCtaLabel,
+          },
+          servicesHeader,
+          operationsMaintenance,
+          contact,
+          footer,
+          settings: {
+            footerYear: footer.year,
+          },
+          projects: projects.docs ?? [],
+          clients: clients.docs ?? [],
+          testimonials: testimonials.docs ?? [],
+        },
+        status: "success",
+        error: "",
+      });
+    } catch (error) {
+      if (error.name === "AbortError") {
         return;
       }
 
-      errors.push(result.reason instanceof Error ? result.reason.message : "Content request failed.");
-    });
-
-    setContent((current) => ({
-      ...(current || {}),
-      ...nextContent,
-      settings: {
-        ...(current?.settings || {}),
-        headerLogo: current?.settings?.headerLogo || "",
-        companyLogo: current?.settings?.companyLogo || "",
-      },
-      seo: current?.seo || {},
-    }));
-    setStatus(errors.length === endpoints.length ? "error" : "success");
-    setError(errors.join(" | "));
-  }, []);
+      setState({
+        content: null,
+        status: "success",
+        error: error.message || "Payload content unavailable",
+      });
+    }
+  }
 
   useEffect(() => {
-    let isMounted = true;
+    const controller = new AbortController();
+    loadContent({ signal: controller.signal });
 
-    refresh().catch((loadError) => {
-      if (!isMounted) {
-        return;
-      }
-
-      setStatus("error");
-      setError(loadError instanceof Error ? loadError.message : "Unable to load backend content.");
-    });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [refresh]);
+    return () => controller.abort();
+  }, []);
 
   const value = useMemo(
     () => ({
-      content,
-      status,
-      error,
-      refresh,
+      content: state.content,
+      status: state.status,
+      error: state.error,
+      refresh: () => loadContent(),
     }),
-    [content, error, refresh, status]
+    [state]
   );
 
   return <PublicContentContext.Provider value={value}>{children}</PublicContentContext.Provider>;

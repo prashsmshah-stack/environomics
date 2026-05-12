@@ -1,61 +1,153 @@
-# 🚀 Getting started with Strapi
+# Environomics Payload Backend
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+This folder contains the Payload CMS backend for editable site content.
 
-### `develop`
+## Run locally
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+1. Copy `.env.example` to `.env` and change `PAYLOAD_SECRET`.
+2. Install dependencies from this folder:
 
-```
-npm run develop
-# or
-yarn develop
-```
+   ```bash
+   npm install
+   ```
 
-### `start`
+3. Start Payload:
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
+   ```bash
+   npm run dev
+   ```
 
-```
-npm run start
-# or
-yarn start
-```
+4. Open `http://localhost:3001/admin` and create the first admin user.
 
-### `build`
+5. Seed the Home Page global from the current website content:
 
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
+   ```bash
+   npm run seed:home
+   ```
 
-```
-npm run build
-# or
-yarn build
-```
+To populate every backend area from the current website data in one command:
 
-## ⚙️ Deployment
-
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
-
-```
-yarn strapi deploy
+```bash
+npm run seed:all
 ```
 
-## 📚 Learn more
+To verify the backend has the expected content/images/files:
 
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
+```bash
+npm run audit:content
+```
 
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
+## Home page content
 
-## ✨ Community
+The home page is a Payload Global named `Home Page`. Editors can manage:
 
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+- hero titles, subtitle, CTAs, and desktop/mobile hero media
+- about section title, body copy, image, and certification chips
+- impact cards
+- featured videos with YouTube embeds, external videos, uploaded video files, and placeholders
+- service cards with titles, descriptions, links, and images
 
----
+The seed command currently imports the existing homepage content from the React code, including:
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+- `/public/imgs/hero-2560.jpg` and `/public/imgs/hero-1600.jpg`
+- `/imgs/450x600 copy.jpg.jpeg`
+- `/imgs/S1.png`, `/imgs/S2.png`, `/imgs/S3.png`, and `/imgs/HVAC IMAGE.jpeg`
+- the existing YouTube feature video `https://youtu.be/c98iCb4pRg4`
+
+The public REST endpoint is:
+
+```text
+GET http://localhost:3001/api/globals/home-page?depth=2
+```
+
+## Projects content
+
+Projects are stored as a Payload collection named `Projects`. Each project is one removable/addable project tab/card with:
+
+- company name, slug, status, sort order, industry, commissioned year, plant size/capacity, and overview text
+- company icon/logo
+- Projects page cover image
+- case study cover image
+- add/remove/reorder gallery images
+- extra detail rows for future plant/company data
+
+Seed the current website projects with:
+
+```bash
+npm run seed:projects
+```
+
+The public REST endpoint is:
+
+```text
+GET http://localhost:3001/api/projects?depth=2&sort=sortOrder&limit=100
+```
+
+## Clients content
+
+Clients are stored as a simple `Clients` collection. Editors manage only:
+
+- display position
+- client name
+- client logo
+
+When a client is inserted at an existing display position, later clients shift down automatically. When a client is removed, later clients shift up.
+
+Seed the current website clients with:
+
+```bash
+npm run seed:clients
+```
+
+The public REST endpoint is:
+
+```text
+GET http://localhost:3001/api/clients?depth=2&sort=sortOrder&limit=100
+```
+
+## Testimonials content
+
+Testimonials are stored as a `Testimonials` collection. Each card has:
+
+- display position
+- company/title, tag, installed year, and capacity
+- cover image
+- individual certificate file opened when the card is clicked
+
+The seed script splits the existing combined testimonial PDF into one PDF per company and uploads each individual file.
+
+Seed the current website testimonials with:
+
+```bash
+npm run seed:testimonials
+```
+
+The public REST endpoint is:
+
+```text
+GET http://localhost:3001/api/testimonials?depth=2&sort=sortOrder&limit=100
+```
+
+## Services Header, Solar O&M, Contact, Footer
+
+These are Payload Globals because each one controls a single website section:
+
+- `Services Header`: only the images shown in the header Services hover dropdown
+- `Solar O&M Page`: the hero `View Solar O&M Images` CTA label and the gallery images opened from it
+- `Contact Page`: 4 CTA cards after hero, inquiry form labels/options, map destination, facility box, urgent inquiry phone/email, and social/contact details
+- `Footer`: logo, description, services links, quick links, contact-backed details, year, and bottom words
+
+Seed them with:
+
+```bash
+npm run seed:site-sections
+```
+
+Endpoints:
+
+```text
+GET http://localhost:3001/api/globals/services-header?depth=2
+GET http://localhost:3001/api/globals/operations-maintenance-page?depth=2
+GET http://localhost:3001/api/globals/contact-page?depth=2
+GET http://localhost:3001/api/globals/footer?depth=2
+```

@@ -112,6 +112,22 @@ export default function SiteHeader() {
     ) || logo;
   const activeService =
     servicesMenu[Math.min(activeServiceIndex, servicesMenu.length - 1)] ?? servicesMenu[0];
+  const managedServicesMenu =
+    Array.isArray(content?.servicesHeader?.items) && content.servicesHeader.items.length
+      ? servicesMenu.map((service) => {
+          const managed = content.servicesHeader.items.find((item) => item.title === service.title);
+          const managedImage = resolveMediaUrl(managed?.image?.url ?? managed?.image);
+
+          return {
+            ...service,
+            image: managedImage || service.image,
+            imageAlt: managed?.imageAlt || service.imageAlt,
+          };
+        })
+      : servicesMenu;
+  const managedActiveService =
+    managedServicesMenu[Math.min(activeServiceIndex, managedServicesMenu.length - 1)] ??
+    managedServicesMenu[0];
 
   useEffect(() => {
     if (typeof document === "undefined") {
@@ -237,7 +253,7 @@ export default function SiteHeader() {
                         >
                           Services Overview
                         </a>
-                        {servicesMenu.map((service) => (
+                        {managedServicesMenu.map((service) => (
                           <a
                             key={service.title}
                             href={service.href}
@@ -359,7 +375,7 @@ export default function SiteHeader() {
                     >
                       <div className="grid grid-cols-[240px_1fr] gap-6">
                         <div className="flex flex-col gap-3">
-                          {servicesMenu.map((service, index) => (
+                          {managedServicesMenu.map((service, index) => (
                             <a
                               key={service.title}
                               href={service.href}
@@ -384,10 +400,10 @@ export default function SiteHeader() {
                         </div>
                         <div className="flex h-full min-h-[240px] flex-col rounded-xl border border-slate-100 bg-slate-50 p-5">
                           <div className="mb-5 h-40 overflow-hidden rounded-xl bg-white">
-                            {activeService.image ? (
+                            {managedActiveService.image ? (
                               <img
-                                src={activeService.image}
-                                alt={activeService.imageAlt}
+                                src={managedActiveService.image}
+                                alt={managedActiveService.imageAlt}
                                 className="h-full w-full object-cover"
                               />
                             ) : null}
@@ -397,13 +413,13 @@ export default function SiteHeader() {
                               Service Spotlight
                             </span>
                             <h4 className="mt-2 font-headline text-lg text-slate-900">
-                              {activeService.title}
+                              {managedActiveService.title}
                             </h4>
                             <p className="mt-3 text-sm leading-relaxed text-slate-600">
-                              {activeService.description}
+                              {managedActiveService.description}
                             </p>
                             <a
-                              href={activeService.href}
+                              href={managedActiveService.href}
                               className="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary transition-colors hover:text-primary/80"
                             >
                               Explore service
